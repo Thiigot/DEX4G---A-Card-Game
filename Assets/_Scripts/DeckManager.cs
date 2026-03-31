@@ -52,13 +52,11 @@ public class DeckManager : MonoBehaviour
 
     public void DrawCard()
     {
-        
-
 
         if (handManager.transform.childCount >= handManager.maxHandSize)
         {
             if (warningUI != null)
-                warningUI.Show("Mão cheia!");
+                warningUI.Show("Hand full!");
             handManager.ShakeHand();
             return;
         }
@@ -68,7 +66,11 @@ public class DeckManager : MonoBehaviour
         Card card = deck[0];
         deck.RemoveAt(0);
 
-        GameObject obj = Instantiate(handManager.cardPrefab, deckPoint.position, Quaternion.identity);
+        GameObject obj = Instantiate(handManager.cardPrefab, deckPoint);
+
+        RectTransform rect = obj.GetComponent<RectTransform>();
+        rect.localPosition = Vector3.zero;
+
         handManager.AddCardToHand(obj);
 
         CardDisplay display = obj.GetComponent<CardDisplay>();

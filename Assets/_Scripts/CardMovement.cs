@@ -28,6 +28,7 @@ public class CardMovement : MonoBehaviour,
     private bool hasLeftHand = false;
     private Transform originalParent;
     private int originalIndex;
+    private float dragSmoothSpeed = 15f;
 
     [Header("ShakeEffect")]
     private bool isShaking = false;
@@ -144,15 +145,8 @@ public class CardMovement : MonoBehaviour,
         
         transform.rotation = Quaternion.identity;
 
-        Vector2 mousePos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out mousePos
-        );
-
-        dragOffset = mousePos - (Vector2)rectTransform.localPosition;
+        
+        dragOffset = Vector2.zero;
 
         canvasGroup.blocksRaycasts = false;
     }
@@ -167,7 +161,10 @@ public class CardMovement : MonoBehaviour,
             out pos
         );
 
-        rectTransform.localPosition = pos - dragOffset;
+        Vector3 targetPos = pos;
+
+        rectTransform.position = eventData.position;
+
         //SE SAIU DA MÃO
         if (!hasLeftHand && !handManager.IsCardInHandZone(this))
         {
@@ -180,8 +177,6 @@ public class CardMovement : MonoBehaviour,
                 eventData.pressEventCamera,
                 out mousePos
             );
-
-            dragOffset = mousePos - (Vector2)rectTransform.localPosition;
         }
     }
 
