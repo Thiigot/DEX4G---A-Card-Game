@@ -8,16 +8,15 @@ public class DeckManager : MonoBehaviour
     [Header("UI")]
     public TMP_Text deckCountText;
     public TMP_Text discardCountText;
+    public TMP_Text handCountText;
 
     private List<GameObject> discardPileList = new List<GameObject>();
     public List<Card> deck = new List<Card>();
     public Transform deckPoint;
-
-    public int startingHandSize = 5;
-
-    private HandManager handManager;
-
     public Transform discardPile;
+    public int startingHandSize = 5;
+    [SerializeField]private HandManager handManager;
+    [SerializeField] private WarningUI warningUI;
 
     void Start()
     {
@@ -53,19 +52,25 @@ public class DeckManager : MonoBehaviour
 
     public void DrawCard()
     {
+        
+
+
+        if (handManager.transform.childCount >= handManager.maxHandSize)
+        {
+            if (warningUI != null)
+                warningUI.Show("Mão cheia!");
+            handManager.ShakeHand();
+            return;
+        }
+
         if (deck.Count == 0) return;
 
         Card card = deck[0];
         deck.RemoveAt(0);
 
         GameObject obj = Instantiate(handManager.cardPrefab, deckPoint.position, Quaternion.identity);
-        bool added = handManager.AddCardToHand(obj);
+        handManager.AddCardToHand(obj);
 
-        if (!added)
-        {
-            Destroy(obj);
-            return;
-        }
         CardDisplay display = obj.GetComponent<CardDisplay>();
         display.cardData = card;
         display.UpdateCardDisplay();
@@ -90,9 +95,12 @@ public class DeckManager : MonoBehaviour
     void UpdateUI()
     {
         if (deckCountText != null)
-            deckCountText.text = deck.Count.ToString();
+            deckCountText.text = $"Cards in Deck: {deck.Count}";
 
         if (discardCountText != null)
-            discardCountText.text = discardPileList.Count.ToString();
+            discardCountText.text = $"Cards in Discard Pile: {discardPileList.Count}";
+
+        if (handCountText != null)
+            handCountText.text = $"Cards in hand: {handManager.transform.childCount} / {handManager.maxHandSize}";
     }
 }

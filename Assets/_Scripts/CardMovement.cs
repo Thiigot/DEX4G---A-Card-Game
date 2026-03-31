@@ -24,7 +24,16 @@ public class CardMovement : MonoBehaviour,
     public float hoverHeight = 80f;
     public GameObject glow;
 
+    [Header("DragMovement")]
+    private bool hasLeftHand = false;
+    private Transform originalParent;
+    private int originalIndex;
 
+    [Header("ShakeEffect")]
+    private bool isShaking = false;
+    private float shakeTime = 0f;
+    private float shakeDuration = 0.3f;
+    private float shakeStrength = 10f;
 
     void Awake()
     {
@@ -37,18 +46,42 @@ public class CardMovement : MonoBehaviour,
 
     void Update()
     {
-        if (isDragging) return;
+        if (isDragging && !isShaking) return;
+
+        Vector3 shakeOffset = Vector3.zero;
+
+        if (isShaking)
+        {
+            shakeTime -= Time.deltaTime;
+
+            float strength = (shakeTime / shakeDuration) * shakeStrength;
+
+            float frequency = 40f;
+
+            shakeOffset = new Vector3(
+                Mathf.Sin(Time.time * frequency) * strength,
+                0,
+                0
+            );
+
+            if (shakeTime <= 0)
+            {
+                isShaking = false;
+            }
+        }
 
         Vector3 target = basePosition;
 
         if (isHovering)
             target += Vector3.up * hoverHeight;
 
-        rectTransform.localPosition = Vector3.Lerp(
-            rectTransform.localPosition,
-            target,
-            Time.deltaTime * 10f
+        Vector3 smoothPos = Vector3.Lerp(
+        rectTransform.localPosition,
+        target,
+        Time.deltaTime * 10f
         );
+        rectTransform.localPosition = smoothPos + shakeOffset;
+
 
         float scale = isHovering ? hoverScale : 1f;
 
@@ -106,7 +139,9 @@ public class CardMovement : MonoBehaviour,
         handManager.draggedCard = this;
         handManager.hoveredCard = null;
 
-        transform.SetParent(canvas.transform);
+        originalParent = transform.parent;
+        originalIndex = transform.GetSiblingIndex();
+        
         transform.rotation = Quaternion.identity;
 
         Vector2 mousePos;
@@ -133,6 +168,21 @@ public class CardMovement : MonoBehaviour,
         );
 
         rectTransform.localPosition = pos - dragOffset;
+        //SE SAIU DA MÃO
+        if (!hasLeftHand && !handManager.IsCardInHandZone(this))
+        {
+            hasLeftHand = true;
+            transform.SetParent(canvas.transform);
+            Vector2 mousePos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvas.transform as RectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out mousePos
+            );
+
+            dragOffset = mousePos - (Vector2)rectTransform.localPosition;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -149,11 +199,19 @@ public class CardMovement : MonoBehaviour,
         else
         {
             // 🔁 VOLTA PRA MÃO
-            transform.SetParent(handManager.transform);
+            transform.SetParent(originalParent);
+            transform.SetSiblingIndex(originalIndex);
         }
 
         handManager.draggedCard = null;
         canvasGroup.blocksRaycasts = true;
+        hasLeftHand = false;
     }
     #endregion
+
+    public void TriggerShake()
+    {
+        isShaking = true;
+        shakeTime = shakeDuration;
+    }
 }

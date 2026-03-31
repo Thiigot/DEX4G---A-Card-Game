@@ -111,4 +111,14 @@ public class HandManager : MonoBehaviour
         move.SetHandManager(this);
         return true;
     }
+
+    public void ShakeHand()
+    {
+        foreach (Transform card in transform)
+        {
+            CardMovement move = card.GetComponent<CardMovement>();
+            if (move != null)
+                move.TriggerShake();
+        }
+    }
 }
