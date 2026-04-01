@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Faca na Costela
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Sangramento pesado por 3 turnos  '
   textBack: "Avan\xE7a 2 e aplica sangramento 2x  "
   cardClass: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Bala Fria
   cardType: 1
-  cardMana: 0
+  cardMana: 2
   textFront: 'Dobra sangramento   '
   textBack: 'Dobra Marcado  '
   cardClass: 1

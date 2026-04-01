@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "V\xEDcio em P\xF3lvora"
   cardType: 1
-  cardMana: 0
+  cardMana: 2
   textFront: '+40% de dano. Recebe Sangramento leve  '
   textBack: "+Cr\xEDtico, descarta 2 cartas."
   cardClass: 1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Namira
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Na Mira  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 2
   textFront: 'Recua 3. Concentra 2 turnos, executa o alvo  '
   textBack: 'Concentra 2 turnos, executa o alvo  '
   cardClass: 1

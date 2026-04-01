@@ -20,7 +20,8 @@ public class CardDisplay : MonoBehaviour
     new Color32(203, 203, 203, 255),  // jumper
 };
     public Image[] typeImage;
-
+    public Color manaColor;
+    public Color noManaColor;
     void Start()
     {
         UpdateCardDisplay();
@@ -41,5 +42,11 @@ public class CardDisplay : MonoBehaviour
         {
             typeImage[i].gameObject.SetActive(i == (int)cardData.cardType);
         }
+    }
+
+    public void UpdateManaVisual(bool canPlay)
+    {
+
+        manaText.color = canPlay ? manaColor : noManaColor;
     }
 }

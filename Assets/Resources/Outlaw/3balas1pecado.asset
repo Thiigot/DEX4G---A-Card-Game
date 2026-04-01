@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 3balas1pecado
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 3 balas, 1 pecado
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "3 tiros aleat\xF3rios em linha de frente inimiga, dano excedente a
     backline  "
   textBack: "3 tiros na backline inimiga ignorando prote\xE7\xE3o  "

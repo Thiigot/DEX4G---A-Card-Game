@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Pris\xE3o Improvisada"
   cardType: 1
-  cardMana: 0
+  cardMana: 2
   textFront: 'Stun. Se sangrando, ganha um turno extra.  '
   textBack: 'Stun, Se Marcado ganha turno extra  '
   cardClass: 1

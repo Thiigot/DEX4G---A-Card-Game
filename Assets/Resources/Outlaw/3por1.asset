@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 3por1
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: '3 por 1  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: '3 ataques, cada hit com Sangramento progressivo  '
   textBack: "3 ataques, cada hit com Cr\xEDtico progressivo  "
   cardClass: 1

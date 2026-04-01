@@ -1593,6 +1593,8 @@ MonoBehaviour:
   - {fileID: 4562921466929002227}
   - {fileID: 4008899795924596790}
   - {fileID: 5757717512306261328}
+  manaColor: {r: 1, g: 1, b: 1, a: 1}
+  noManaColor: {r: 0.6509434, g: 0, b: 0, a: 1}
 --- !u!61 &27365078019320577
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1651,9 +1653,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b702a26cb663c24d972c6254ee6b1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardMovement
-  glow: {fileID: 8888737376537431172}
   hoverScale: 1.2
   hoverHeight: 80
+  glow: {fileID: 8888737376537431172}
+  normalHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  noManaHoverColor: {r: 1, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &8918682854523326819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,7 +1762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.9, b: 1, a: 0.6}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Cigarro e Confiss\xE3o"
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Cura por inimigo sangrando  '
   textBack: 'Cura por inimigo marcado  '
   cardClass: 1

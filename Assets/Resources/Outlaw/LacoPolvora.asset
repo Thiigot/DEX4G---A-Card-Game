@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LacoPolvora
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "La\xE7o e p\xF3lvora  "
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Atira no inimigo da frontline, recua 2 posi\xE7\xF5es  "
   textBack: "puxa o alvo 2 posi\xE7\xF5es para frente  "
   cardClass: 1

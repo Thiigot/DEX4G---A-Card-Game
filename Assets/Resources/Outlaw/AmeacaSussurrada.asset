@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Amea\xE7a Sussurrada"
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Gera cr\xEDtico para cada alvo sangrando  "
   textBack: 'Gera sangramento para cada alvo marcado  '
   cardClass: 1

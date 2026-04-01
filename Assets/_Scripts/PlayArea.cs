@@ -1,12 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayArea : MonoBehaviour
 {
+    public static PlayArea Instance;
     public GameObject highlight;
 
     private HandManager handManager;
     private Canvas canvas;
 
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         handManager = FindAnyObjectByType<HandManager>();
@@ -28,11 +33,23 @@ public class PlayArea : MonoBehaviour
 
             bool inside = RectTransformUtility.RectangleContainsScreenPoint(
                 transform as RectTransform,
-                RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, rect.position),
-                canvas.worldCamera
+                rect.position,
+                null
             );
 
-            highlight.SetActive(inside);
+            // 🔥 sempre visível durante drag
+            highlight.SetActive(true);
+
+            // 💡 opcional: feedback visual
+            var img = highlight.GetComponent<UnityEngine.UI.Image>();
+            if (img != null)
+            {
+                float targetAlpha = inside ? 0.5f : 0.2f;
+
+                Color c = img.color;
+                c.a = Mathf.Lerp(c.a, targetAlpha, Time.deltaTime * 10f);
+                img.color = c;
+            }
         }
         else
         {
@@ -43,9 +60,9 @@ public class PlayArea : MonoBehaviour
     public bool IsInside(RectTransform cardRect)
     {
         return RectTransformUtility.RectangleContainsScreenPoint(
-            transform as RectTransform,
-            RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, cardRect.position),
-            canvas.worldCamera
+        transform as RectTransform,
+        cardRect.position,
+        null
         );
     }
 }

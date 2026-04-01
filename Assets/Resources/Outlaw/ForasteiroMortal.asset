@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ForasteiroMortal
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Forasteiro Mortal
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Finaliza inimigo com Sangramento 5+. +1 Energia e ganha cr\xEDtico  "
   textBack: 'Marca um inimigo e ataca 3x. Se fatal, +1 energia e compra 1  '
   cardClass: 1

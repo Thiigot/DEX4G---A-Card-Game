@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TiroRapido
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Tiro R\xE1pido"
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 2
   textFront: 'Ataca 2x, sangramento  '
   textBack: 'Marca e ataca  '
   cardClass: 1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RedWine
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Red Wine Killshot  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 3
   textFront: 'Todo sangramento explode de uma vez  '
   textBack: 'Todo sangramento explode de uma vez  '
   cardClass: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Mirar na Cabe\xE7a"
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Alvo fica Marcado 2x  '
   textBack: 'Marca 2 alvos 1x  '
   cardClass: 1

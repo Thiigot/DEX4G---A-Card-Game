@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TrilhaSangue
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Trilha de sangue  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Ataca um inimigo aleat\xF3rio. Se fatal, transfere Sangramento para
     outro inimigo  "
   textBack: "Ataca um inimigo aleat\xF3rio. Se fatal, repete  "

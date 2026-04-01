@@ -12,23 +12,34 @@ public class CardMovement : MonoBehaviour,
     private Vector3 basePosition;
     private Vector2 dragOffset;
 
+    [Header("GameObjects/Scripts")]
     private HandManager handManager;
     private DeckManager deckManager;
     private PlayArea playArea;
+    private WarningUI warningUI;
+    private ManaManagerSTS manaManager;
 
     private bool isDragging;
     private bool isHovering;
+    private float rotationSpeed = 15f;
+    private bool isReturning = false;
+    private float returnSpeed = 15f;
 
     [Header("Hover")]
     public float hoverScale = 1.2f;
     public float hoverHeight = 80f;
     public GameObject glow;
 
+    [Header("Hover Colors")]
+    public Color normalHoverColor = new Color(0f,0.9f,1f,0.6f);
+    public Color noManaHoverColor = new Color(1f, 0.2f, 0.2f, 0.6f); // vermelho claro
+    private UnityEngine.UI.Image glowImage;
+
     [Header("DragMovement")]
     private bool hasLeftHand = false;
     private Transform originalParent;
     private int originalIndex;
-    private float dragSmoothSpeed = 15f;
+    
 
     [Header("ShakeEffect")]
     private bool isShaking = false;
@@ -43,6 +54,12 @@ public class CardMovement : MonoBehaviour,
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        if (glow != null)
+            glow.SetActive(false);
+        if (glow != null)
+            glowImage = glow.GetComponent<UnityEngine.UI.Image>();
+
     }
 
     void Update()
@@ -71,15 +88,33 @@ public class CardMovement : MonoBehaviour,
             }
         }
 
+        if (isReturning)
+        {
+            rectTransform.localPosition = Vector3.Lerp(
+                rectTransform.localPosition,
+                basePosition,
+                Time.deltaTime * returnSpeed
+            );
+
+            if (Vector3.Distance(rectTransform.localPosition, basePosition) < 1f)
+            {
+                rectTransform.localPosition = basePosition;
+                isReturning = false;
+            }
+
+            return; 
+        }
+
+        // 🔥 HOVER / IDLE
         Vector3 target = basePosition;
 
         if (isHovering)
             target += Vector3.up * hoverHeight;
 
         Vector3 smoothPos = Vector3.Lerp(
-        rectTransform.localPosition,
-        target,
-        Time.deltaTime * 10f
+            rectTransform.localPosition,
+            target,
+            Time.deltaTime * 10f
         );
         rectTransform.localPosition = smoothPos + shakeOffset;
 
@@ -91,6 +126,15 @@ public class CardMovement : MonoBehaviour,
             Vector3.one * scale,
             Time.deltaTime * 10f
         );
+
+        if (isDragging)
+        {
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                Quaternion.identity,
+                Time.deltaTime * rotationSpeed
+            );
+        }
     }
 
     public void SetHandManager(HandManager manager)
@@ -98,7 +142,9 @@ public class CardMovement : MonoBehaviour,
         handManager = manager;
         canvas = manager.GetComponentInParent<Canvas>();
         deckManager = FindAnyObjectByType<DeckManager>();
-        playArea = FindAnyObjectByType<PlayArea>();
+        playArea = PlayArea.Instance;
+        manaManager = FindAnyObjectByType<ManaManagerSTS>();
+        warningUI = FindAnyObjectByType<WarningUI>();
     }
 
     public void SetBasePosition(Vector3 pos)
@@ -116,6 +162,12 @@ public class CardMovement : MonoBehaviour,
         if (glow) glow.SetActive(true);
 
         handManager.hoveredCard = this;
+
+        if (glowImage != null)
+        {
+            glowImage.color = HasEnoughMana() ? normalHoverColor : noManaHoverColor;
+        }
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -128,6 +180,7 @@ public class CardMovement : MonoBehaviour,
 
         if (handManager.hoveredCard == this)
             handManager.hoveredCard = null;
+
     }
     #endregion
 
@@ -142,10 +195,9 @@ public class CardMovement : MonoBehaviour,
 
         originalParent = transform.parent;
         originalIndex = transform.GetSiblingIndex();
-        
+
         transform.rotation = Quaternion.identity;
 
-        
         dragOffset = Vector2.zero;
 
         canvasGroup.blocksRaycasts = false;
@@ -153,30 +205,13 @@ public class CardMovement : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out pos
-        );
-
-        Vector3 targetPos = pos;
-
         rectTransform.position = eventData.position;
 
         //SE SAIU DA MÃO
         if (!hasLeftHand && !handManager.IsCardInHandZone(this))
         {
             hasLeftHand = true;
-            transform.SetParent(canvas.transform);
-            Vector2 mousePos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out mousePos
-            );
+            transform.SetParent(canvas.transform, true);
         }
     }
 
@@ -184,23 +219,46 @@ public class CardMovement : MonoBehaviour,
     {
         isDragging = false;
 
-        bool played = playArea.IsInside(rectTransform);
+        bool played = false;
+
+        if (playArea != null)
+            played = playArea.IsInside(rectTransform);
 
         if (played)
         {
-            // 🔥 CARTA JOGADA
-            deckManager.DiscardCard(gameObject);
+            CardDisplay display = GetComponent<CardDisplay>();
+
+            if (display == null || display.cardData == null || manaManager == null)
+            {
+                Debug.LogError("Erro: referências faltando ao jogar carta");
+                ReturnToHandSafe();
+                EndDragCleanup();
+                return;
+            }
+
+            int cost = display.cardData.cardMana;
+            if (!manaManager.HasEnoughMana(cost))
+            {
+                ReturnToHandSafe();
+                if (warningUI != null)
+                    warningUI.Show("Not enough mana");
+                handManager.ShakeHand();
+                EndDragCleanup();
+                return;
+            }
+
+            // ✅ JOGOU COM SUCESSO
+            manaManager.SpendMana(cost);
+
+            if (deckManager != null)
+                deckManager.DiscardCard(gameObject);
         }
         else
         {
-            // 🔁 VOLTA PRA MÃO
-            transform.SetParent(originalParent);
-            transform.SetSiblingIndex(originalIndex);
+            // ❌ NÃO JOGOU
+            ReturnToHandSafe();
         }
-
-        handManager.draggedCard = null;
-        canvasGroup.blocksRaycasts = true;
-        hasLeftHand = false;
+        EndDragCleanup();
     }
     #endregion
 
@@ -208,5 +266,54 @@ public class CardMovement : MonoBehaviour,
     {
         isShaking = true;
         shakeTime = shakeDuration;
+    }
+
+    void ReturnToHandSafe()
+    {
+        transform.SetParent(originalParent, true);
+        transform.SetSiblingIndex(originalIndex);
+
+        isHovering = false;
+
+        if (glow != null)
+            glow.SetActive(false);
+
+        handManager.hoveredCard = null;
+
+        transform.localScale = Vector3.one;
+
+        //transform.localRotation = Quaternion.identity;
+        
+        isReturning = true;
+
+        canvasGroup.blocksRaycasts = true;
+        handManager.UpdateCardsList();
+        
+    }
+
+    void EndDragCleanup()
+    {
+        handManager.draggedCard = null;
+        handManager.hoveredCard = null;
+
+        canvasGroup.blocksRaycasts = true;
+
+        isDragging = false;
+        hasLeftHand = false;
+    }
+
+    public bool IsReturning()
+    {
+        return isReturning;
+    }
+
+    bool HasEnoughMana()
+    {
+        if (manaManager == null) return true;
+
+        CardDisplay display = GetComponent<CardDisplay>();
+        if (display == null || display.cardData == null) return true;
+
+        return manaManager.HasEnoughMana(display.cardData.cardMana);
     }
 }

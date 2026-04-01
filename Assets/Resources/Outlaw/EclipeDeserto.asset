@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Eclipse no Deserto
   cardType: 1
-  cardMana: 0
+  cardMana: 2
   textFront: "Recua 3. Invis\xEDvel por 1 turno, pr\xF3ximo dano x3. Finaliza seu
     turno  "
   textBack: "Invis\xEDvel por 1 turno, pr\xF3ximo dano x3. Finaliza seu turno  "

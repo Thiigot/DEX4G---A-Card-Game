@@ -6,6 +6,7 @@ public class HandManager : MonoBehaviour
     [Header("Card Prefab")]
     public List<Transform> cards = new List<Transform>();
     public GameObject cardPrefab;
+    private ManaManagerSTS manaManager;
 
     [Header("Layout")]
     public float spacing = 170f;
@@ -25,10 +26,16 @@ public class HandManager : MonoBehaviour
 
     [Header("Limits")]
     public int maxHandSize = 10;
+
+    void Start()
+    {
+        manaManager = FindAnyObjectByType<ManaManagerSTS>();
+    }
     void LateUpdate()
     {
         UpdateCardsList();
         AnimateHand();
+        UpdateManaVisuals();
     }
 
     public void UpdateCardsList()
@@ -119,6 +126,22 @@ public class HandManager : MonoBehaviour
             CardMovement move = card.GetComponent<CardMovement>();
             if (move != null)
                 move.TriggerShake();
+        }
+    }
+
+    void UpdateManaVisuals()
+    {
+        if (manaManager == null) return;
+
+        foreach (Transform card in transform)
+        {
+            CardDisplay display = card.GetComponent<CardDisplay>();
+            if (display == null) continue;
+
+            int cost = display.cardData.cardMana;
+            bool canPlay = manaManager.currentMana >= cost;
+
+            display.UpdateManaVisual(canPlay);
         }
     }
 }
