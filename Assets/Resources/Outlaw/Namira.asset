@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 2
   textFront: 'Recua 3. Concentra 2 turnos, executa o alvo  '
   textBack: 'Concentra 2 turnos, executa o alvo  '
+  requiresTarget: 1
   cardClass: 1

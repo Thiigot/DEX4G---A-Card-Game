@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: "Atira no inimigo da frontline, recua 2 posi\xE7\xF5es  "
   textBack: "puxa o alvo 2 posi\xE7\xF5es para frente  "
+  requiresTarget: 1
   cardClass: 1

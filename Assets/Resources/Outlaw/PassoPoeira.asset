@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: "Recua 1. Se inimigo est\xE1 sangrando, fica furtivo e +Cr\xEDtico  "
   textBack: "Avan\xE7a 1. Se inimigo est\xE1 marcado, Ataca e +Velocidade  "
+  requiresTarget: 1
   cardClass: 1

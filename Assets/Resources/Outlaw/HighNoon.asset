@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 2
   textFront: 'Zera a vida de ambos, ganha o duelo quem possuir menos sangramento  '
   textBack: "Zera a vida de ambos, ganha o duelo quem possuir mais cr\xEDtico   "
+  requiresTarget: 1
   cardClass: 1

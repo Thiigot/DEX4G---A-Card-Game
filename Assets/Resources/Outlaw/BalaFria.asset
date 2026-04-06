@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 2
   textFront: 'Dobra sangramento   '
   textBack: 'Dobra Marcado  '
+  requiresTarget: 1
   cardClass: 1

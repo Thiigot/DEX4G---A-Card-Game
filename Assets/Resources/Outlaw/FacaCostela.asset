@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: 'Sangramento pesado por 3 turnos  '
   textBack: "Avan\xE7a 2 e aplica sangramento 2x  "
+  requiresTarget: 1
   cardClass: 1

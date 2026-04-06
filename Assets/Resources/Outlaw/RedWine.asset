@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 3
   textFront: 'Todo sangramento explode de uma vez  '
   textBack: 'Todo sangramento explode de uma vez  '
+  requiresTarget: 1
   cardClass: 1

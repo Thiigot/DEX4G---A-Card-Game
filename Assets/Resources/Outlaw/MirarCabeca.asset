@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: 'Alvo fica Marcado 2x  '
   textBack: 'Marca 2 alvos 1x  '
+  requiresTarget: 1
   cardClass: 1

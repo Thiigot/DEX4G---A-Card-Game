@@ -236,6 +236,7 @@ public class CardMovement : MonoBehaviour,
                 return;
             }
 
+            // SEM MANA
             int cost = display.cardData.cardMana;
             if (!manaManager.HasEnoughMana(cost))
             {
@@ -247,18 +248,56 @@ public class CardMovement : MonoBehaviour,
                 return;
             }
 
-            // ✅ JOGOU COM SUCESSO
-            manaManager.SpendMana(cost);
+            // 🔥 CARTA COM TARGET
+            if (display.cardData.requiresTarget)
+            {
+                if (TargetManager.Instance == null)
+                {
+                    Debug.LogError("TargetManager não encontrado na cena!");
+                    ReturnToHandSafe();
+                    EndDragCleanup();
+                    return;
+                }
 
-            if (deckManager != null)
-                deckManager.DiscardCard(gameObject);
+                transform.SetParent(playArea.transform, true);
+                rectTransform.anchoredPosition = Vector2.zero;
+
+                // 👉 inicia targeting
+                TargetManager.Instance.StartTargeting((slot) =>
+                {
+                    if (slot.currentUnit != null)
+                    {
+                        slot.currentUnit.TakeDamage(3); // exemplo
+                    }
+
+                    manaManager.SpendMana(cost);
+
+                    if (deckManager != null)
+                        deckManager.DiscardCard(gameObject);
+                });
+
+                EndDragCleanup(); 
+                return;
+            }
+            else
+            {
+                // 🔥 CARTA SEM TARGET (resolve instantaneamente)
+                manaManager.SpendMana(cost);
+
+                if (deckManager != null)
+                    deckManager.DiscardCard(gameObject);
+
+                EndDragCleanup();
+                return;
+            }
+
         }
         else
         {
             // ❌ NÃO JOGOU
             ReturnToHandSafe();
+            EndDragCleanup();
         }
-        EndDragCleanup();
     }
     #endregion
 

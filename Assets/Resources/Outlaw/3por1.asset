@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: '3 ataques, cada hit com Sangramento progressivo  '
   textBack: "3 ataques, cada hit com Cr\xEDtico progressivo  "
+  requiresTarget: 1
   cardClass: 1

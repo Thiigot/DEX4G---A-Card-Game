@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: "Gera cr\xEDtico para cada alvo sangrando  "
   textBack: 'Gera sangramento para cada alvo marcado  '
+  requiresTarget: 1
   cardClass: 1

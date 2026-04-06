@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 2
   textFront: 'Compra 2 e Recua 2 automaticamente  '
   textBack: "2 posi\xE7\xF5es para Frente e aplica Fraqueza.   "
+  requiresTarget: 1
   cardClass: 1

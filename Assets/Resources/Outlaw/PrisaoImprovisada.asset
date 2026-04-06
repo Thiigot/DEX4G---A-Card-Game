@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 2
   textFront: 'Stun. Se sangrando, ganha um turno extra.  '
   textBack: 'Stun, Se Marcado ganha turno extra  '
+  requiresTarget: 1
   cardClass: 1

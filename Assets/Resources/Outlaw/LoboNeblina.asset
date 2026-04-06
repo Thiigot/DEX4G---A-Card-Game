@@ -18,4 +18,5 @@ MonoBehaviour:
   textFront: "o pr\xF3ximo bleed causado duplica.  "
   textBack: "Fica invis\xEDvel 1 turno. Pr\xF3ximo ataque: avan\xE7a 3 e Cr\xEDtico
     garantido.  "
+  requiresTarget: 1
   cardClass: 1

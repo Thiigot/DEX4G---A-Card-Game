@@ -12,7 +12,8 @@ namespace CardData
         public int cardMana;
         public string textFront;
         public string textBack;
-        public CardClass cardClass; 
+        public bool requiresTarget;
+        public CardClass cardClass;
     }
     public enum CardType
     {
