@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardMovement : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler,
@@ -24,6 +25,7 @@ public class CardMovement : MonoBehaviour,
     private float rotationSpeed = 15f;
     private bool isReturning = false;
     private float returnSpeed = 15f;
+    private bool isWaitingForTarget = false;
 
     [Header("Hover")]
     public float hoverScale = 1.2f;
@@ -155,7 +157,7 @@ public class CardMovement : MonoBehaviour,
     #region HOVER
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isDragging || handManager.draggedCard != null) return;
+        if (isDragging || handManager.draggedCard != null || isWaitingForTarget || PlayArea.HasCardInPlay) return;
 
         isHovering = true;
 
@@ -172,7 +174,7 @@ public class CardMovement : MonoBehaviour,
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isDragging || handManager.draggedCard != null) return;
+        if (isDragging || handManager.draggedCard != null || isWaitingForTarget || PlayArea.HasCardInPlay) return;
 
         isHovering = false;
 
@@ -187,8 +189,13 @@ public class CardMovement : MonoBehaviour,
     #region DRAG
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (PlayArea.HasCardInPlay) return;
+
         isDragging = true;
         isHovering = false;
+
+        if (glow != null)
+            glow.SetActive(false);
 
         handManager.draggedCard = this;
         handManager.hoveredCard = null;
@@ -236,13 +243,16 @@ public class CardMovement : MonoBehaviour,
                 return;
             }
 
-            // SEM MANA
             int cost = display.cardData.cardMana;
+
+            // ❌ SEM MANA
             if (!manaManager.HasEnoughMana(cost))
             {
                 ReturnToHandSafe();
+
                 if (warningUI != null)
                     warningUI.Show("Not enough mana");
+
                 handManager.ShakeHand();
                 EndDragCleanup();
                 return;
@@ -259,29 +269,66 @@ public class CardMovement : MonoBehaviour,
                     return;
                 }
 
-                transform.SetParent(playArea.transform, true);
+                // estado global
+                PlayArea.HasCardInPlay = true;
+
+                // move pra playarea
+                transform.SetParent(playArea.transform, false);
+                handManager.UpdateCardsList();
+
+                RectTransform parentRect = playArea.GetComponent<RectTransform>();
+
+                rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
                 rectTransform.anchoredPosition = Vector2.zero;
+                rectTransform.localScale = Vector3.one;
+                rectTransform.localRotation = Quaternion.identity;
 
-                // 👉 inicia targeting
-                TargetManager.Instance.StartTargeting((slot) =>
-                {
-                    if (slot.currentUnit != null)
+                // 🔥 força atualizar layout antes de posicionar
+                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRect);
+
+                // 🔥 GASTA MANA AQUI (UMA VEZ)
+
+
+                TargetManager.Instance.StartTargeting(
+
+                    // 🎯 AO SELECIONAR
+                    (slot) =>
                     {
-                        slot.currentUnit.TakeDamage(3); // exemplo
+                        isWaitingForTarget = false;
+                        PlayArea.HasCardInPlay = false;
+
+                        if (slot.currentUnit != null)
+                        {
+                            manaManager.SpendMana(cost);
+                            Debug.Log("CARD EFFECT: " + display.cardData.textFront);
+                        }
+
+                        if (deckManager != null)
+                            deckManager.DiscardCard(gameObject);
+                    },
+
+                    // ❌ AO CANCELAR
+                    () =>
+                    {
+                        Debug.Log("Cancelou a carta");
+
+                        isWaitingForTarget = false;
+                        PlayArea.HasCardInPlay = false;
+
+                        ReturnToHandSafe();
                     }
+                );
 
-                    manaManager.SpendMana(cost);
-
-                    if (deckManager != null)
-                        deckManager.DiscardCard(gameObject);
-                });
-
-                EndDragCleanup(); 
+                EndDragCleanup();
                 return;
             }
             else
             {
-                // 🔥 CARTA SEM TARGET (resolve instantaneamente)
+                // 🔥 SEM TARGET
+
                 manaManager.SpendMana(cost);
 
                 if (deckManager != null)
@@ -290,11 +337,9 @@ public class CardMovement : MonoBehaviour,
                 EndDragCleanup();
                 return;
             }
-
         }
         else
         {
-            // ❌ NÃO JOGOU
             ReturnToHandSafe();
             EndDragCleanup();
         }
@@ -320,7 +365,9 @@ public class CardMovement : MonoBehaviour,
         handManager.hoveredCard = null;
 
         transform.localScale = Vector3.one;
-
+        PlayArea.HasCardInPlay = false;
+        isWaitingForTarget = false;
+        canvasGroup.interactable = true;
         //transform.localRotation = Quaternion.identity;
         
         isReturning = true;

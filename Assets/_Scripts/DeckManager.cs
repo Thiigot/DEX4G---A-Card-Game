@@ -52,6 +52,13 @@ public class DeckManager : MonoBehaviour
 
     public void DrawCard()
     {
+        if (TargetManager.isTargeting)
+        {
+            if (warningUI != null)
+                warningUI.Show("Select Target!");
+            handManager.ShakeHand();
+            return;
+        }
 
         if (handManager.transform.childCount >= handManager.maxHandSize)
         {
@@ -94,7 +101,7 @@ public class DeckManager : MonoBehaviour
         UpdateUI();
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         if (deckCountText != null)
             deckCountText.text = $"Cards in Deck: {deck.Count}";

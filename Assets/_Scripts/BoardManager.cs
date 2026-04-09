@@ -5,6 +5,8 @@ public class BoardManager : MonoBehaviour
 {
     public List<BoardSlot> playerSlots;
     public List<BoardSlot> enemySlots;
+    public List<BoardSlot> allSlots;
+
 
     public List<Unit> GetAllEnemies(bool playerSide)
     {

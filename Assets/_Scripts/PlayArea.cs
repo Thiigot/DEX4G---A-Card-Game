@@ -8,6 +8,8 @@ public class PlayArea : MonoBehaviour
     private HandManager handManager;
     private Canvas canvas;
 
+    public static bool HasCardInPlay = false;
+
     void Awake()
     {
         Instance = this;

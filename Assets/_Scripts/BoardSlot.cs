@@ -1,11 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class BoardSlot : MonoBehaviour, IPointerClickHandler
+public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isEnemy;
     public Unit currentUnit;
+    public HandManager handManager;
 
+    [Header("Hover Slot")]
+    public Image slotImage;
+    public float normalAlpha = 0.2f;
+    public float hoverAlpha = 0.5f;
+
+    private void Start()
+    {
+        slotImage = GetComponent<Image>();
+        //currentUnit = GetComponent<Unit>();
+    }
     public bool IsEmpty()
     {
         return currentUnit == null;
@@ -36,11 +48,55 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler
 
         if (TargetManager.Instance.IsTargeting())
         {
-            // s� aceita se tiver inimigo
+            // só aceita se tiver inimigo
             if (currentUnit != null)
             {
                 TargetManager.Instance.SelectTarget(this);
             }
         }
     }
+
+
+    #region HOVER
+    public void SetHover(bool value)
+    {
+
+        if (!TargetManager.isTargeting)
+            value = false;
+
+        if (slotImage == null) return;
+
+        Color c = slotImage.color;
+        c.a = value ? hoverAlpha : normalAlpha;
+        slotImage.color = c;
+
+        if (currentUnit != null)
+        {
+            currentUnit.SetFlash(value);
+        }
+            
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (TargetManager.isTargeting) return;
+        if (handManager != null && handManager.draggedCard != null) return; 
+
+        if (currentUnit != null)
+        {
+            UnitInfoUI.Instance.Show(currentUnit, transform.position);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (TargetManager.isTargeting) return;
+        if (handManager != null && handManager.draggedCard != null) return;
+        if (currentUnit != null)
+        {
+            UnitInfoUI.Instance.Hide();
+        }
+    }
+
+    #endregion
 }
