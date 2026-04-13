@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Saque r\xE1pido"
   cardType: 1
-  cardMana: 2
+  cardMana: 1
   textFront: 'Compra 2 e Recua 2 automaticamente  '
   textBack: "2 posi\xE7\xF5es para Frente e aplica Fraqueza.   "
   requiresTarget: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Circuito de Foco  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: '+Atitude, Recua 2  '
   textBack: "+Esquiva, Avan\xE7a 2  "
+  requiresTarget: 1
   cardClass: 3

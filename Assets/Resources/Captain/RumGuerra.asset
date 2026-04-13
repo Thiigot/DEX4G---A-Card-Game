@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Rum de Guerra  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Cura a si mesma + Prote\xE7\xE3o 2 turnos  "
   textBack: "Cura baixa e avan\xE7a 2  "
+  requiresTarget: 0
   cardClass: 2

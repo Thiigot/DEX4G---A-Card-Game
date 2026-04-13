@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Ningu\xE9m Passa!  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Taunt 2 turnos  '
   textBack: "Avan\xE7a 3 e bloqueia apenas 1 ataque  "
+  requiresTarget: 0
   cardClass: 2

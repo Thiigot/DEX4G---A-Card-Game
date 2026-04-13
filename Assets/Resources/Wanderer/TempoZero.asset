@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Tempo Zero
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Se for primeiro a agir no turno: pr\xF3ximo ataque +50% dano.  "
   textBack: "Se for primeiro a agir no turno: A\xE7\xE3o Extra.  "
+  requiresTarget: 0
   cardClass: 3

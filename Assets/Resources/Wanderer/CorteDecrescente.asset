@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CorteDecrescente
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Corte Decrescente
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: Cria 2 ZEN BLADE no deck. Ataca e Compra 1
   textBack: "Ataca e Avan\xE7a 2. Cria 2 ZEN BLADE no deck  "
+  requiresTarget: 1
   cardClass: 3

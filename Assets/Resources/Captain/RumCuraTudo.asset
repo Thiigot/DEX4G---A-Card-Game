@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Rum cura tudo  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Cura Aliados. 10% de chance de aplicar Fraqueza  '
   textBack: 'Cura Aliados. Chance de falhar  '
+  requiresTarget: 1
   cardClass: 2

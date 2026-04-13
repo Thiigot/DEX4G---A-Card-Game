@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BarragemNaval
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Barragem naval
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Disparo na frontline. Se fatal, dano se repete na Backline (Dano 2X)  '
   textBack: 
+  requiresTarget: 1
   cardClass: 2

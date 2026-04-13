@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayArea : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class PlayArea : MonoBehaviour
 
     private HandManager handManager;
     private Canvas canvas;
+    private Image img;
 
     public static bool HasCardInPlay = false;
 
@@ -18,9 +20,8 @@ public class PlayArea : MonoBehaviour
     {
         handManager = FindAnyObjectByType<HandManager>();
         canvas = GetComponentInParent<Canvas>();
-
-        if (highlight != null)
-            highlight.SetActive(false);
+        img = highlight.GetComponent<Image>();
+        img.color = new Color(1, 1, 1, 0);
     }
 
     void Update()
@@ -39,14 +40,11 @@ public class PlayArea : MonoBehaviour
                 null
             );
 
-            // 🔥 sempre visível durante drag
-            highlight.SetActive(true);
+            img.color = new Color(1, 1, 1, 0.2f);
 
-            // 💡 opcional: feedback visual
-            var img = highlight.GetComponent<UnityEngine.UI.Image>();
             if (img != null)
             {
-                float targetAlpha = inside ? 0.5f : 0.2f;
+                float targetAlpha = inside ? 0.8f : 0.2f;
 
                 Color c = img.color;
                 c.a = Mathf.Lerp(c.a, targetAlpha, Time.deltaTime * 10f);
@@ -55,7 +53,7 @@ public class PlayArea : MonoBehaviour
         }
         else
         {
-            highlight.SetActive(false);
+            img.color = new Color(1, 1, 1, 0);
         }
     }
 

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: TempesdadeAco
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Tempestade de A\xE7o"
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Todos os inimigos recebem dano  '
   textBack: "Ataca e avan\xE7a 3. +Prote\xE7\xE3o  "
+  requiresTarget: 0
   cardClass: 2

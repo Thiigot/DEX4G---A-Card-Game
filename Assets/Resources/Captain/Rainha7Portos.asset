@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Rainha dos 7 portos  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: Imune a Debuff por 2 turnos. +1 Energia
   textBack: "Avan\xE7a 3. +Prote\xE7\xE3o  "
+  requiresTarget: 0
   cardClass: 2

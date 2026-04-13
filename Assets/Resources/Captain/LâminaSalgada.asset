@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "L\xE2mina Salgada  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Cr\xEDtico garantido se provocando algu\xE9m  "
   textBack: "+Crit e avan\xE7a 2  "
+  requiresTarget: 1
   cardClass: 2

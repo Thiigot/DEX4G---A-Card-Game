@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: JogarPelaBorda
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Jogar Pela Borda!  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Ataca e empurra o inimigo 3. Chance de Stun  '
   textBack: "Ataca e avan\xE7a 3. +Revidar  "
+  requiresTarget: 1
   cardClass: 2

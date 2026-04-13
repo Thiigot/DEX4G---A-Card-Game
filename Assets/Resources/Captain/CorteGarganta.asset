@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Corte na Garganta  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "70% cr\xEDtico se estiver provocando  "
   textBack: "20% cr\xEDtico e avan\xE7a 2"
+  requiresTarget: 1
   cardClass: 2

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: High Noon
   cardType: 1
-  cardMana: 2
+  cardMana: 1
   textFront: 'Zera a vida de ambos, ganha o duelo quem possuir menos sangramento  '
   textBack: "Zera a vida de ambos, ganha o duelo quem possuir mais cr\xEDtico   "
   requiresTarget: 1

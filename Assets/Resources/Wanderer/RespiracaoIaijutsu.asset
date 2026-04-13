@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Respira\xE7\xE3o Iaijutsu  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Usa a carta do topo do deck. Se for Ataque, repete  '
   textBack: 'Usa a carta do topo do deck. Se for Ataque, repete  '
+  requiresTarget: 0
   cardClass: 3

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CardData;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HandManager : MonoBehaviour
@@ -27,6 +29,12 @@ public class HandManager : MonoBehaviour
     [Header("Limits")]
     public int maxHandSize = 10;
 
+    public Unit owner;
+
+    public void SetOwner(Unit unit)
+    {
+        owner = unit;
+    }
     void Start()
     {
         manaManager = FindAnyObjectByType<ManaManagerSTS>();
@@ -44,7 +52,9 @@ public class HandManager : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<CardMovement>() != null)
+            CardMovement cm = child.GetComponent<CardMovement>();
+
+            if (cm != null && child.parent == transform) // 🔥 garantia extra
                 cards.Add(child);
         }
     }
@@ -131,17 +141,122 @@ public class HandManager : MonoBehaviour
 
     void UpdateManaVisuals()
     {
+        if (owner == null) return;
         if (manaManager == null) return;
 
         foreach (Transform card in transform)
         {
             CardDisplay display = card.GetComponent<CardDisplay>();
             if (display == null) continue;
-
+            if (display.cardData == null) continue;
             int cost = display.cardData.cardMana;
             bool canPlay = manaManager.currentMana >= cost;
 
             display.UpdateManaVisual(canPlay);
         }
+    }
+
+    public void ClearHandVisual()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void ShowHand(List<Card> cards)
+    {
+        ClearHandVisual();
+
+        foreach (var card in cards)
+        {
+            if (card == null)
+            {
+                continue;
+            }
+            GameObject obj = Instantiate(cardPrefab, transform);
+
+            // posição inicial
+            obj.transform.localPosition = Vector3.zero;
+
+            // display
+            CardDisplay display = obj.GetComponent<CardDisplay>();
+            display.cardData = card;
+            display.UpdateCardDisplay();
+
+            // movimento
+            CardMovement move = obj.GetComponent<CardMovement>();
+            move.SetHandManager(this);
+        }
+    }
+
+    public IEnumerator AnimateDrawCard(Card card, Transform deckPoint)
+    {
+        // 🔹 1. Instancia na mão (invisível) para calcular posição final
+        GameObject obj = Instantiate(cardPrefab, transform);
+        obj.SetActive(false);
+
+        RectTransform rect = obj.GetComponent<RectTransform>();
+
+        // setup visual
+        CardDisplay display = obj.GetComponent<CardDisplay>();
+        display.cardData = card;
+        display.UpdateCardDisplay();
+
+        CardMovement move = obj.GetComponent<CardMovement>();
+        move.SetHandManager(this);
+
+        // 🔹 2. Força layout atualizar
+        Canvas.ForceUpdateCanvases();
+
+        // 🔹 3. Pega posição FINAL REAL
+        Vector3 targetPos = rect.position;
+
+        // 🔹 4. Move carta para o DECK (fora da mão)
+        obj.transform.SetParent(transform.root, true);
+        rect.position = deckPoint.position;
+        rect.localScale = Vector3.one * 0.6f;
+
+        obj.SetActive(true);
+
+        Vector3 start = deckPoint.position;
+
+        float duration = 0.35f;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / duration;
+
+            float curve = Mathf.SmoothStep(0, 1, t);
+
+            // 🔥 movimento com leve arco
+            Vector3 mid = (start + targetPos) / 2 + Vector3.up * 100f;
+
+            rect.position =
+                Mathf.Pow(1 - curve, 2) * start +
+                2 * (1 - curve) * curve * mid +
+                Mathf.Pow(curve, 2) * targetPos;
+
+            rect.localScale = Vector3.Lerp(Vector3.one * 0.6f, Vector3.one, curve);
+
+            yield return null;
+        }
+
+        // 🔹 5. Entra na mão (sem teleport)
+        obj.transform.SetParent(transform, true);
+    }
+
+    public GameObject GetCardObject(Card card)
+    {
+        foreach (Transform child in transform)
+        {
+            CardDisplay display = child.GetComponent<CardDisplay>();
+
+            if (display != null && display.cardData == card)
+                return child.gameObject;
+        }
+
+        return null;
     }
 }

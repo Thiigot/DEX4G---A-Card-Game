@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Levar pro Fundo
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "N\xE3o Sofre dano e n\xE3o pode morrer por 5 turnos. Morre instantaneamente
     quando o efeito acabar.  "
   textBack: "Se morrer no pr\xF3ximo turno, mata o atacante junto  "
+  requiresTarget: 0
   cardClass: 2

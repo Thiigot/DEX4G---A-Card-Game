@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ZenBlade
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Zen Blade
-  cardType: 00000000
+  cardType: 0
   cardMana: 0
   textFront: "Ao ser comprada, ataca um inimigo aleat\xF3rio, e compre 1. Consuma  "
   textBack: "Ao ser comprada, ataca um inimigo aleat\xF3rio, e compre 1. Consuma  "
+  requiresTarget: 0
   cardClass: 3

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Ordens da Capit\xE3  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "+Prote\xE7\xE3o para Equipe  "
   textBack: '+Dano para Equipe  '
+  requiresTarget: 1
   cardClass: 2

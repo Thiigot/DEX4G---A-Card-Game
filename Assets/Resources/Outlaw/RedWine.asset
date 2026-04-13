@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Red Wine Killshot  '
   cardType: 0
-  cardMana: 3
+  cardMana: 1
   textFront: 'Todo sangramento explode de uma vez  '
   textBack: 'Todo sangramento explode de uma vez  '
   requiresTarget: 1

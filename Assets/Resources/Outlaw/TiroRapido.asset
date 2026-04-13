@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Tiro R\xE1pido"
   cardType: 0
-  cardMana: 2
+  cardMana: 1
   textFront: 'Ataca 2x, sangramento  '
   textBack: 'Marca e ataca  '
   requiresTarget: 1

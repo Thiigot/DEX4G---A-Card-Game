@@ -19,3 +19,4 @@ MonoBehaviour:
   speed: 5
   baseMana: 4
   critChance: 5
+  isPlayer: 1

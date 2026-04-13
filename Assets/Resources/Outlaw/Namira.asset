@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Na Mira  '
   cardType: 0
-  cardMana: 2
+  cardMana: 1
   textFront: 'Recua 3. Concentra 2 turnos, executa o alvo  '
   textBack: 'Concentra 2 turnos, executa o alvo  '
   requiresTarget: 1

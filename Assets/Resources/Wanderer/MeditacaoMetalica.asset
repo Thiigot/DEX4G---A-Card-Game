@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Medita\xE7\xE3o Metallica"
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Compre 1. Se o custo for \xEDmpar: +10% Cr\xEDtico, se o custo for
     par: +10% Esquiva  "
   textBack: 'Compre 2.   '
+  requiresTarget: 0
   cardClass: 3

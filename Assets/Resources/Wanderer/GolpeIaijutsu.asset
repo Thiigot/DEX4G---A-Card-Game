@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: GolpeIaijutsu
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Golpe Iaijutsu
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Dano leve \u2192 cria 1 ZEN BLADE. Se acertar cr\xEDtico, cria +1  "
   textBack: "Cria 2 ZEN BLADE. +1 Energia pr\xF3ximo turno  "
+  requiresTarget: 0
   cardClass: 3

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: DashReflexivo
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Dash Reflexivo  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Recua 2, causa dano. Se fatal, compra 1 e avan\xE7a 2.  "
   textBack: "Avan\xE7a 2, causa dano. Se fatal, compra 1 e recua 2.  "
+  requiresTarget: 0
   cardClass: 3

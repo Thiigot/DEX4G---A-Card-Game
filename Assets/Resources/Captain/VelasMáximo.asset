@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Velas ao M\xE1ximo  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Ganha 2 a\xE7\xF5es se estiver em posi\xE7\xE3o 1  "
   textBack: " Avan\xE7a 3, +Velocidade  "
+  requiresTarget: 1
   cardClass: 2

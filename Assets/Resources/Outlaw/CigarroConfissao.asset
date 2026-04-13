@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: 'Cura por inimigo sangrando  '
   textBack: 'Cura por inimigo marcado  '
+  requiresTarget: 0
   cardClass: 1

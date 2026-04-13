@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CortarAtirar
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Cortar e Atirar  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Ataca com a faca (dano alto, alvo \xFAnico). Recua 3 e embaralha essa
     carta no seu deck.  "
   textBack: "Ataca com a pistola (dano baixo, v\xE1rios alvos). Avan\xE7a 3 e embaralha
     essa carta no seu deck.  "
+  requiresTarget: 0
   cardClass: 2

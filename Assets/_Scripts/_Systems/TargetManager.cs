@@ -11,9 +11,13 @@ public class TargetManager : MonoBehaviour
     public static bool isTargeting = false;
     [SerializeField] private HandManager handManager;
 
+    [Header("TargetUI")]
+    [SerializeField] private GameObject targetTextUI; // UI abaixo da carta
+
     void Awake()
     {
         Instance = this;
+        targetTextUI.SetActive(false);
     }
 
     void Update()
@@ -44,6 +48,7 @@ public class TargetManager : MonoBehaviour
         isTargeting = true;
         onTargetSelected = onSelected;
         onCancel = onCancelCallback;
+        targetTextUI.SetActive(true);
     }
 
     public void SelectTarget(BoardSlot slot)
@@ -68,7 +73,7 @@ public class TargetManager : MonoBehaviour
 
         onTargetSelected = null;
         onCancel = null;
-
+        targetTextUI.SetActive(false);
         // 🔥 libera o jogo novamente
         PlayArea.HasCardInPlay = false;
     }

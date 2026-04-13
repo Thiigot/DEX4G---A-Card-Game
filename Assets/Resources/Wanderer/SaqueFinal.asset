@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: SaqueFinal
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Saque Final  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: "Descarte toda a sua m\xE3o, cause dano em um inimigo aleat\xF3rio.
     Repete igual o n\xFAmero de cartas descartadas. Finalize seu turno  "
   textBack: "Descarte toda a sua m\xE3o, cause dano em um inimigo aleat\xF3rio. Repete
     igual o n\xFAmero de cartas descartadas. Finalize seu turno  "
+  requiresTarget: 1
   cardClass: 3

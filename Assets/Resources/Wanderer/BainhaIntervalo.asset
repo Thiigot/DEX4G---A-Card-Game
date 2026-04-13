@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Bainha e Intervalo  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Compra 2. Se comprar uma carta STANCE, reduz o custo a 0  '
   textBack: 'Compra 2. Se comprar uma carta ATAQUE, reduz o custo a 0  '
+  requiresTarget: 0
   cardClass: 3

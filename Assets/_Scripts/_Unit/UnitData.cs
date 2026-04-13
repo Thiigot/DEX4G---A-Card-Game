@@ -12,4 +12,5 @@ public class UnitData : ScriptableObject
     public int speed;
     public int baseMana;
     public float critChance;
+    public bool isPlayer;
 }

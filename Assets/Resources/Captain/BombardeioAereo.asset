@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BombardeioAereo
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Bombardeio a\xE9reo  "
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Ataca TODOS os jogadores. Chance de Atordoar inimigos  '
   textBack: 'Ataca inimigo 4. Chance de Atordoar  '
+  requiresTarget: 0
   cardClass: 2

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Camaradas Primeiro!  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Taunt 1 + Prote\xE7\xE3o  "
   textBack: "Prote\xE7\xE3o para Equipe  "
+  requiresTarget: 1
   cardClass: 2

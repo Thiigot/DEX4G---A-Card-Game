@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Medita\xE7\xE3o Cruel"
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Dobra todas as ZEN BLADE no deck  '
   textBack: 'Converte todas ZEN BLADE em Cura  '
+  requiresTarget: 1
   cardClass: 3

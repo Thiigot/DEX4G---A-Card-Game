@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CorteCrescente
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Corte Crescente  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Ataca e recua 2. Cria 2 ZEN BLADE no deck  '
   textBack: "Ataca e Avan\xE7a 2. Cria 2 ZEN BLADE no deck  "
+  requiresTarget: 0
   cardClass: 3

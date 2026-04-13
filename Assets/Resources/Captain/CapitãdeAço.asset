@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Capit\xE3 de A\xE7o  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Imune a cr\xEDtico por 2 turno. -Prote\xE7\xE3o  "
   textBack: "Avan\xE7a. Taunt 1, Marcada 1  "
+  requiresTarget: 1
   cardClass: 2

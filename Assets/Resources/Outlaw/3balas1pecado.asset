@@ -18,4 +18,5 @@ MonoBehaviour:
   textFront: "3 tiros aleat\xF3rios em linha de frente inimiga, dano excedente a
     backline  "
   textBack: "3 tiros na backline inimiga ignorando prote\xE7\xE3o  "
+  requiresTarget: 0
   cardClass: 1

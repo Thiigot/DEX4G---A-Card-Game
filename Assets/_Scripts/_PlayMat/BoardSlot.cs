@@ -13,6 +13,12 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     public float normalAlpha = 0.2f;
     public float hoverAlpha = 0.5f;
 
+    private SpriteRenderer sr;
+
+    void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();    
+    }
     private void Start()
     {
         slotImage = GetComponent<Image>();
@@ -96,6 +102,16 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         {
             UnitInfoUI.Instance.Hide();
         }
+    }
+
+    public void OnHoverEnter()
+    {
+        sr.color = Color.yellow;
+    }
+
+    public void OnHoverExit()
+    {
+        sr.color = Color.white;
     }
 
     #endregion

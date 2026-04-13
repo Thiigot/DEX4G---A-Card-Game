@@ -22,13 +22,14 @@ public class CardDisplay : MonoBehaviour
     public Image[] typeImage;
     public Color manaColor;
     public Color noManaColor;
-    void Start()
-    {
-        UpdateCardDisplay();
-    }
 
     public void UpdateCardDisplay()
     {
+        if (cardData == null)
+        {
+            Debug.LogError("cardData NULL em " + gameObject.name);
+            return;
+        }
         //CardColor
         Color c = colorType[(int)cardData.cardClass];
         c.a = 1f;
@@ -46,7 +47,6 @@ public class CardDisplay : MonoBehaviour
 
     public void UpdateManaVisual(bool canPlay)
     {
-
         manaText.color = canPlay ? manaColor : noManaColor;
     }
 }

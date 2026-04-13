@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Desarme Selvagem  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: 'Aplica Fraqueza em um inimigo  '
   textBack: "Avan\xE7a 3. +Revidar  "
+  requiresTarget: 1
   cardClass: 2

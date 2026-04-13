@@ -22,7 +22,7 @@ public class UnitInfoUI : MonoBehaviour
     {
         panel.SetActive(true);
 
-        nameText.text = unit.cardName;
+        nameText.text = unit.unitClass;
         hpText.text = $"HP: {unit.currentHP} / {unit.maxHP}";
         atkText.text = $"ATK: {unit.attack}";
         manaText.text = $"MANA: {unit.currentMana} / {unit.maxMana}";

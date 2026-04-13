@@ -18,4 +18,5 @@ MonoBehaviour:
   textFront: "Ataca um inimigo aleat\xF3rio. Se fatal, transfere Sangramento para
     outro inimigo  "
   textBack: "Ataca um inimigo aleat\xF3rio. Se fatal, repete  "
+  requiresTarget: 0
   cardClass: 1

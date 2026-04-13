@@ -17,4 +17,5 @@ MonoBehaviour:
   cardMana: 1
   textFront: "Se sofrer dano no pr\xF3ximo turno, Revidar com Sangramento garantido  "
   textBack: "Se sofrer dano no pr\xF3ximo turno, Revidar com cr\xEDtico garantido  "
+  requiresTarget: 0
   cardClass: 1

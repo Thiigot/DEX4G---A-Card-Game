@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BainhaInfinita
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Bainha Infinita  '
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Ataca e descarta X. Crie X ZEN BLADE no deck  '
   textBack: 'Ataca e descarta X. Crie X ZEN BLADE no deck  '
+  requiresTarget: 1
   cardClass: 3

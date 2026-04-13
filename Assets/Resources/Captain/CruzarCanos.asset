@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: 'Cruzar Canos  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Se dois inimigos atacarem ela no pr\xF3ximo turno, contra-ataca ambos  "
   textBack: "+Revidar e avan\xE7a 2  "
+  requiresTarget: 0
   cardClass: 2

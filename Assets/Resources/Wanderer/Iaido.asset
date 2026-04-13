@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Iaido
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Iaid\xF4"
-  cardType: 00000000
-  cardMana: 0
+  cardType: 0
+  cardMana: 1
   textFront: 'Ataque leve, cria 1 ZEN BLADE em seu deck para cada carta que comprou
     nesse turno. Recua 2  '
   textBack: "Ataque leve, cria 1 ZEN BLADE em seu deck para cada carta que comprou
     nesse turno. Avan\xE7a 2  "
+  requiresTarget: 1
   cardClass: 3

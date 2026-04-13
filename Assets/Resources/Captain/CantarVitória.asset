@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: "Cantar Vit\xF3ria  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: '+Revidar para Equipe  '
   textBack: '+Revidar por 2 turnos  '
+  requiresTarget: 0
   cardClass: 2

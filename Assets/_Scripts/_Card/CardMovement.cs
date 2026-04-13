@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -14,12 +15,13 @@ public class CardMovement : MonoBehaviour,
     private Vector2 dragOffset;
 
     [Header("GameObjects/Scripts")]
-    private HandManager handManager;
+    public HandManager handManager;
     private DeckManager deckManager;
     private PlayArea playArea;
     private WarningUI warningUI;
     private ManaManagerSTS manaManager;
 
+    [Header("Validation Values")]
     private bool isDragging;
     private bool isHovering;
     private float rotationSpeed = 15f;
@@ -35,19 +37,26 @@ public class CardMovement : MonoBehaviour,
     [Header("Hover Colors")]
     public Color normalHoverColor = new Color(0f,0.9f,1f,0.6f);
     public Color noManaHoverColor = new Color(1f, 0.2f, 0.2f, 0.6f); // vermelho claro
-    private UnityEngine.UI.Image glowImage;
+    private Image glowImage;
 
     [Header("DragMovement")]
     private bool hasLeftHand = false;
     private Transform originalParent;
     private int originalIndex;
-    
+    private bool isInPlayArea = false;
 
     [Header("ShakeEffect")]
     private bool isShaking = false;
     private float shakeTime = 0f;
     private float shakeDuration = 0.3f;
     private float shakeStrength = 10f;
+
+    [Header("CardPulsation")]
+    private float pulseSpeed = 6f;
+    private float pulseAmount = 0.03f;
+    private bool isPulsing = false;
+    private Vector3 baseScale;
+
 
     void Awake()
     {
@@ -62,10 +71,23 @@ public class CardMovement : MonoBehaviour,
         if (glow != null)
             glowImage = glow.GetComponent<UnityEngine.UI.Image>();
 
+        pulseSpeed = 6f;
+        pulseAmount = .03f;
+
     }
 
     void Update()
     {
+        if (isInPlayArea)
+        {
+            if (isPulsing)
+            {
+                float pulse = 1f + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;
+                transform.localScale = baseScale * pulse;
+            }
+
+            return;
+        }
         if (isDragging && !isShaking) return;
 
         Vector3 shakeOffset = Vector3.zero;
@@ -157,6 +179,7 @@ public class CardMovement : MonoBehaviour,
     #region HOVER
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (handManager == null) return;
         if (isDragging || handManager.draggedCard != null || isWaitingForTarget || PlayArea.HasCardInPlay) return;
 
         isHovering = true;
@@ -174,6 +197,7 @@ public class CardMovement : MonoBehaviour,
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (handManager == null) return;
         if (isDragging || handManager.draggedCard != null || isWaitingForTarget || PlayArea.HasCardInPlay) return;
 
         isHovering = false;
@@ -189,7 +213,7 @@ public class CardMovement : MonoBehaviour,
     #region DRAG
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (PlayArea.HasCardInPlay) return;
+        if (PlayArea.HasCardInPlay && !isInPlayArea) return;
 
         isDragging = true;
         isHovering = false;
@@ -233,6 +257,45 @@ public class CardMovement : MonoBehaviour,
 
         if (played)
         {
+            // estado global
+            PlayArea.HasCardInPlay = true;
+
+            #region POSIÇÃO NO PLAYAREA
+
+            // 🔥 salva posição MUNDIAL antes de mudar parent
+            Vector3 worldPos = rectTransform.position;
+
+            // move pro playArea SEM mexer na posição visual
+            RectTransform playRect = playArea.GetComponent<RectTransform>();
+            transform.SetParent(playRect, true); // 🔥 TRUE mantém posição global
+
+            // 🔥 agora converte posição para LOCAL do playArea
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                playRect,
+                RectTransformUtility.WorldToScreenPoint(null, worldPos),
+                null,
+                out localPoint
+            );
+
+            // aplica posição LOCAL correta
+            rectTransform.anchoredPosition = localPoint;
+
+            // reset leve
+            rectTransform.localScale = Vector3.one;
+            rectTransform.localRotation = Quaternion.identity;
+
+            // marca estado
+            isInPlayArea = true;
+
+            // 🔥 anima até o centro (ZERO)
+            StartCoroutine(AnimateToPlayArea(Vector2.zero));
+
+            // evita interferência do layout
+            SetBasePosition(Vector3.zero);
+
+            #endregion
+
             CardDisplay display = GetComponent<CardDisplay>();
 
             if (display == null || display.cardData == null || manaManager == null)
@@ -261,6 +324,7 @@ public class CardMovement : MonoBehaviour,
             // 🔥 CARTA COM TARGET
             if (display.cardData.requiresTarget)
             {
+                
                 if (TargetManager.Instance == null)
                 {
                     Debug.LogError("TargetManager não encontrado na cena!");
@@ -268,30 +332,9 @@ public class CardMovement : MonoBehaviour,
                     EndDragCleanup();
                     return;
                 }
-
-                // estado global
-                PlayArea.HasCardInPlay = true;
-
-                // move pra playarea
-                transform.SetParent(playArea.transform, false);
-                handManager.UpdateCardsList();
-
-                RectTransform parentRect = playArea.GetComponent<RectTransform>();
-
-                rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-                rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-                rectTransform.pivot = new Vector2(0.5f, 0.5f);
-
-                rectTransform.anchoredPosition = Vector2.zero;
-                rectTransform.localScale = Vector3.one;
-                rectTransform.localRotation = Quaternion.identity;
-
-                // 🔥 força atualizar layout antes de posicionar
-                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRect);
-
-                // 🔥 GASTA MANA AQUI (UMA VEZ)
-
-
+                //// 🔥 GARANTE atualização visual
+                Canvas.ForceUpdateCanvases();
+                StartPulse();
                 TargetManager.Instance.StartTargeting(
 
                     // 🎯 AO SELECIONAR
@@ -299,15 +342,10 @@ public class CardMovement : MonoBehaviour,
                     {
                         isWaitingForTarget = false;
                         PlayArea.HasCardInPlay = false;
-
-                        if (slot.currentUnit != null)
-                        {
-                            manaManager.SpendMana(cost);
-                            Debug.Log("CARD EFFECT: " + display.cardData.textFront);
-                        }
-
-                        if (deckManager != null)
-                            deckManager.DiscardCard(gameObject);
+                        manaManager.SpendMana(cost);
+                        Debug.Log("CARD EFFECT: " + display.cardData.textFront);
+                        handManager.owner.PlayCard(display.cardData, gameObject);
+                        StopPulse();
                     },
 
                     // ❌ AO CANCELAR
@@ -317,8 +355,9 @@ public class CardMovement : MonoBehaviour,
 
                         isWaitingForTarget = false;
                         PlayArea.HasCardInPlay = false;
-
+                        isInPlayArea= false;
                         ReturnToHandSafe();
+                        StopPulse();
                     }
                 );
 
@@ -328,12 +367,10 @@ public class CardMovement : MonoBehaviour,
             else
             {
                 // 🔥 SEM TARGET
-
                 manaManager.SpendMana(cost);
-
-                if (deckManager != null)
-                    deckManager.DiscardCard(gameObject);
-
+                PlayArea.HasCardInPlay = false;
+                Debug.Log("CARD EFFECT: " + display.cardData.textFront);
+                handManager.owner.PlayCard(display.cardData, gameObject);
                 EndDragCleanup();
                 return;
             }
@@ -354,6 +391,7 @@ public class CardMovement : MonoBehaviour,
 
     void ReturnToHandSafe()
     {
+        isInPlayArea = false;
         transform.SetParent(originalParent, true);
         transform.SetSiblingIndex(originalIndex);
 
@@ -401,5 +439,38 @@ public class CardMovement : MonoBehaviour,
         if (display == null || display.cardData == null) return true;
 
         return manaManager.HasEnoughMana(display.cardData.cardMana);
+    }
+
+    IEnumerator AnimateToPlayArea(Vector2 target)
+    {
+        Vector2 start = rectTransform.anchoredPosition;
+
+        float duration = 0.2f;
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / duration;
+
+            float curve = Mathf.SmoothStep(0, 1, t);
+
+            rectTransform.anchoredPosition = Vector2.Lerp(start, target, curve);
+
+            yield return null;
+        }
+
+        rectTransform.anchoredPosition = target;
+    }
+
+    void StartPulse()
+    {
+        isPulsing = true;
+        baseScale = Vector3.one;
+    }
+
+    void StopPulse()
+    {
+        isPulsing = false;
+        transform.localScale = Vector3.one;
     }
 }

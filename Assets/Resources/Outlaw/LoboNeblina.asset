@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Lobo na Neblina
   cardType: 1
-  cardMana: 2
+  cardMana: 1
   textFront: "o pr\xF3ximo bleed causado duplica.  "
   textBack: "Fica invis\xEDvel 1 turno. Pr\xF3ximo ataque: avan\xE7a 3 e Cr\xEDtico
     garantido.  "

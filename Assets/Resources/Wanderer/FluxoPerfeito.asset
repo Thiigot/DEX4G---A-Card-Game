@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   cardName: Fluxo Perfeito
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textFront: "Se voc\xEA esquivou turno passado: +2 A\xE7\xF5es Extra  "
   textBack: "Se voc\xEA esquivou turno passado: Compra 2  "
+  requiresTarget: 1
   cardClass: 3
