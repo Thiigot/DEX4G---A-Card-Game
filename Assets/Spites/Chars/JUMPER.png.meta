@@ -103,9 +103,9 @@ TextureImporter:
       name: JUMPER_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 10
-        width: 407
+        width: 408
         height: 582
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

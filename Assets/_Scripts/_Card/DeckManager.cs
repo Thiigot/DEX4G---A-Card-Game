@@ -125,4 +125,49 @@ public class DeckManager : MonoBehaviour
         if (cardObj != null)
             cardObj.SetActive(false);
     }
+
+    #region ZEN BLADES
+    public List<Card> GetAllZenBladeCards()
+    {
+        List<Card> result = new List<Card>();
+
+        foreach (var card in deck)
+            if (card.isZenBlade)
+                result.Add(card);
+
+        foreach (var card in discard)
+            if (card.isZenBlade)
+                result.Add(card);
+
+        foreach (var card in handManager.owner.hand)
+            if (card.isZenBlade)
+                result.Add(card);
+
+        return result;
+    }
+
+    public void AddCardToDeck(Card original)
+    {
+        Card copy = Instantiate(original);
+        deck.Add(copy);
+    }
+
+    public void ConvertZenBladeToHeal()
+    {
+        foreach (var card in deck)
+        {
+            if (card.isZenBlade)
+            {
+                card.effectsInFront.Clear();
+
+                card.effectsInFront.Add(new CardEffect
+                {
+                    effectType = EffectType.Heal,
+                    value = 10,
+                    targetType = TargetType.Self
+                });
+            }
+        }
+    }
+    #endregion
 }

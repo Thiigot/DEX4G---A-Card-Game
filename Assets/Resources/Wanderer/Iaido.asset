@@ -12,12 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Iaido
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  cardName: "Iaid\xF4"
+  effectsInFront: []
+  effectsInBack:
+  - effectType: 0
+    value: 3
+    targetType: 1
+  - effectType: 7
+    value: 3
+    targetType: 1
+  cardName: 'Iaido  '
   cardType: 0
-  cardMana: 1
-  textFront: 'Ataque leve, cria 1 ZEN BLADE em seu deck para cada carta que comprou
-    nesse turno. Recua 2  '
-  textBack: "Ataque leve, cria 1 ZEN BLADE em seu deck para cada carta que comprou
-    nesse turno. Avan\xE7a 2  "
-  requiresTarget: 1
+  cardMana: 0
+  textInFront: 'Attack, ZEN BLADE 1 for each card you drew this turn. Retreat 2  '
+  textInBack: 'Attack, ZEN BLADE 1 for each card you drew this turn. Charge 2  '
+  requiresTargetInFront: 1
+  requiresTargetInBack: 1
   cardClass: 3
+  isZenBlade: 0

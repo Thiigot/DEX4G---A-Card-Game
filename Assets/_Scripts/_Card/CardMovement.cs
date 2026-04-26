@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CardData;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -321,8 +322,10 @@ public class CardMovement : MonoBehaviour,
                 return;
             }
 
+            bool needsManualTarget = display.cardData.RequiresTarget(handManager.owner);
+
             // 🔥 CARTA COM TARGET
-            if (display.cardData.requiresTarget)
+            if (needsManualTarget)
             {
                 
                 if (TargetManager.Instance == null)
@@ -342,17 +345,20 @@ public class CardMovement : MonoBehaviour,
                     {
                         isWaitingForTarget = false;
                         PlayArea.HasCardInPlay = false;
+                        Unit targetUnit = slot.currentUnit;
                         manaManager.SpendMana(cost);
-                        Debug.Log("CARD EFFECT: " + display.cardData.textFront);
-                        handManager.owner.PlayCard(display.cardData, gameObject);
+                        CardExecutionContext ctx = new CardExecutionContext
+                        {
+                            target = targetUnit,
+                            isFront = true
+                        };
+                        handManager.owner.PlayCard(display.cardData,ctx,gameObject);
                         StopPulse();
                     },
 
                     // ❌ AO CANCELAR
                     () =>
                     {
-                        Debug.Log("Cancelou a carta");
-
                         isWaitingForTarget = false;
                         PlayArea.HasCardInPlay = false;
                         isInPlayArea= false;
@@ -367,10 +373,15 @@ public class CardMovement : MonoBehaviour,
             else
             {
                 // 🔥 SEM TARGET
+                CardExecutionContext ctx = new CardExecutionContext
+                {
+                    target = null,
+                    isFront = true
+                };
+
                 manaManager.SpendMana(cost);
                 PlayArea.HasCardInPlay = false;
-                Debug.Log("CARD EFFECT: " + display.cardData.textFront);
-                handManager.owner.PlayCard(display.cardData, gameObject);
+                handManager.owner.PlayCard(display.cardData, ctx, gameObject);
                 EndDragCleanup();
                 return;
             }

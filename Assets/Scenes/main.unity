@@ -315,6 +315,7 @@ MonoBehaviour:
   isEnemy: 1
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 1
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -683,6 +684,7 @@ MonoBehaviour:
   isEnemy: 0
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 0
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -1263,6 +1265,7 @@ MonoBehaviour:
   isEnemy: 0
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 0
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -1501,6 +1504,7 @@ MonoBehaviour:
   isEnemy: 1
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 0
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -1842,6 +1846,7 @@ MonoBehaviour:
   isEnemy: 1
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 0
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -3458,6 +3463,7 @@ MonoBehaviour:
   isEnemy: 0
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 1
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -3689,6 +3695,7 @@ MonoBehaviour:
   isEnemy: 1
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 1
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5
@@ -4360,6 +4367,7 @@ MonoBehaviour:
   isEnemy: 0
   currentUnit: {fileID: 0}
   handManager: {fileID: 918410538}
+  slotPosition: 1
   slotImage: {fileID: 0}
   normalAlpha: 0.2
   hoverAlpha: 0.5

@@ -182,6 +182,7 @@ public class HandManager : MonoBehaviour
             // display
             CardDisplay display = obj.GetComponent<CardDisplay>();
             display.cardData = card;
+            display.owner = owner;
             display.UpdateCardDisplay();
 
             // movimento
@@ -201,6 +202,7 @@ public class HandManager : MonoBehaviour
         // setup visual
         CardDisplay display = obj.GetComponent<CardDisplay>();
         display.cardData = card;
+        display.owner = owner;
         display.UpdateCardDisplay();
 
         CardMovement move = obj.GetComponent<CardMovement>();

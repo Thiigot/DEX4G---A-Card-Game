@@ -19,4 +19,12 @@ MonoBehaviour:
   speed: 3
   baseMana: 3
   critChance: 10
+  dodgeChance: 5
+  retaliateChance: 5
+  protection: 0
+  weakness: 0
+  baseLuck: 0
+  baseChip: 0
+  isFrontline: 0
+  isBackline: 0
   isPlayer: 1

@@ -5,6 +5,8 @@ using TMPro;
 using System;
 public class CardDisplay : MonoBehaviour
 {
+    public Unit owner;
+
     public Card cardData;
     public Image cardImage;
     public TMP_Text nameText;
@@ -37,7 +39,7 @@ public class CardDisplay : MonoBehaviour
         //CardTexts
         nameText.text = cardData.cardName;
         manaText.text = cardData.cardMana.ToString();
-        cardText.text = cardData.textFront;
+        cardText.text = cardData.GetText(owner);
         //CardType
         for (int i = 0; i < typeImage.Length; i++)
         {

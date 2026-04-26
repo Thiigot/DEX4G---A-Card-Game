@@ -7,6 +7,12 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     public bool isEnemy;
     public Unit currentUnit;
     public HandManager handManager;
+    public SlotPosition slotPosition;
+    public enum SlotPosition
+    {
+        Frontline,
+        Backline
+    }
 
     [Header("Hover Slot")]
     public Image slotImage;
@@ -32,7 +38,7 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     public void SetUnit(Unit unit)
     {
         currentUnit = unit;
-
+        unit.SetSlot(this);
         unit.transform.SetParent(transform, false);
 
         RectTransform rt = unit.GetComponent<RectTransform>();

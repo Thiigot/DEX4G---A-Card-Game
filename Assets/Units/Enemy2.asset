@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitName: Enemy2
-  sprite: {fileID: 8392233055799049176, guid: 3a96ad4ffd5708947902fbfec32ef64c, type: 3}
+  sprite: {fileID: 2560409137336587926, guid: d45b398342d5ddf429198191949eb0a4, type: 3}
   maxHP: 20
   attack: 3
   speed: 3
   baseMana: 3
   critChance: 3
+  dodgeChance: 5
+  retaliateChance: 5
+  protection: 0
+  weakness: 0
+  baseLuck: 0
+  baseChip: 0
+  isFrontline: 0
+  isBackline: 0
+  isPlayer: 0

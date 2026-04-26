@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
+  m_Name: Ghost Blade
+  m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
+  effectsInFront: []
+  effectsInBack:
+  - effectType: 2
+    value: 3
+    duration: 0
+    targetType: 0
+  cardName: 'Ghost Blade  '
+  cardType: 1
+  cardMana: 0
+  textInFront: 'Ignores Protection until the end of turn  '
+  textInBack: 'Charge 2 and +2 Energy  '
+  requiresTargetInFront: 0
+  requiresTargetInBack: 0
+  cardClass: 3
+  isZenBlade: 0

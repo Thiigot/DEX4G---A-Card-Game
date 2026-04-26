@@ -11,6 +11,23 @@ public class UnitData : ScriptableObject
     public int attack;
     public int speed;
     public int baseMana;
+
+    [Header("Combat Stats")]
     public float critChance;
+    public float dodgeChance;
+    public float retaliateChance;
+
+    public float protection; // %
+    public float weakness;   // %
+
+    [Header("Resources")]
+    public int baseLuck;
+    public int baseChip;
+
+    [Header("Traits")]
+    public bool isFrontline;
+    public bool isBackline;
+
+    [Header("Flags")]
     public bool isPlayer;
 }
