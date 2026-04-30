@@ -2,11 +2,12 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class BoardSlot : MonoBehaviour, IPointerClickHandler
 {
     public bool isEnemy;
     public Unit currentUnit;
     public HandManager handManager;
+
     public SlotPosition slotPosition;
     public enum SlotPosition
     {
@@ -14,22 +15,16 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         Backline
     }
 
-    [Header("Hover Slot")]
+    [Header("Visual")]
     public Image slotImage;
     public float normalAlpha = 0.2f;
     public float hoverAlpha = 0.5f;
 
-    private SpriteRenderer sr;
-
-    void Awake()
-    {
-        sr = GetComponent<SpriteRenderer>();    
-    }
-    private void Start()
+    void Start()
     {
         slotImage = GetComponent<Image>();
-        //currentUnit = GetComponent<Unit>();
     }
+
     public bool IsEmpty()
     {
         return currentUnit == null;
@@ -56,26 +51,35 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (TargetManager.Instance == null) return;
-
-        if (TargetManager.Instance.IsTargeting())
+        // 🖱️ LEFT CLICK → TARGETING
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // só aceita se tiver inimigo
-            if (currentUnit != null)
+            if (TargetManager.Instance == null) return;
+
+            if (TargetManager.Instance.IsTargeting())
             {
-                TargetManager.Instance.SelectTarget(this);
+                if (currentUnit != null)
+                {
+                    TargetManager.Instance.SelectTarget(this);
+                }
             }
+        }
+
+        // 🖱️ RIGHT CLICK → INFO PANEL
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (currentUnit == null) return;
+
+            // 🔥 evita conflito com drag
+            if (handManager != null && handManager.draggedCard != null)
+                return;
+
+            UnitInfoUI.Instance.Show(currentUnit, transform.position, isEnemy);
         }
     }
 
-
-    #region HOVER
-    public void SetHover(bool value)
+    public void SetTargetHighlight(bool value)
     {
-
-        if (!TargetManager.isTargeting)
-            value = false;
-
         if (slotImage == null) return;
 
         Color c = slotImage.color;
@@ -86,39 +90,5 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         {
             currentUnit.SetFlash(value);
         }
-            
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (TargetManager.isTargeting) return;
-        if (handManager != null && handManager.draggedCard != null) return; 
-
-        if (currentUnit != null)
-        {
-            UnitInfoUI.Instance.Show(currentUnit, transform.position);
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (TargetManager.isTargeting) return;
-        if (handManager != null && handManager.draggedCard != null) return;
-        if (currentUnit != null)
-        {
-            UnitInfoUI.Instance.Hide();
-        }
-    }
-
-    public void OnHoverEnter()
-    {
-        sr.color = Color.yellow;
-    }
-
-    public void OnHoverExit()
-    {
-        sr.color = Color.white;
-    }
-
-    #endregion
 }

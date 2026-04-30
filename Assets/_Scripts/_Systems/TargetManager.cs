@@ -7,12 +7,11 @@ public class TargetManager : MonoBehaviour
     public static TargetManager Instance;
 
     private Action<BoardSlot> onTargetSelected;
-    private System.Action onCancel;
-    public static bool isTargeting = false;
-    [SerializeField] private HandManager handManager;
+    private Action onCancel;
 
-    [Header("TargetUI")]
-    [SerializeField] private GameObject targetTextUI; // UI abaixo da carta
+    public static bool isTargeting = false;
+
+    [SerializeField] private GameObject targetTextUI;
 
     void Awake()
     {
@@ -23,64 +22,65 @@ public class TargetManager : MonoBehaviour
     void Update()
     {
         if (!isTargeting) return;
+
         UpdateSlotHover();
 
         if (CancelPressed())
         {
             CancelTargeting();
         }
-            
     }
-    void UpdateSlotHover()
-{
-    foreach (var slot in FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
-    {
-        bool isHovering = RectTransformUtility.RectangleContainsScreenPoint(
-            slot.transform as RectTransform,
-            Mouse.current.position.ReadValue()
-        );
 
-        slot.SetHover(isHovering);
+    void UpdateSlotHover()
+    {
+        foreach (var slot in FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
+        {
+            bool isHovering = RectTransformUtility.RectangleContainsScreenPoint(
+                slot.transform as RectTransform,
+                Mouse.current.position.ReadValue()
+            );
+
+            slot.SetTargetHighlight(isHovering);
+        }
     }
-}
-    public void StartTargeting(System.Action<BoardSlot> onSelected, System.Action onCancelCallback = null)
+
+    public void StartTargeting(Action<BoardSlot> onSelected, Action onCancelCallback = null)
     {
         isTargeting = true;
         onTargetSelected = onSelected;
         onCancel = onCancelCallback;
+
         targetTextUI.SetActive(true);
     }
 
     public void SelectTarget(BoardSlot slot)
     {
-
         if (!isTargeting) return;
 
         onTargetSelected?.Invoke(slot);
-
         EndTargeting();
     }
 
     void EndTargeting()
     {
-        // 🔥 limpa hover de todos os slots
-        foreach (var slot in UnityEngine.Object.FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
+        foreach (var slot in FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
         {
-            slot.SetHover(false);
+            slot.SetTargetHighlight(false);
         }
 
         isTargeting = false;
 
         onTargetSelected = null;
         onCancel = null;
+
         targetTextUI.SetActive(false);
-        // 🔥 libera o jogo novamente
+
         PlayArea.HasCardInPlay = false;
     }
 
     public bool IsTargeting()
     {
-        return onTargetSelected != null;
+        return isTargeting;
     }
 
     public void CancelTargeting()
@@ -88,7 +88,6 @@ public class TargetManager : MonoBehaviour
         if (!isTargeting) return;
 
         onCancel?.Invoke();
-
         EndTargeting();
     }
 
@@ -97,7 +96,6 @@ public class TargetManager : MonoBehaviour
         bool mouseCancel = Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame;
         bool keyboardCancel = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
 
-        
         return mouseCancel || keyboardCancel;
     }
 }

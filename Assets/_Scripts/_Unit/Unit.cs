@@ -57,10 +57,6 @@ public class Unit : MonoBehaviour
 
     private List<GameObject> spawnedIcons = new List<GameObject>();
 
-
-    
-
-
     #region INIT
     private void Awake()
     {
