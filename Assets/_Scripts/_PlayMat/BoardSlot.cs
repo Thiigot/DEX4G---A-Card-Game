@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BoardSlot : MonoBehaviour, IPointerClickHandler
+public class BoardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isEnemy;
     public Unit currentUnit;
@@ -16,13 +16,16 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler
     }
 
     [Header("Visual")]
-    public Image slotImage;
+    public SpriteRenderer slotImage;
     public float normalAlpha = 0.2f;
     public float hoverAlpha = 0.5f;
 
     void Start()
     {
-        slotImage = GetComponent<Image>();
+        slotImage = GetComponent<SpriteRenderer>();
+        Color c = slotImage.color;
+        c.a = normalAlpha;
+        slotImage.color = c;
     }
 
     public bool IsEmpty()
@@ -49,6 +52,28 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler
         currentUnit = null;
     }
 
+    // =========================
+    // HOVER
+    // =========================
+    #region HOVER
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (TargetManager.isTargeting)
+        {
+            SetTargetHighlight(true);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetTargetHighlight(false);
+    }
+    #endregion[
+
+    // =========================
+    // CLICK
+    // =========================
+    #region CLICK
     public void OnPointerClick(PointerEventData eventData)
     {
         // 🖱️ LEFT CLICK → TARGETING
@@ -77,6 +102,12 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler
             UnitInfoUI.Instance.Show(currentUnit, transform.position, isEnemy);
         }
     }
+    #endregion
+
+    // =========================
+    // VISUAL
+    // =========================
+    #region VISUAL
 
     public void SetTargetHighlight(bool value)
     {
@@ -91,4 +122,5 @@ public class BoardSlot : MonoBehaviour, IPointerClickHandler
             currentUnit.SetFlash(value);
         }
     }
+    #endregion
 }

@@ -23,7 +23,7 @@ public class TargetManager : MonoBehaviour
     {
         if (!isTargeting) return;
 
-        UpdateSlotHover();
+        //UpdateSlotHover();
 
         if (CancelPressed())
         {
@@ -31,18 +31,18 @@ public class TargetManager : MonoBehaviour
         }
     }
 
-    void UpdateSlotHover()
-    {
-        foreach (var slot in FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
-        {
-            bool isHovering = RectTransformUtility.RectangleContainsScreenPoint(
-                slot.transform as RectTransform,
-                Mouse.current.position.ReadValue()
-            );
+    //void UpdateSlotHover()
+    //{
+    //    foreach (var slot in FindObjectsByType<BoardSlot>(FindObjectsSortMode.None))
+    //    {
+    //        bool isHovering = RectTransformUtility.RectangleContainsScreenPoint(
+    //            slot.transform as RectTransform,
+    //            Mouse.current.position.ReadValue()
+    //        );
 
-            slot.SetTargetHighlight(isHovering);
-        }
-    }
+    //        slot.SetTargetHighlight(isHovering);
+    //    }
+    //}
 
     public void StartTargeting(Action<BoardSlot> onSelected, Action onCancelCallback = null)
     {
@@ -55,7 +55,10 @@ public class TargetManager : MonoBehaviour
 
     public void SelectTarget(BoardSlot slot)
     {
-        if (!isTargeting) return;
+        if (!isTargeting)
+        {
+            return;
+        }
 
         onTargetSelected?.Invoke(slot);
         EndTargeting();
@@ -67,7 +70,6 @@ public class TargetManager : MonoBehaviour
         {
             slot.SetTargetHighlight(false);
         }
-
         isTargeting = false;
 
         onTargetSelected = null;

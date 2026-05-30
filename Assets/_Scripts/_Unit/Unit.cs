@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text hpText;
-    public Image spriteImage;
+    public SpriteRenderer spriteRenderer;
     private BoardSlot currentSlot;
 
     [Header("Status UI")]
@@ -80,8 +80,8 @@ public class Unit : MonoBehaviour
         maxMana = data.baseMana;
         currentMana = maxMana;
 
-        if (spriteImage != null)
-            spriteImage.sprite = data.sprite;
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = data.sprite;
         if (hpText != null)
             hpText.text = data.unitName;
 
@@ -254,24 +254,46 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region STATUS SYSTEM
-    public void AddStatus(StatusEffect effect)
+    public void AddStatus(StatusEffect neweffect)
     {
-        if (effect == null) return;
+        if (neweffect == null) return;
 
-        if (effect is StunEffect)
+        if (neweffect is StunEffect)
         {
             var existing = activeEffects.Find(e => e is StunEffect);
             if (existing != null)
             {
                 // atualiza duração ao invés de adicionar
-                existing.value = effect.value;
+                existing.value = neweffect.value;
+                UpdateStatusUI();
+                return;
+            }
+        }
+        foreach (var effect in activeEffects)
+        {
+            if (effect.GetTypeID() == neweffect.GetTypeID())
+            {
+
+                // 🔥 TAUNT atualiza valor
+                if (effect is TauntEffect taunt &&
+                    neweffect is TauntEffect newTaunt)
+                {
+                    taunt.value = newTaunt.value;
+                    taunt.taunter = newTaunt.taunter;
+                    UpdateStatusUI();
+                    return;
+                }
+
+                // 🔥 STATUS STACKÁVEIS
+                effect.value += neweffect.value;
+                UpdateStatusUI();
                 return;
             }
         }
 
-        effect.owner = this;
-        activeEffects.Add(effect);
-        effect.OnApply();
+        neweffect.owner = this;
+        activeEffects.Add(neweffect);
+        neweffect.OnApply();
 
         UpdateStatusUI();
     }
@@ -339,7 +361,7 @@ public class Unit : MonoBehaviour
         if (!value)
         {
             flashTimer = 0f;
-            spriteImage.color = Color.white;
+            spriteRenderer.color = Color.white;
         }
     }
     #endregion
@@ -352,7 +374,7 @@ public class Unit : MonoBehaviour
 
         float t = Mathf.Abs(Mathf.Sin(flashTimer));
 
-        spriteImage.color = Color.Lerp(Color.white, new Color(2f,2f,2f,0f), t);
+        spriteRenderer.color = Color.Lerp(Color.white, new Color(2f,2f,2f,0f), t);
 
     }
 }
