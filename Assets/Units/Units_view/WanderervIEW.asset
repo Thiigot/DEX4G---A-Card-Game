@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebaad27eed98bd64dbea658edda9f00f, type: 3}
+  m_Name: WanderervIEW
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitName: Wanderer
+  sprite: {fileID: -2199315502593558665, guid: 96db5ce38041e204d9de1dea478a62d0, type: 3}
+  maxHP: 15
+  attack: 8
+  speed: 5
+  baseMana: 4
+  critChance: 5
+  dodgeChance: 5
+  retaliateChance: 5
+  protection: 0
+  weakness: 0
+  baseLuck: 0
+  baseChip: 0
+  isFrontline: 0
+  isBackline: 0
+  isPlayer: 1

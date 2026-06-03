@@ -10,12 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebaad27eed98bd64dbea658edda9f00f, type: 3}
-  m_Name: Outlaw
+  m_Name: Outlaw_VIEW
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitName: 
-  sprite: {fileID: 0}
-  maxHP: 0
-  attack: 0
-  speed: 0
-  baseMana: 0
-  critChance: 0
+  unitName: Outlaw
+  sprite: {fileID: 3577748933166990928, guid: a7500e6398311b147b02927ff2746935, type: 3}
+  maxHP: 20
+  attack: 5
+  speed: 3
+  baseMana: 3
+  critChance: 10
+  dodgeChance: 5
+  retaliateChance: 5
+  protection: 0
+  weakness: 0
+  baseLuck: 0
+  baseChip: 0
+  isFrontline: 0
+  isBackline: 0
+  isPlayer: 1
