@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e749cda5169a14bac39d59609629ef, type: 3}
+  m_Name: WandererDeckData
+  m_EditorClassIdentifier: Assembly-CSharp::DeckData
+  deckName: Wanderer's Deck
+  cardClass: 3
+  availableCards:
+  - {fileID: 11400000, guid: 18ebacb677260eb489c51ae9862eaf09, type: 2}
+  - {fileID: 11400000, guid: f7b7d0b5187264a4bad6bf0a43eaf36c, type: 2}
+  - {fileID: 11400000, guid: d9b3c41d45efa7342a5dfe4e35f912dd, type: 2}
+  - {fileID: 11400000, guid: 656e43d9f8a82b44a9e88760026cc62a, type: 2}
+  - {fileID: 11400000, guid: b1e83f03c569ecc4fbecf53a76a15359, type: 2}
+  - {fileID: 11400000, guid: e859c0b4996f1054c9ee7c14678754ef, type: 2}
+  - {fileID: 11400000, guid: 6ca9322b81983ab4da4372321cea2333, type: 2}
+  - {fileID: 11400000, guid: 6d37e076d23abe04fb996ad9c4046a87, type: 2}
+  - {fileID: 11400000, guid: 5b624c2efe64a6e4ea28e46f3db89da8, type: 2}
+  - {fileID: 11400000, guid: e26efaa5acb42a1439369e7a0333b096, type: 2}
+  - {fileID: 11400000, guid: 32f653c7fa92c2646b60b3b84b09139d, type: 2}
+  - {fileID: 11400000, guid: 8bd59a0e86bbd1a43b02655608354474, type: 2}
+  - {fileID: 11400000, guid: 7dd3415681c7ef645a7b67d46f99b985, type: 2}
+  - {fileID: 11400000, guid: 744a61e80c91c3d4d84102153c73ae3a, type: 2}
+  - {fileID: 11400000, guid: 99feceaedb9b88e46babb08cdb0ad210, type: 2}
+  - {fileID: 11400000, guid: 09a623de784b1cf4abb1c5e3a31948d9, type: 2}
+  - {fileID: 11400000, guid: 5929a21ce93b29c4f831789d2d146ae5, type: 2}
+  - {fileID: 11400000, guid: 5b52bced33c5d094eb234cb0041ec958, type: 2}
+  - {fileID: 11400000, guid: cdb305fbf8509984f8b6b6bb49b5aff0, type: 2}
+  - {fileID: 11400000, guid: 07e39111e7570784ca1724c7f6a01668, type: 2}
+  - {fileID: 11400000, guid: 6cc345af160c2d94fb070a377e969e75, type: 2}
+  startingDeck: []

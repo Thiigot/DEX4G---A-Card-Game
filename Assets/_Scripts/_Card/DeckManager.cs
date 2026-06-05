@@ -14,7 +14,7 @@ public class DeckManager : MonoBehaviour
     DeckUIManager deckUI;
     public int startingHandSize = 5;
 
-    [SerializeField]private HandManager handManager;
+    [SerializeField] private HandManager handManager;
     [SerializeField] private WarningUI warningUI;
 
     public Action OnDeckChanged;
@@ -33,14 +33,18 @@ public class DeckManager : MonoBehaviour
     }
     void LoadDeck(Unit owner)
     {
-        string path = owner.unitClass;
-        Card[] cards = Resources.LoadAll<Card>(path);
+        deck.Clear();
+
+        List<Card> cards = owner != null && owner.data != null
+            ? PartyDeckState.GetDeck(owner.data)
+            : new List<Card>();
+
         foreach (var c in cards)
         {
             if (c != null)
                 deck.Add(c);
             else
-                Debug.LogError("Carta NULL encontrada em Resources/" + path);
+                Debug.LogError("Carta NULL encontrada no deck de " + owner.unitName);
         }
     }
 

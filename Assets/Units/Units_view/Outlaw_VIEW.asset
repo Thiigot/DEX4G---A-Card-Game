@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitName: Outlaw
   sprite: {fileID: 3577748933166990928, guid: a7500e6398311b147b02927ff2746935, type: 3}
+  deckData: {fileID: 11400000, guid: 20f2fcebdcb8a4e4984747fa8a5bb9c6, type: 2}
   maxHP: 20
   attack: 5
   speed: 3

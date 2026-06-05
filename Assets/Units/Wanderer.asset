@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitName: Wanderer
   sprite: {fileID: -2199315502593558665, guid: 73d2cc411b2fc2d40befc912025bde7e, type: 3}
+  deckData: {fileID: 11400000, guid: 377fd0f5873edbd428e686eb18b60425, type: 2}
   maxHP: 15
   attack: 8
   speed: 5

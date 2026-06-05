@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e749cda5169a14bac39d59609629ef, type: 3}
+  m_Name: CaptainDeckData
+  m_EditorClassIdentifier: Assembly-CSharp::DeckData
+  deckName: Captain's Deck
+  cardClass: 2
+  availableCards:
+  - {fileID: 11400000, guid: 678a8ce4de8c19c4f9b8cf7dda63453a, type: 2}
+  - {fileID: 11400000, guid: ce7ebf86956e285419a30314402a5c15, type: 2}
+  - {fileID: 11400000, guid: 51fa0af3fc8f478498425e04fc0255ff, type: 2}
+  - {fileID: 11400000, guid: c26e990775423b347ba962aacd71e24d, type: 2}
+  - {fileID: 11400000, guid: 5a1e9af01be489442a9be583e6415e81, type: 2}
+  - {fileID: 11400000, guid: 046d1be8e1157404a8099073d1885b34, type: 2}
+  - {fileID: 11400000, guid: ad80efed7e21f6f48bbb3057ea70c6da, type: 2}
+  - {fileID: 11400000, guid: 46ff169851efa2d43878d127e397aba2, type: 2}
+  - {fileID: 11400000, guid: f553a82bd85007344892b3b5a46e1e38, type: 2}
+  - {fileID: 11400000, guid: 7e384b875e23b8b48a43c28158c32e17, type: 2}
+  - {fileID: 11400000, guid: c36697b711a2fc94eab7e61be428f215, type: 2}
+  - {fileID: 11400000, guid: b8fdf1e368225eb4380281f72463da5d, type: 2}
+  - {fileID: 11400000, guid: 1bcdf0379c1fcdc4e9d997ef8ac12acd, type: 2}
+  - {fileID: 11400000, guid: b47829cd17b344b41a6dd96bad044293, type: 2}
+  - {fileID: 11400000, guid: 938438f10b96ffa4fbf90709bf18d4e4, type: 2}
+  - {fileID: 11400000, guid: 27a84091ae8b40b4e8ec9275a2b8f7eb, type: 2}
+  - {fileID: 11400000, guid: 84b8c5d70b505f94381bace0ebe25dfb, type: 2}
+  - {fileID: 11400000, guid: deeb56440f326b144b7867c0ccac31eb, type: 2}
+  - {fileID: 11400000, guid: 5d139a336449f3142899c034d2e4b131, type: 2}
+  - {fileID: 11400000, guid: 8bbcba27c62871d4cb44f1fccfe84383, type: 2}
+  - {fileID: 0}
+  startingDeck: []

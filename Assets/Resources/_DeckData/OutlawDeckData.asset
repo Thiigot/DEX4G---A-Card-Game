@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e749cda5169a14bac39d59609629ef, type: 3}
+  m_Name: OutlawDeckData
+  m_EditorClassIdentifier: Assembly-CSharp::DeckData
+  deckName: Outlaw's Deck
+  cardClass: 1
+  availableCards:
+  - {fileID: 11400000, guid: 3f37c016fccc7024bb5c1c1d5e493ba7, type: 2}
+  - {fileID: 11400000, guid: 08d142fbf27147245a162c42bc589c80, type: 2}
+  - {fileID: 11400000, guid: f92b0b617d56b844394308e860b8117e, type: 2}
+  - {fileID: 11400000, guid: 13241773367140044b5719faacded301, type: 2}
+  - {fileID: 11400000, guid: 0f19bbb3f70f91d41b0b37ecab9631ff, type: 2}
+  - {fileID: 11400000, guid: 96e79eadc04c9d14896541496d370caa, type: 2}
+  - {fileID: 11400000, guid: 6c8f106c23289dd4fb4a6f8a700cea26, type: 2}
+  - {fileID: 11400000, guid: 4000c960d86cc4f4c8d3ca993883fd51, type: 2}
+  - {fileID: 11400000, guid: 10cd0f8e9b7cfe447ac1062c264bbf49, type: 2}
+  - {fileID: 11400000, guid: 19910af199a8eda428bf63eba934e149, type: 2}
+  - {fileID: 11400000, guid: 98ee29fe1db2ca7488834bf69f51d36b, type: 2}
+  - {fileID: 11400000, guid: 760a835dece79dd4ebcab63b7e0fc889, type: 2}
+  - {fileID: 11400000, guid: e5160c78b603c4d4ab8d184b0d27f59e, type: 2}
+  - {fileID: 11400000, guid: 6e3d05f9100122641b1202823c584c03, type: 2}
+  - {fileID: 11400000, guid: 3f8ef894d9552074c82e6b64a0415aa2, type: 2}
+  - {fileID: 11400000, guid: fef455701adbdf34ca2360b3fe766b6c, type: 2}
+  - {fileID: 11400000, guid: 7d547c5a67f17a54b8b4b1f49306a488, type: 2}
+  - {fileID: 11400000, guid: 3de16718f180bdf4094303b248490263, type: 2}
+  - {fileID: 11400000, guid: 134f8eb41e3c3ff4d9042d165f1de79a, type: 2}
+  - {fileID: 11400000, guid: 923b1690e1986894787e04ddccade4ee, type: 2}
+  - {fileID: 11400000, guid: 00e4ba7c2228ca248ad1c0464638c2ba, type: 2}
+  startingDeck:
+  - {fileID: 11400000, guid: 4000c960d86cc4f4c8d3ca993883fd51, type: 2}
+  - {fileID: 11400000, guid: 6c8f106c23289dd4fb4a6f8a700cea26, type: 2}
+  - {fileID: 11400000, guid: 13241773367140044b5719faacded301, type: 2}
+  - {fileID: 11400000, guid: f92b0b617d56b844394308e860b8117e, type: 2}
+  - {fileID: 11400000, guid: 08d142fbf27147245a162c42bc589c80, type: 2}
+  - {fileID: 11400000, guid: 96e79eadc04c9d14896541496d370caa, type: 2}
+  - {fileID: 11400000, guid: 3f37c016fccc7024bb5c1c1d5e493ba7, type: 2}
+  - {fileID: 11400000, guid: 0f19bbb3f70f91d41b0b37ecab9631ff, type: 2}
+  - {fileID: 11400000, guid: 10cd0f8e9b7cfe447ac1062c264bbf49, type: 2}
+  - {fileID: 11400000, guid: 19910af199a8eda428bf63eba934e149, type: 2}

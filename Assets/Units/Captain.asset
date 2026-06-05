@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitName: Captain
   sprite: {fileID: -2861691266667383149, guid: 3e594a9717d9d70479275cbcb37d1e43, type: 3}
+  deckData: {fileID: 11400000, guid: 13658224b21bd5d4da76bc88ad06efd6, type: 2}
   maxHP: 50
   attack: 3
   speed: 3

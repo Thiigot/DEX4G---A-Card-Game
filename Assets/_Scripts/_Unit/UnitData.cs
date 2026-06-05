@@ -6,6 +6,9 @@ public class UnitData : ScriptableObject
     public string unitName;
     public Sprite sprite;
 
+    [Header("Deck")]
+    public DeckData deckData;
+
     [Header("Stats")]
     public int maxHP;
     public int attack;
