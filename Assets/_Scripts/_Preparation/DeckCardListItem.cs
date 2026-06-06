@@ -18,19 +18,30 @@ public class DeckCardListItem : MonoBehaviour,
 {
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text costLabel;
-    [SerializeField] private TMP_Text typeLabel;
     [SerializeField] private Image background;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color selectedColor = new Color(0.45f, 0.8f, 1f, 1f);
     [SerializeField] private Color unavailableColor = new Color(0.45f, 0.45f, 0.45f, 0.75f);
+    [SerializeField] private Image[] typeImages;
 
+    [SerializeField]
+    private Color32[] colorType =
+    {
+    new Color32(212, 184, 40, 255),   // jackpot
+    new Color32(116, 40, 40, 255),    // outlaw
+    new Color32(40, 40, 116, 255),    // captain
+    new Color32(40, 116, 40, 255),    // wanderer
+    new Color32(99, 99, 99, 255),     // mechanic
+    new Color32(203, 203, 203, 255),  // jumper
+    };
     private Card card;
     private PartyDeckBuilderUI owner;
     private DeckBuilderListType listType;
     private RectTransform rectTransform;
     private Transform originalParent;
     private int originalSiblingIndex;
+
+
 
     void Awake()
     {
@@ -61,15 +72,22 @@ public class DeckCardListItem : MonoBehaviour,
         if (costLabel != null)
             costLabel.text = card != null ? card.cardMana.ToString() : "";
 
-        if (typeLabel != null)
-            typeLabel.text = card != null ? card.cardType.ToString() : "";
-
-        if (background != null)
+        if (background != null && card != null)
         {
+            Color c = colorType[(int)card.cardClass];
+
             if (unavailable)
-                background.color = unavailableColor;
-            else
-                background.color = selected ? selectedColor : normalColor;
+                c = unavailableColor;
+            else if(selected)
+                c = selectedColor;
+            background.color = c;
+        }
+        if(typeImages != null && card != null)
+        {
+            for (int i = 0; i < typeImages.Length; i++)
+            {
+                typeImages[i].gameObject.SetActive(i == (int)card.cardType);
+            }
         }
     }
 
@@ -77,8 +95,6 @@ public class DeckCardListItem : MonoBehaviour,
     {
         if (owner == null || card == null)
             return;
-
-        Debug.Log($"DeckBuilder card click: {card.cardName}, button={eventData.button}, source={listType}");
 
         if (eventData.button == PointerEventData.InputButton.Left)
             owner.ShowCardDetails(card);
@@ -92,8 +108,6 @@ public class DeckCardListItem : MonoBehaviour,
         if (owner == null || card == null || rectTransform == null)
             return;
 
-        Debug.Log($"DeckBuilder drag begin: {card.cardName}, source={listType}");
-
         originalParent = transform.parent;
         originalSiblingIndex = transform.GetSiblingIndex();
 
@@ -106,25 +120,27 @@ public class DeckCardListItem : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (rectTransform == null)
+        if (rectTransform == null || owner == null)
             return;
-
-        rectTransform.position = eventData.position;
+        RectTransform dragRootRect = owner.DragRoot as RectTransform;
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            dragRootRect,
+            eventData.position,
+            eventData.pressEventCamera,
+            out localPoint
+        );
+        rectTransform.localPosition = localPoint;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
-
+        transform.localScale = Vector3.one;
         DeckBuilderListType? destination = owner != null
             ? owner.ResolveDropTarget(eventData.position)
             : null;
-
-        Debug.Log(
-            $"DeckBuilder drag end: {card.cardName}, source={listType}, " +
-            $"destination={(destination.HasValue ? destination.Value.ToString() : "None")}"
-        );
 
         if (owner != null && destination.HasValue)
             owner.MoveCard(card, listType, destination.Value);
@@ -139,5 +155,6 @@ public class DeckCardListItem : MonoBehaviour,
 
         transform.SetParent(originalParent, false);
         transform.SetSiblingIndex(originalSiblingIndex);
+        transform.localScale = Vector3.one;
     }
 }

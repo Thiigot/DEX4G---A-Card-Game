@@ -7,8 +7,8 @@ public class PartySlot : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] private SpriteRenderer highlightRenderer;
-    [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 0.25f);
-    [SerializeField] private Color hoverColor = new Color(0.4f, 0.9f, 1f, 0.65f);
+    [SerializeField] private Color normalColor = new Color(0.12f, 0.18f, 0.30f, 0.67f);
+    [SerializeField] private Color hoverColor = new Color(0.12f, 0.18f, 0.30f, 1f);
 
     void Awake()
     {
@@ -30,6 +30,9 @@ public class PartySlot : MonoBehaviour
 
         character.transform.SetParent(transform, false);
         character.transform.localPosition = Vector3.zero;
+        hoverColor.a = 0f;
+        highlightRenderer.color = hoverColor;
+        hoverColor.a = 1f;
     }
 
     public UnitData GetUnit()
@@ -53,7 +56,7 @@ public class PartySlot : MonoBehaviour
     {
         if (currentCharacter != null)
             Destroy(currentCharacter.gameObject);
-
+        highlightRenderer.color = normalColor;
         currentCharacter = null;
     }
 }

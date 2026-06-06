@@ -223,13 +223,13 @@ public class PartyDeckBuilderUI : MonoBehaviour
         List<Card> draftDeck = PartyDeckState.GetDraft(currentUnit);
         IReadOnlyList<Card> availableCards = PartyDeckState.GetAvailableCards(currentUnit);
 
-        Debug.Log(
-            $"DeckBuilder Rebuild: unit={currentUnit.unitName}, " +
-            $"availableCards={availableCards.Count}, draftDeck={draftDeck.Count}, " +
-            $"collectionContent={(collectionContent != null ? collectionContent.name : "NULL")}, " +
-            $"deckContent={(deckContent != null ? deckContent.name : "NULL")}, " +
-            $"listItemPrefab={(listItemPrefab != null ? listItemPrefab.name : "NULL")}"
-        );
+        //Debug.Log(
+        //    $"DeckBuilder Rebuild: unit={currentUnit.unitName}, " +
+        //    $"availableCards={availableCards.Count}, draftDeck={draftDeck.Count}, " +
+        //    $"collectionContent={(collectionContent != null ? collectionContent.name : "NULL")}, " +
+        //    $"deckContent={(deckContent != null ? deckContent.name : "NULL")}, " +
+        //    $"listItemPrefab={(listItemPrefab != null ? listItemPrefab.name : "NULL")}"
+        //);
 
         if (titleText != null)
             titleText.text = $"{currentUnit.unitName} Deck Builder";
