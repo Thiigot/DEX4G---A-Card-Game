@@ -37,6 +37,11 @@ public class Unit : MonoBehaviour
     public int currentMana;
     public int maxMana;
     public int maxHP;
+    public float critChance;
+    public float dodgeChance;
+    public float retaliateChance;
+    public float protection;
+    public float weakness;
     public bool isPlayer;
     public bool hasStartedCombat = false;
 
@@ -49,6 +54,7 @@ public class Unit : MonoBehaviour
     public TMP_Text hpText;
     public SpriteRenderer spriteRenderer;
     private BoardSlot currentSlot;
+    public BoardSlot CurrentSlot => currentSlot;
 
     [Header("Status UI")]
     public Transform statusContainer;
@@ -77,6 +83,11 @@ public class Unit : MonoBehaviour
         currentHP = maxHP;
         attack = data.attack;
         speed = data.speed;
+        critChance = data.critChance;
+        dodgeChance = data.dodgeChance;
+        retaliateChance = data.retaliateChance;
+        protection = data.protection;
+        weakness = data.weakness;
         maxMana = data.baseMana;
         currentMana = maxMana;
 
@@ -125,17 +136,34 @@ public class Unit : MonoBehaviour
         UpdateUI();
     }
 
-    public void TakeDamage(int amount, DamageType type = DamageType.Direct)
+    public void TakeDamage(int amount, DamageType type = DamageType.Direct, Unit attacker = null, bool ignoreProtection = false, bool canTriggerRetaliate = true)
     {
+        if(TryDodge())
+        {
+            Debug.Log($"{unitName} dodged the attack!");
+
+            if(canTriggerRetaliate && attacker != null)
+                TryRetaliate(attacker);
+            
+            return;
+        }
+
         int finalDamage = amount;
 
-        foreach (var effect in activeEffects)
-            effect.OnReceiveDamage(ref finalDamage, type);
-
+        if (!ignoreProtection)
+        {
+            finalDamage = Mathf.RoundToInt(finalDamage * (1f - protection / 100f));
+            foreach (var effect in activeEffects)
+                effect.OnReceiveDamage(ref finalDamage, type);
+        }
+        finalDamage = Mathf.Max(0, finalDamage);
         currentHP -= finalDamage;
 
         if (currentHP <= 0)
             Die();
+
+        if (currentHP > 0 && canTriggerRetaliate && attacker != null)
+            TryRetaliate(attacker);
 
         UpdateUI();
     }
@@ -143,9 +171,17 @@ public class Unit : MonoBehaviour
     {
         int finalDamage = damage;
 
+        if(weakness > 0f)
+            finalDamage = Mathf.RoundToInt(damage * (1f - weakness / 100f));
         foreach (var effect in activeEffects)
             effect.OnDealDamage(ref finalDamage);
 
+        if (TryCrit())
+        {
+            finalDamage = Mathf.RoundToInt(finalDamage * 2f);
+            Debug.Log($"{unitName} CRITICAL HIT!");
+        }
+        
         return finalDamage;
     }
     void Die()
@@ -254,6 +290,38 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region STATUS SYSTEM
+    bool TryCrit()
+    {
+        float chance = critChance;
+        foreach(var effect in activeEffects)
+            effect.ModifyCritChance(ref chance);
+        chance = Mathf.Clamp(chance, 0f, 100f);
+
+        return chance > 0f && Random.value * 100f < chance;
+    }
+    bool TryDodge()
+    {
+        float chance = dodgeChance;
+        foreach (var effect in activeEffects)
+            effect.ModifyDodgeChance(ref chance);
+
+        chance = Mathf.Clamp(chance, 0f, 100f);
+        
+        return chance > 0f && Random.value * 100f < chance;
+    }
+    void TryRetaliate(Unit attacker)
+    {
+        if (attacker == null) return;
+
+        float chance = retaliateChance;
+        foreach (var effect in activeEffects)
+            effect.ModifyRetaliateChance(ref chance);
+        chance = Mathf.Clamp(chance, 0f, 100f);
+        if (chance <= 0f || Random.value * 100f >= chance) return;
+        int retaliateDamage = Mathf.Max(1, ModifyOutgoingDamage(attack));
+        Debug.Log($"{unitName} retaliates against {attacker.unitName} for {retaliateDamage} damage!");
+        attacker.TakeDamage(retaliateDamage, DamageType.Direct, this, false, false);
+    }
     public void AddStatus(StatusEffect neweffect)
     {
         if (neweffect == null) return;

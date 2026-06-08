@@ -15,17 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
-    targetType: 2
-  - effectType: 7
-    value: 3
-    targetType: 2
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: Zen Blade
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'On Draw, attack a random Enemy, Draw 1. Consume  '
   textInBack: 'On Draw, attack a random Enemy, Draw 1. Consume  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
-  isZenBlade: 1
+  isZenBlade: 0

@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 3
-    duration: 0
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Focus Circuit  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Gain Speed, Retreat 2  '
   textInBack: '+10% Dodge and Charge 2  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -15,22 +15,23 @@ MonoBehaviour:
   effectsInFront:
   - effectType: 4
     value: 3
-    duration: 0
     targetType: 0
+    ignoreProtection: 0
   effectsInBack:
   - effectType: 28
     value: 3
-    duration: 0
     targetType: 0
+    ignoreProtection: 0
   - effectType: 5
     value: 5
-    duration: 0
     targetType: 0
+    ignoreProtection: 0
   cardName: 'All sails set!  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: '+3 Energy if at Position 1  '
   textInBack: 'Charge 3, Doubles Speed  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

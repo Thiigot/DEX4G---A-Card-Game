@@ -15,17 +15,17 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
-    duration: 0
-    targetType: 2
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Last Draw  '
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Discard your entire hand, Attack a random enemy. Repeat this equal
     to the number of cards discarded. End your turn  '
   textInBack: 'Discard your entire hand, Attack a random enemy. Repeat this equal
     to the number of cards discarded. End your turn  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

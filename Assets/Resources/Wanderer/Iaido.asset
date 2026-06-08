@@ -15,17 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
+    value: 4
     targetType: 1
-  - effectType: 7
-    value: 3
-    targetType: 1
+    ignoreProtection: 0
   cardName: 'Iaido  '
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Attack, ZEN BLADE 1 for each card you drew this turn. Retreat 2  '
   textInBack: 'Attack, ZEN BLADE 1 for each card you drew this turn. Charge 2  '
-  requiresTargetInFront: 1
+  requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

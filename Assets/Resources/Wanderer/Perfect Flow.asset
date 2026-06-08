@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 2
-    duration: 0
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Perfect Flow  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'If you Dodged last turn: +2 Energy  '
   textInBack: 'If you Dodged last turn: Draw 2  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -135,28 +135,33 @@ public class PartyDeckBuilderUI : MonoBehaviour
         MoveCard(card, sourceList, destination);
     }
 
-    public void MoveCard(Card card, DeckBuilderListType sourceList, DeckBuilderListType destination)
+    public bool MoveCard(Card card, DeckBuilderListType sourceList, DeckBuilderListType destination)
     {
         if (currentUnit == null || card == null || sourceList == destination)
-            return;
+            return false;
+
+        bool changed = false;
 
         if (destination == DeckBuilderListType.Deck)
         {
-            bool added = PartyDeckState.TryAddToDraft(currentUnit, card);
-            Debug.Log(added
+            changed = PartyDeckState.TryAddToDraft(currentUnit, card);
+            Debug.Log(changed
                 ? $"DeckBuilder: added {card.cardName} to {currentUnit.unitName} deck."
                 : $"DeckBuilder: could not add {card.cardName}. Deck may be full or card is already in deck.");
         }
 
         if (destination == DeckBuilderListType.Collection)
         {
-            bool removed = PartyDeckState.RemoveFromDraft(currentUnit, card);
-            Debug.Log(removed
+            changed = PartyDeckState.RemoveFromDraft(currentUnit, card);
+            Debug.Log(changed
                 ? $"DeckBuilder: removed {card.cardName} from {currentUnit.unitName} deck."
                 : $"DeckBuilder: could not remove {card.cardName}. It was not in deck.");
         }
 
-        Rebuild();
+        if (changed)
+            Rebuild();
+
+        return changed;
     }
 
     public DeckBuilderListType? ResolveDropTarget(Vector2 screenPosition)
@@ -223,13 +228,13 @@ public class PartyDeckBuilderUI : MonoBehaviour
         List<Card> draftDeck = PartyDeckState.GetDraft(currentUnit);
         IReadOnlyList<Card> availableCards = PartyDeckState.GetAvailableCards(currentUnit);
 
-        //Debug.Log(
-        //    $"DeckBuilder Rebuild: unit={currentUnit.unitName}, " +
-        //    $"availableCards={availableCards.Count}, draftDeck={draftDeck.Count}, " +
-        //    $"collectionContent={(collectionContent != null ? collectionContent.name : "NULL")}, " +
-        //    $"deckContent={(deckContent != null ? deckContent.name : "NULL")}, " +
-        //    $"listItemPrefab={(listItemPrefab != null ? listItemPrefab.name : "NULL")}"
-        //);
+        Debug.Log(
+            $"DeckBuilder Rebuild: unit={currentUnit.unitName}, " +
+            $"availableCards={availableCards.Count}, draftDeck={draftDeck.Count}, " +
+            $"collectionContent={(collectionContent != null ? collectionContent.name : "NULL")}, " +
+            $"deckContent={(deckContent != null ? deckContent.name : "NULL")}, " +
+            $"listItemPrefab={(listItemPrefab != null ? listItemPrefab.name : "NULL")}"
+        );
 
         if (titleText != null)
             titleText.text = $"{currentUnit.unitName} Deck Builder";

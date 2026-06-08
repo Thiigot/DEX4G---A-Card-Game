@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Ya Shall not Pass!  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Taunt an enemy for 2 turns  '
   textInBack: 'Charge 3 and Block an Enemy Attack  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
   cardClass: 2
+  isZenBlade: 0

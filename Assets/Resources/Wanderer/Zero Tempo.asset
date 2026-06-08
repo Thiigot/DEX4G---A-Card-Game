@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 2
-    duration: 0
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Zero Tempo  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'If the Fastest: next attack deals +50% Damage.  '
   textInBack: 'If the Fastest: +3 Energy.  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -14,23 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 1
-    value: 3
-    targetType: 0
-  - effectType: 8
-    value: 3
-    targetType: 2
-  - effectType: 6
-    value: 3
-    targetType: 2
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: "Bushi\u2019s Path  "
   cardType: 3
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Passive: +10% Speed  |  ZEN BLADE gains: Double the damage of next
     ZEN BLADE   '
   textInBack: 'Passive: +10% Speed  |  ZEN BLADE gains: Double the damage of next
     ZEN BLADE   '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

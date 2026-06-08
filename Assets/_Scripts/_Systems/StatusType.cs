@@ -8,5 +8,7 @@ public enum StatusType
     Taunt,
     Stealth,
     Retaliate,
-    Dodge
+    Dodge,
+    DamageModifier,
+    Crit
 }

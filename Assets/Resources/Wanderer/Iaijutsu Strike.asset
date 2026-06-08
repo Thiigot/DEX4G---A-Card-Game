@@ -15,15 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
-    duration: 0
+    value: 4
     targetType: 1
+    ignoreProtection: 0
   cardName: Iaijutsu Strike
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Attack and ZEN BLADE 1. If Crits, ZEN BLADE 2 instead  '
   textInBack: 'Attack with 0% Crit. ZEN BLADE 2. +1 Energy next turn  '
-  requiresTargetInFront: 1
+  requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

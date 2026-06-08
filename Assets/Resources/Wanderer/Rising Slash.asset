@@ -15,17 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
+    value: 4
     targetType: 1
-  - effectType: 8
-    value: 3
-    targetType: 1
+    ignoreProtection: 0
   cardName: Rising Slash
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Attack, Draw 2 and ZEN BLADE 2  '
   textInBack: 'Attack, Charge 2 and ZEN BLADE 2  '
-  requiresTargetInFront: 1
+  requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

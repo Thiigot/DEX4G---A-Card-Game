@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 3
-    duration: 0
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Ghost Blade  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Ignores Protection until the end of turn  '
   textInBack: 'Charge 2 and +2 Energy  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Salty Blade  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: '+100% Crit if Taunting  '
   textInBack: '+Crit and Charge 2  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

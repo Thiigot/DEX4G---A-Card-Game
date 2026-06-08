@@ -15,15 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
-    duration: 0
-    targetType: 2
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Infinity Sheath  '
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Attack a random enemy X times. ZEN BLADE X  '
   textInBack: 'Attack a random enemy X times. ZEN BLADE X  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

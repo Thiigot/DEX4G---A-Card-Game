@@ -22,3 +22,4 @@ MonoBehaviour:
   requiresTargetInFront: 1
   requiresTargetInBack: 1
   cardClass: 2
+  isZenBlade: 0

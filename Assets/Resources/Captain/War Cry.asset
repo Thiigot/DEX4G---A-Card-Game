@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'War Cry  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Apply Weakness to enemies  '
   textInBack: '+Protection for the Crew  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

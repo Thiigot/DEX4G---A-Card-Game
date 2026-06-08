@@ -40,6 +40,8 @@ public class DeckCardListItem : MonoBehaviour,
     private RectTransform rectTransform;
     private Transform originalParent;
     private int originalSiblingIndex;
+    private DeckCardListItem placeholderItem;
+    private bool isPlaceholder;
 
 
 
@@ -93,6 +95,9 @@ public class DeckCardListItem : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isPlaceholder)
+            return;
+
         if (owner == null || card == null)
             return;
 
@@ -105,11 +110,15 @@ public class DeckCardListItem : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isPlaceholder)
+            return;
         if (owner == null || card == null || rectTransform == null)
             return;
 
         originalParent = transform.parent;
         originalSiblingIndex = transform.GetSiblingIndex();
+
+        CreateDragPlaceholder();
 
         transform.SetParent(owner.DragRoot, true);
         transform.SetAsLastSibling();
@@ -120,6 +129,8 @@ public class DeckCardListItem : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isPlaceholder)
+            return;
         if (rectTransform == null || owner == null)
             return;
         RectTransform dragRootRect = owner.DragRoot as RectTransform;
@@ -135,17 +146,21 @@ public class DeckCardListItem : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isPlaceholder)
+            return;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
         transform.localScale = Vector3.one;
         DeckBuilderListType? destination = owner != null
             ? owner.ResolveDropTarget(eventData.position)
             : null;
-
+        bool moved = false;
         if (owner != null && destination.HasValue)
-            owner.MoveCard(card, listType, destination.Value);
+            moved = owner.MoveCard(card, listType, destination.Value);
 
-        RestorePosition();
+        ClearDragPlaceholder();
+        if (!moved)
+            RestorePosition();
     }
 
     void RestorePosition()
@@ -156,5 +171,42 @@ public class DeckCardListItem : MonoBehaviour,
         transform.SetParent(originalParent, false);
         transform.SetSiblingIndex(originalSiblingIndex);
         transform.localScale = Vector3.one;
+    }
+
+    void CreateDragPlaceholder()
+    {
+        if (originalParent == null)
+            return;
+
+        DeckCardListItem placeholder = Instantiate(this, originalParent);
+        placeholder.transform.SetSiblingIndex(originalSiblingIndex);
+        placeholder.MakePlaceholder();
+        placeholderItem = placeholder;
+    }
+
+    void MakePlaceholder()
+    {
+        isPlaceholder = true;
+
+        if (canvasGroup == null)
+            canvasGroup = GetComponent<CanvasGroup>();
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0.45f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+
+        if (background != null)
+            background.color = unavailableColor;
+    }
+
+    void ClearDragPlaceholder()
+    {
+        if (placeholderItem != null)
+            Destroy(placeholderItem.gameObject);
+
+        placeholderItem = null;
     }
 }

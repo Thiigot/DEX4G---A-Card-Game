@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: Steel Captain
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Immune to Crit for 2 Turns. Apply Weakness  '
   textInBack: 'Charge 1. Taunt 1 and gain Marked  '
   requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 2
+  isZenBlade: 0

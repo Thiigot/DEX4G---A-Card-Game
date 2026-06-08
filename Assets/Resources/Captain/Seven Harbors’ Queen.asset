@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: "Seven Harbors\u2019 Queen  "
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Immune to Debuff for 2 turns. +1 Energy  '
   textInBack: 'Charge 3. Doubles Protection  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

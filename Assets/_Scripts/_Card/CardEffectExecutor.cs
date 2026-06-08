@@ -63,7 +63,12 @@ public static class CardEffectExecutor
         {
             case EffectType.Damage:
                 if (target != null)
-                    target.TakeDamage(effect.value, DamageType.Direct);
+                    target.TakeDamage(
+                        caster.ModifyOutgoingDamage(effect.value),
+                        DamageType.Direct,
+                        caster,
+                        effect.ignoreProtection
+                        );
                 break;
 
             case EffectType.Heal:
@@ -78,6 +83,15 @@ public static class CardEffectExecutor
                 caster.currentMana += effect.value;
                 break;
 
+            case EffectType.Speed:
+                caster.speed += effect.value;
+                break;
+            case EffectType.Charge:
+                MoveUnit(caster, effect.value, true);
+                break;
+            case EffectType.Retreat:
+                MoveUnit(caster, effect.value, false);
+                break;
             case EffectType.ZenBlade:
                 HandleZenBlade(caster, effect);
                 break;
@@ -102,11 +116,69 @@ public static class CardEffectExecutor
                     value = effect.value
                 });
                 break;
-
+            case EffectType.ApplyTaunt:
+                target.AddStatus(new TauntEffect
+                {
+                    value = effect.value,
+                    taunter = caster
+                });
+                break;
+            case EffectType.ApplyStealth:
+                target.AddStatus(new StealthEffect
+                {
+                    value = effect.value
+                });
+                break;
+            case EffectType.ModifyWeakness:
+                target.AddStatus(new WeaknessEffect
+                {
+                    value = effect.value
+                });
+                break;
+            case EffectType.ModifyDodge:
+                target.AddStatus(new DodgeEffect
+                {
+                    value = effect.value
+                });
+                break;
+            case EffectType.Retaliate:
+                target.AddStatus(new RetaliateEffect
+                {
+                    value = effect.value
+                });
+                break;
+            case EffectType.ModifyProtection:
+                target.AddStatus(new ProtectionEffect
+                {
+                    value = effect.value
+                });
+                break;
+            case EffectType.ModifyDamage:
+                target.AddStatus(new DamageModifierEffect
+                {
+                    value = effect.value
+                });
+                break;
         }
     }
 
     // 🔥 SISTEMAS AUXILIARES
+
+    static void MoveUnit(Unit unit, int steps, bool forward)
+    {
+        BoardManager boardManager = BoardManager.Instance;
+
+        if (boardManager == null)
+            boardManager = GameObject.FindAnyObjectByType<BoardManager>();
+
+        if (boardManager == null)
+        {
+            Debug.LogWarning("BoardManager não encontrado para mover unidade.");
+            return;
+        }
+
+        boardManager.TryMoveUnit(unit, steps, forward);
+    }
 
     static List<Unit> GetAllEnemies(Unit caster)
     {

@@ -12,6 +12,10 @@ public abstract class StatusEffect
     public virtual bool ShowValue() => true;
     public virtual void OnReceiveDamage(ref int damage, DamageType type) { }
     public virtual void OnDealDamage(ref int damage) { }
+    public virtual void ModifyDodgeChance(ref float chance) { }
+    public virtual void ModifyRetaliateChance(ref float chance) { }
+    public virtual void ModifyCritChance(ref float chance) { }
+    public virtual void ModifySpeed(ref int speed) { }
     public virtual void OnExpire() { }
 
     public virtual bool IsExpired()
@@ -93,6 +97,15 @@ public class WeaknessEffect : StatusEffect
     }
 }
 
+/////////  DAMAGEMODIFIER  /////////
+public class DamageModifierEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.DamageModifier;
+    public override void OnDealDamage(ref int damage)
+    {
+        damage = Mathf.RoundToInt(damage * (1f + value / 100f));
+    }
+}
 /////////  STEALTH  /////////
 public class StealthEffect : StatusEffect
 {
@@ -134,4 +147,40 @@ public class TauntEffect : StatusEffect
     {
         value--;
     }
+}
+
+//////////  DODGE  //////////
+public class DodgeEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.Dodge;
+
+    public override void ModifyDodgeChance(ref float chance)
+    {
+        chance += value;
+    }
+
+}
+
+//////////  RETALIATE  //////////
+public class RetaliateEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.Retaliate;
+
+    public override void ModifyRetaliateChance(ref float chance)
+    {
+        chance += value;
+    }
+
+}
+
+//////////  CRIT  //////////
+public class CritEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.Crit;
+
+    public override void ModifyCritChance(ref float chance)
+    {
+        chance += value;
+    }
+
 }

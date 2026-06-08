@@ -14,21 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 1
-    value: 3
-    targetType: 0
-  - effectType: 8
-    value: 3
-    targetType: 2
-  - effectType: 6
-    value: 3
-    targetType: 2
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: "Dragon\u2019s Path  "
   cardType: 3
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Passive: +1 Energy |  ZEN BLADE gains: AoE damage to all enemies   '
   textInBack: 'Passive: +1 Energy |  ZEN BLADE gains: AoE damage to all enemies   '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

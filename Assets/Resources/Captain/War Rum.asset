@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'War Rum  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Heal and +Protection for 2 Turns  '
   textInBack: 'Minor Heal and Charge 2  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

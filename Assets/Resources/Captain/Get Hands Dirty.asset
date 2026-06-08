@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Get Hands Dirty  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: '+Protection and Taunt 2. Repeat   '
   textInBack: 'Charge 3 and Retaliate  '
   requiresTargetInFront: 1
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

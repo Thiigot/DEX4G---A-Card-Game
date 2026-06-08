@@ -82,6 +82,7 @@ public class TurnManager : MonoBehaviour
     void CalculateTurnOrder()
     {
         turnOrder = allUnits
+            .Where(u => u != null)
             .OrderByDescending(u => u.speed)
             .ToList();
     }

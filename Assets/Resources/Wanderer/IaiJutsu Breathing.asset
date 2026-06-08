@@ -14,18 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 2
-    targetType: 0
-  - effectType: 9
-    value: 2
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'IaiJutsu Breathing  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Use the top card of the deck. If it is an ATTACK, repeat  '
   textInBack: 'Use the top card of the deck. If it is an ATTACK, repeat  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -62,6 +62,8 @@ namespace CardData
 
         public TargetType targetType;
 
+        public bool ignoreProtection;
+
     }
     public enum EffectType
     {
@@ -83,6 +85,7 @@ namespace CardData
         ApplyChannel,
 
         // especiais
+        Retaliate,
         Execute,
         Repeat,
         Consume,
@@ -92,6 +95,7 @@ namespace CardData
         ModifyDodge,
         ModifyProtection,
         ModifyWeakness,
+        ModifyDamage,
 
         // jackpot
         Dice,

@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Shark Bait  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Apply Weakness to an Enemy  '
   textInBack: 'Charge 3. +Retaliate  '
   requiresTargetInFront: 1
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

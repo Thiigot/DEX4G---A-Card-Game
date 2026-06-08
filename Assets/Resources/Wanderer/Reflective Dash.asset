@@ -15,17 +15,15 @@ MonoBehaviour:
   effectsInFront: []
   effectsInBack:
   - effectType: 0
-    value: 3
+    value: 4
     targetType: 1
-  - effectType: 7
-    value: 3
-    targetType: 1
+    ignoreProtection: 0
   cardName: 'Reflective Dash  '
   cardType: 0
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Retreat 2, Attack. If fatal, Draw 1 and Charge 2.  '
   textInBack: 'Charge 2, Attack. If fatal, Draw 1 and Retreat 2.  '
-  requiresTargetInFront: 1
+  requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

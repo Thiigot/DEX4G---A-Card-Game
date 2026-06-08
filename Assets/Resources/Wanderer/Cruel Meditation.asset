@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 2
-    value: 3
-    duration: 0
-    targetType: 0
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: 'Cruel Meditation  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Doubles ZEN BLADE  '
   textInBack: 'Convert all ZEN BLADE in Heal  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -16,10 +16,11 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Take it to the Bottom  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Takes no damage and cannot die for 5 turns. Dies instantly when the
     effect ends.  '
   textInBack: 'If you die until the next turn, kill the attacker along with  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0

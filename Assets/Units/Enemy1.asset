@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitName: Enemy1
   sprite: {fileID: 2721828011576170267, guid: db65602b9fea64343bb96b9682625391, type: 3}
+  deckData: {fileID: 0}
   maxHP: 20
   attack: 3
   speed: 3
   baseMana: 3
-  critChance: 3
+  critChance: 5
   dodgeChance: 5
-  retaliateChance: 5
+  retaliateChance: 0
   protection: 0
   weakness: 0
   baseLuck: 0

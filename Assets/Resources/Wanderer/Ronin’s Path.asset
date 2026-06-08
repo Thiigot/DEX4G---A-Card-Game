@@ -14,21 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront: []
   effectsInBack:
-  - effectType: 1
-    value: 3
-    targetType: 0
-  - effectType: 8
-    value: 3
-    targetType: 2
-  - effectType: 6
-    value: 3
-    targetType: 2
+  - effectType: 0
+    value: 4
+    targetType: 1
+    ignoreProtection: 0
   cardName: "Ronin\u2019s Path  "
   cardType: 3
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Passive: +10% Dodge | ZEN BLADE gains: ZEN BLADE 3   '
   textInBack: 'Passive: +10% Dodge | ZEN BLADE gains: ZEN BLADE 3   '
   requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInBack: 1
   cardClass: 3
   isZenBlade: 0

@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   effectsInFront:
   - effectType: 0
-    value: 0
-    duration: 0
+    value: 3
     targetType: 2
+    ignoreProtection: 0
   - effectType: 8
-    value: 10
-    duration: 0
+    value: 1
     targetType: 2
+    ignoreProtection: 0
   effectsInBack:
   - effectType: 0
-    value: 0
-    duration: 0
+    value: 3
     targetType: 1
+    ignoreProtection: 0
   - effectType: 8
     value: 10
-    duration: 0
     targetType: 1
+    ignoreProtection: 0
   cardName: 'Bombing Raid  '
   cardType: 0
   cardMana: 1
@@ -38,3 +38,4 @@ MonoBehaviour:
   requiresTargetInFront: 0
   requiresTargetInBack: 1
   cardClass: 2
+  isZenBlade: 0

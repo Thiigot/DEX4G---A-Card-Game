@@ -16,9 +16,10 @@ MonoBehaviour:
   effectsInBack: []
   cardName: 'Rum heals anything  '
   cardType: 1
-  cardMana: 0
+  cardMana: 1
   textInFront: 'Heal Crew. 10% chance to apply Weakness  '
   textInBack: 'Heal Crew. Chance to fail  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
   cardClass: 2
+  isZenBlade: 0
