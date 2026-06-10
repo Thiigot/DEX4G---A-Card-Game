@@ -6,6 +6,8 @@ public abstract class StatusEffect
     public int value;
 
     public abstract StatusType GetTypeID();
+    public virtual bool IsStackable() => true;
+    public virtual void OnStack(int addedValue) { }
     public virtual void OnApply() { }
     public virtual void OnTurnStart() { }
     public virtual void OnTurnEnd() { }
@@ -40,6 +42,7 @@ public class StunEffect : StatusEffect
 {
     public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.Stun;
+    public override bool IsStackable() => false;
     public override void OnApply()
     {
         owner.isStunned = true;
@@ -100,6 +103,7 @@ public class WeaknessEffect : StatusEffect
 /////////  DAMAGEMODIFIER  /////////
 public class DamageModifierEffect : StatusEffect
 {
+    public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.DamageModifier;
     public override void OnDealDamage(ref int damage)
     {
@@ -129,6 +133,7 @@ public class StealthEffect : StatusEffect
 //////////  TAUNT  //////////
 public class TauntEffect : StatusEffect
 {
+    public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.Taunt;
 
     public Unit taunter;
@@ -152,13 +157,33 @@ public class TauntEffect : StatusEffect
 //////////  DODGE  //////////
 public class DodgeEffect : StatusEffect
 {
+    public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.Dodge;
-
-    public override void ModifyDodgeChance(ref float chance)
+    public override bool IsStackable() => true;
+    public override void OnStack(int addedValue)
     {
-        chance += value;
+        value += addedValue;
+        owner.dodgeChance += addedValue;
+    }
+    public override void OnApply()
+    {
+        owner.dodgeChance += value;
     }
 
+    public override void OnTurnEnd()
+    {
+        int decay = 5;
+
+        owner.dodgeChance -= decay;
+        value -= decay;
+    }
+    public override void OnExpire()
+    {
+        owner.dodgeChance -= value;
+        if(owner.dodgeChance < 0)
+            owner.dodgeChance = 0;
+
+    }
 }
 
 //////////  RETALIATE  //////////
@@ -176,11 +201,49 @@ public class RetaliateEffect : StatusEffect
 //////////  CRIT  //////////
 public class CritEffect : StatusEffect
 {
-    public override StatusType GetTypeID() => StatusType.Crit;
+    public override bool ShowValue() => false;
+    public override StatusType GetTypeID()
+        => StatusType.Crit;
 
+    public override bool IsStackable()
+        => true;
+    public override void OnStack(int addedValue)
+    {
+        value += addedValue;
+        owner.critChance += addedValue;
+    }
+    public override void OnApply()
+    {
+        owner.critChance += value;
+    }
     public override void ModifyCritChance(ref float chance)
     {
         chance += value;
     }
 
+    public override void OnTurnEnd()
+    {
+        value -= 10;
+
+        if (value < 0)
+            value = 0;
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+
+
+////////////// IGNORE PROTECTION //////////
+public class IgnoreProtectionEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+    public override StatusType GetTypeID() => StatusType.IgnoreProtection;
+    public override bool IsStackable() => false;
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
 }

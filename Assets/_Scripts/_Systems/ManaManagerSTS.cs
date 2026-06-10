@@ -11,10 +11,15 @@ public class ManaManagerSTS : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text manaText;
-
+    public Unit currentUnit;
     void Awake()
     {
         Instance = this;
+    }
+    public void SetCurrentUnit(Unit unit)
+    {
+        currentUnit = unit;
+        UpdateUI();
     }
 
     void Start()
@@ -24,24 +29,29 @@ public class ManaManagerSTS : MonoBehaviour
 
     public void StartTurn()
     {
-        currentMana = manaPerTurn;
+        if(currentUnit == null)return;
+        currentUnit.currentMana = currentUnit.maxMana;
         UpdateUI();
     }
 
     public bool HasEnoughMana(int cost)
     {
-        return currentMana >= cost;
+        return currentUnit!= null && currentUnit.currentMana >= cost;
     }
 
     public void SpendMana(int cost)
     {
-        currentMana -= cost;
+        currentUnit.currentMana -= cost;
         UpdateUI();
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
-        if (manaText != null)
-            manaText.text = $"Mana: {currentMana}";
+        if (currentUnit == null)
+        {
+            manaText.text = "Mana: 0";
+            return;
+        }
+        manaText.text = $"Mana: {currentUnit.currentMana}/{currentUnit.maxMana}";
     }
 }

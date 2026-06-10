@@ -38,7 +38,15 @@ public class CardDisplay : MonoBehaviour
         cardImage.color = c;
         //CardTexts
         nameText.text = cardData.cardName;
-        manaText.text = cardData.cardMana.ToString();
+
+        if (cardData.isXCost)
+        {
+            manaText.text = "X";
+        }
+        else
+        {
+            manaText.text = cardData.GetCurrentCost().ToString();
+        }
         cardText.text = cardData.GetText(owner);
         //CardType
         for (int i = 0; i < typeImage.Length; i++)

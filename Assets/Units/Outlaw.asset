@@ -20,7 +20,7 @@ MonoBehaviour:
   speed: 3
   baseMana: 3
   critChance: 10
-  dodgeChance: 5
+  dodgeChance: 0
   retaliateChance: 5
   protection: 0
   weakness: 0

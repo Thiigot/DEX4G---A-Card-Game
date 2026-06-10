@@ -7,24 +7,25 @@ namespace CardData
     [CreateAssetMenu(fileName = "New Card", menuName = "Card")] 
     public class Card : ScriptableObject
     {
-        public List<CardEffect> effectsInFront;
-        public List<CardEffect> effectsInBack;
+        [Header("Effects")]
+        public CardSpecialEffect specialEffect;
 
+        [HideInInspector]
+        public int temporaryManaCost = -1;
 
+        [Header("Traits")]
         public string cardName;
         public CardType cardType;
+        public CardClass cardClass;
         public int cardMana;
+        public bool isXCost;
         public string textInFront;
         public string textInBack;
+
+        [Header("Details")]
         public bool requiresTargetInFront;
         public bool requiresTargetInBack;
-        public CardClass cardClass;
         public bool isZenBlade;
-
-        public List<CardEffect> GetEffects(Unit caster)
-        {
-            return caster.IsFrontline() ? effectsInFront : effectsInBack;
-        }
 
         public bool RequiresTarget(Unit caster)
         {
@@ -34,6 +35,27 @@ namespace CardData
         public string GetText(Unit caster)
         {
             return caster.IsFrontline() ? textInFront : textInBack;
+        }
+
+        public void SetTemporaryCost(int cost)
+        {
+            temporaryManaCost = cost;
+
+            Debug.Log(
+                $"[{cardName}] temporaryManaCost -> {cost}\n" +
+                System.Environment.StackTrace
+            );
+        }
+        public void ClearTemporaryCost()
+        {
+            temporaryManaCost = -1;
+        }
+        public int GetCurrentCost()
+        {
+            if (temporaryManaCost >= 0)
+                return temporaryManaCost;
+
+            return cardMana;
         }
     }
     public enum CardType
@@ -53,18 +75,6 @@ namespace CardData
         Jumper
     }
 
-    [System.Serializable]
-    public class CardEffect
-    {
-        public EffectType effectType;
-
-        public int value;
-
-        public TargetType targetType;
-
-        public bool ignoreProtection;
-
-    }
     public enum EffectType
     {
         // básicos

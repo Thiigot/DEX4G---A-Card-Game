@@ -10,5 +10,6 @@ public enum StatusType
     Retaliate,
     Dodge,
     DamageModifier,
-    Crit
+    Crit,
+    IgnoreProtection
 }

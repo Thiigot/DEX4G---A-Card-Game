@@ -3,10 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public class CardMovement : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler,
-    IPointerEnterHandler, IPointerExitHandler
+public class CardMovement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private RectTransform rectTransform;
     private Canvas canvas;
@@ -307,9 +304,9 @@ public class CardMovement : MonoBehaviour,
                 return;
             }
 
-            int cost = display.cardData.cardMana;
+            int cost = display.cardData.GetCurrentCost();
 
-            // ❌ SEM MANA
+            //SEM MANA
             if (!manaManager.HasEnoughMana(cost))
             {
                 ReturnToHandSafe();
@@ -324,7 +321,7 @@ public class CardMovement : MonoBehaviour,
 
             bool needsManualTarget = display.cardData.RequiresTarget(handManager.owner);
 
-            // 🔥 CARTA COM TARGET
+            //CARTA COM TARGET
             if (needsManualTarget)
             {
                 
@@ -352,7 +349,7 @@ public class CardMovement : MonoBehaviour,
                             target = targetUnit,
                             isFront = true
                         };
-                        handManager.owner.PlayCard(display.cardData,ctx,gameObject);
+                        StartCoroutine(handManager.owner.PlayCard(display.cardData,ctx,gameObject));
                         StopPulse();
                     },
 
@@ -372,7 +369,7 @@ public class CardMovement : MonoBehaviour,
             }
             else
             {
-                // 🔥 SEM TARGET
+                //SEM TARGET
                 CardExecutionContext ctx = new CardExecutionContext
                 {
                     target = null,
@@ -381,7 +378,7 @@ public class CardMovement : MonoBehaviour,
 
                 manaManager.SpendMana(cost);
                 PlayArea.HasCardInPlay = false;
-                handManager.owner.PlayCard(display.cardData, ctx, gameObject);
+                StartCoroutine(handManager.owner.PlayCard(display.cardData, ctx, gameObject));
                 EndDragCleanup();
                 return;
             }

@@ -45,6 +45,10 @@ public class Unit : MonoBehaviour
     public bool isPlayer;
     public bool hasStartedCombat = false;
 
+    [Header("Turn Stats")]
+    public int cardsDrawnThisTurn;
+    public bool dodgedSinceLastTurn;
+
     [Header("Flash variables")]
     private bool isFlashing = false;
     private float flashTimer = 0f;
@@ -149,13 +153,15 @@ public class Unit : MonoBehaviour
         }
 
         int finalDamage = amount;
+        bool shouldIgnoreProtection = ignoreProtection || (attacker != null && attacker.HasIgnoreProtection());
 
-        if (!ignoreProtection)
+        if (!shouldIgnoreProtection)
         {
             finalDamage = Mathf.RoundToInt(finalDamage * (1f - protection / 100f));
             foreach (var effect in activeEffects)
                 effect.OnReceiveDamage(ref finalDamage, type);
         }
+
         finalDamage = Mathf.Max(0, finalDamage);
         currentHP -= finalDamage;
 
@@ -167,7 +173,7 @@ public class Unit : MonoBehaviour
 
         UpdateUI();
     }
-    public int ModifyOutgoingDamage(int damage)
+    public int ModifyOutgoingDamage(int damage, bool allowCrit = false)
     {
         int finalDamage = damage;
 
@@ -176,9 +182,9 @@ public class Unit : MonoBehaviour
         foreach (var effect in activeEffects)
             effect.OnDealDamage(ref finalDamage);
 
-        if (TryCrit())
+        if (allowCrit && TryCrit())
         {
-            finalDamage = Mathf.RoundToInt(finalDamage * 2f);
+            finalDamage *= 2;
             Debug.Log($"{unitName} CRITICAL HIT!");
         }
         
@@ -196,6 +202,7 @@ public class Unit : MonoBehaviour
     #region TURN
     public IEnumerator TakeTurn()
     {
+        cardsDrawnThisTurn = 0;
         ProcessTurnStart();
 
         if (isStunned)
@@ -213,6 +220,7 @@ public class Unit : MonoBehaviour
     IEnumerator PlayerTurn()
     {
         handManager.owner = this;
+        manaManager.SetCurrentUnit(this);
         TurnManager.Instance.playerFinishedTurn = false;
         manaManager.StartTurn();
         if (!hasStartedCombat)
@@ -247,7 +255,7 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region CARDS
-    public void PlayCard(Card card, CardExecutionContext context, GameObject cardObj)
+    public IEnumerator PlayCard(Card card, CardExecutionContext context, GameObject cardObj)
     {
         if (hand.Contains(card))
             hand.Remove(card);
@@ -255,16 +263,47 @@ public class Unit : MonoBehaviour
         context.caster = this;
         context.isFront = IsFrontline();
 
-        CardEffectExecutor.ExecuteCard(this,context.target, card);
+        yield return CardEffectExecutor.ExecuteCardCoroutine(
+        this,
+        context.target,
+        card
+    );
+        //CardEffectExecutor.ExecuteCard(this,context.target, card);
 
         deckManager.AddToDiscard(card);
-        deckManager.StartCoroutine(deckManager.AnimateDiscard(cardObj));
+        yield return deckManager.AnimateDiscard(cardObj);
+        //deckManager.StartCoroutine(deckManager.AnimateDiscard(cardObj));
         deckUI.UpdateUI();
     }
+
+    public IEnumerator PlayCardFree(Card card)
+    {
+        Unit autoTarget =
+            CardEffectExecutor.GetAutomaticTarget(
+                this,
+                card
+            );
+
+        yield return CardEffectExecutor.ExecuteCardCoroutine(
+            this,
+            autoTarget,
+            card
+        );
+
+        deckManager.AddToDiscard(card);
+    }
+
     public void DrawCards(int amount)
     {
         StartCoroutine(DrawCardsAnimated(amount));
     }
+    public IEnumerator DrawCardsAnimatedPublic(int amount)
+    {
+        yield return StartCoroutine(
+            DrawCardsAnimated(amount)
+        );
+    }
+
     IEnumerator DrawCardsAnimated(int amount)
     {
         for (int i = 0; i < amount; i++)
@@ -274,10 +313,13 @@ public class Unit : MonoBehaviour
             if (c != null)
             {
                 hand.Add(c);
-                deckUI.UpdateUI();
-                yield return StartCoroutine(
-                    handManager.AnimateDrawCard(c, deckManager.deckPoint)
-                );
+                cardsDrawnThisTurn++;
+
+                yield return StartCoroutine(handManager.AnimateDrawCard(c,deckManager.deckPoint));
+                CardSpecialEffect effect = c.specialEffect;
+                if(c.specialEffect != null)
+                    yield return StartCoroutine(effect.OnDraw(this, c));
+
                 deckUI.UpdateUI();
                 yield return new WaitForSeconds(0.1f); // delay entre cartas
             }
@@ -287,10 +329,48 @@ public class Unit : MonoBehaviour
     {
         handManager.ClearHandVisual();
     }
+    public IEnumerator DrawSingleCard(System.Action<Card> onCardDrawn)
+    {
+        Card c = deckManager.DrawCard();
+
+        if (c == null)
+        {
+            onCardDrawn?.Invoke(null);
+            yield break;
+        }
+
+        hand.Add(c);
+        cardsDrawnThisTurn++;
+
+        yield return StartCoroutine(
+            handManager.AnimateDrawCard(
+                c,
+                deckManager.deckPoint
+            )
+        );
+
+        if (c.specialEffect != null)
+        {
+            yield return StartCoroutine(
+                c.specialEffect.OnDraw(this, c)
+            );
+        }
+
+        deckUI.UpdateUI();
+
+        onCardDrawn?.Invoke(c);
+    }
     #endregion
 
     #region STATUS SYSTEM
-    bool TryCrit()
+
+    public bool HasIgnoreProtection()
+    {
+        return activeEffects.Exists(
+        e => e is IgnoreProtectionEffect
+    );
+    }
+    public bool TryCrit()
     {
         float chance = critChance;
         foreach(var effect in activeEffects)
@@ -302,12 +382,20 @@ public class Unit : MonoBehaviour
     bool TryDodge()
     {
         float chance = dodgeChance;
+
         foreach (var effect in activeEffects)
             effect.ModifyDodgeChance(ref chance);
 
         chance = Mathf.Clamp(chance, 0f, 100f);
-        
-        return chance > 0f && Random.value * 100f < chance;
+
+        bool dodged =
+            chance > 0f &&
+            Random.value * 100f < chance;
+
+        if (dodged)
+            dodgedSinceLastTurn = true;
+
+        return dodged;
     }
     void TryRetaliate(Unit attacker)
     {
@@ -341,7 +429,21 @@ public class Unit : MonoBehaviour
         {
             if (effect.GetTypeID() == neweffect.GetTypeID())
             {
+                if(effect is DodgeEffect)
+                {
+                    effect.value += neweffect.value;
+                    dodgeChance += neweffect.value;
+                    UpdateStatusUI();
+                    return;
+                }
+                if (effect is CritEffect)
+                {
+                    effect.value += neweffect.value;
+                    critChance += neweffect.value;
 
+                    UpdateStatusUI();
+                    return;
+                }
                 // 🔥 TAUNT atualiza valor
                 if (effect is TauntEffect taunt &&
                     neweffect is TauntEffect newTaunt)
@@ -353,7 +455,14 @@ public class Unit : MonoBehaviour
                 }
 
                 // 🔥 STATUS STACKÁVEIS
-                effect.value += neweffect.value;
+                if (effect.IsStackable())
+                {
+                    effect.OnStack(neweffect.value);
+                }
+                else
+                {
+                    effect.value = Mathf.Max(effect.value, neweffect.value);
+                }
                 UpdateStatusUI();
                 return;
             }
@@ -378,6 +487,9 @@ public class Unit : MonoBehaviour
             effect.OnTurnEnd();
 
         CleanupEffects();
+        dodgedSinceLastTurn = false;
+        deckManager.ResetTemporaryCosts();
+        handManager.RefreshHandVisual();
     }
     void CleanupEffects()
     {

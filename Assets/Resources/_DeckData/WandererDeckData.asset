@@ -38,8 +38,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6cc345af160c2d94fb070a377e969e75, type: 2}
   startingDeck:
   - {fileID: 11400000, guid: 32f653c7fa92c2646b60b3b84b09139d, type: 2}
-  - {fileID: 11400000, guid: 99feceaedb9b88e46babb08cdb0ad210, type: 2}
+  - {fileID: 11400000, guid: 18ebacb677260eb489c51ae9862eaf09, type: 2}
+  - {fileID: 11400000, guid: f7b7d0b5187264a4bad6bf0a43eaf36c, type: 2}
+  - {fileID: 11400000, guid: d9b3c41d45efa7342a5dfe4e35f912dd, type: 2}
   - {fileID: 11400000, guid: 656e43d9f8a82b44a9e88760026cc62a, type: 2}
+  - {fileID: 11400000, guid: 6d37e076d23abe04fb996ad9c4046a87, type: 2}
   - {fileID: 11400000, guid: 6ca9322b81983ab4da4372321cea2333, type: 2}
+  - {fileID: 11400000, guid: e859c0b4996f1054c9ee7c14678754ef, type: 2}
+  - {fileID: 11400000, guid: b1e83f03c569ecc4fbecf53a76a15359, type: 2}
   - {fileID: 11400000, guid: e26efaa5acb42a1439369e7a0333b096, type: 2}
-  - {fileID: 11400000, guid: 5b624c2efe64a6e4ea28e46f3db89da8, type: 2}

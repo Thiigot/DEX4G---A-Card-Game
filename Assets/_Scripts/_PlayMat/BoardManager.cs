@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class BoardManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class BoardManager : MonoBehaviour
         int currentIndex = sideSlots.IndexOf(unit.CurrentSlot);
         if (currentIndex < 0) return false;
 
-        int direction = forward ? 1 : -1;
+        int direction = forward ? -1 : 1;
         int targetIndex = Mathf.Clamp(currentIndex + direction * steps, 0, sideSlots.Count - 1);
 
         if (targetIndex == currentIndex) return false;
@@ -61,7 +62,7 @@ public class BoardManager : MonoBehaviour
             currentSlot.SetUnit(otherUnit);
             otherUnit.transform.position = currentSlot.transform.position;
         }
-
+        Debug.Log($"{unit.unitName} moveu de {currentIndex} para {targetIndex}.");
         return true;
     }
 

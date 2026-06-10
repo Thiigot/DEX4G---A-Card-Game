@@ -424,8 +424,14 @@ MonoBehaviour:
   currentMana: 0
   maxMana: 0
   maxHP: 0
+  critChance: 0
+  dodgeChance: 0
+  retaliateChance: 0
+  protection: 0
+  weakness: 0
   isPlayer: 0
   hasStartedCombat: 0
+  cardsDrawnThisTurn: 0
   hpText: {fileID: 5432736274811016080}
   spriteRenderer: {fileID: 2377754664896391629}
   statusContainer: {fileID: 2722247129713503148}
@@ -445,8 +451,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   discard: []
   deck: []
+  exile: []
   deckPoint: {fileID: 0}
   discardPile: {fileID: 0}
   startingHandSize: 5
   handManager: {fileID: 0}
   warningUI: {fileID: 0}
+  zenBladeCard: {fileID: 11400000, guid: cdb305fbf8509984f8b6b6bb49b5aff0, type: 2}

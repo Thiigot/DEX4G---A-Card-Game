@@ -8,7 +8,7 @@ public class HandManager : MonoBehaviour
     [Header("Card Prefab")]
     public List<Transform> cards = new List<Transform>();
     public GameObject cardPrefab;
-    private ManaManagerSTS manaManager;
+    public ManaManagerSTS manaManager;
 
     [Header("Layout")]
     public float spacing = 170f;
@@ -30,6 +30,14 @@ public class HandManager : MonoBehaviour
     public int maxHandSize = 10;
 
     public Unit owner;
+
+    [Header("Select")]
+    public bool isSelectingCards;
+    public int cardsToSelect;
+    public List<Card> selectedCards = new List<Card>();
+    private List<GameObject> selectedObjects = new List<GameObject>();
+    public bool waitingConfirm;
+    [SerializeField] private GameObject confirmButton;
 
     public void SetOwner(Unit unit)
     {
@@ -54,7 +62,7 @@ public class HandManager : MonoBehaviour
         {
             CardMovement cm = child.GetComponent<CardMovement>();
 
-            if (cm != null && child.parent == transform) // 🔥 garantia extra
+            if (cm != null && child.parent == transform)
                 cards.Add(child);
         }
     }
@@ -139,7 +147,7 @@ public class HandManager : MonoBehaviour
         }
     }
 
-    void UpdateManaVisuals()
+    public void UpdateManaVisuals()
     {
         if (owner == null) return;
         if (manaManager == null) return;
@@ -149,8 +157,8 @@ public class HandManager : MonoBehaviour
             CardDisplay display = card.GetComponent<CardDisplay>();
             if (display == null) continue;
             if (display.cardData == null) continue;
-            int cost = display.cardData.cardMana;
-            bool canPlay = manaManager.currentMana >= cost;
+            int cost = display.cardData.GetCurrentCost();
+            bool canPlay = manaManager.HasEnoughMana(cost);
 
             display.UpdateManaVisual(canPlay);
         }
@@ -245,6 +253,7 @@ public class HandManager : MonoBehaviour
             yield return null;
         }
 
+        
         // 🔹 5. Entra na mão (sem teleport)
         obj.transform.SetParent(transform, true);
     }
@@ -260,5 +269,61 @@ public class HandManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void RemoveCardVisual(Card card)
+    {
+        GameObject cardObj = GetCardObject(card);
+
+        if (cardObj != null)
+        {
+            cards.Remove(cardObj.transform);
+            Destroy(cardObj);
+        }
+    }
+
+    public void RefreshHandVisual()
+    {
+        if (owner == null)
+            return;
+
+        ShowHand(owner.hand);
+    }
+
+    public void RefreshCardVisual(Card card)
+    {
+        GameObject obj = GetCardObject(card);
+
+        Debug.Log($"Refreshando {card.cardName}");
+
+        if (obj == null)
+        {
+            Debug.Log("OBJ NÃO ENCONTRADO");
+            return;
+        }
+
+        Debug.Log("OBJ ENCONTRADO");
+
+        CardDisplay display =
+            obj.GetComponent<CardDisplay>();
+
+        if (display != null)
+        {
+            display.UpdateCardDisplay();
+            Debug.Log("DISPLAY ATUALIZADO");
+        }
+            
+    }
+
+    public IEnumerator DiscardCardVisual(Card card, DeckManager deckManager)
+    {
+        GameObject cardObj = GetCardObject(card);
+
+        if (cardObj == null)
+            yield break;
+
+        yield return deckManager.AnimateDiscard(cardObj);
+
+        Destroy(cardObj);
     }
 }

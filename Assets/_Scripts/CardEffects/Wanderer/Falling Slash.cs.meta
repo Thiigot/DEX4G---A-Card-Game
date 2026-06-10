@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 74ec87d965a7d2e48bf7c11bcda52bd5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - zenBladeCard: {fileID: 11400000, guid: cdb305fbf8509984f8b6b6bb49b5aff0, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

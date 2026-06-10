@@ -12,18 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: "Ronin\u2019s Path"
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack:
-  - effectType: 0
-    value: 4
-    targetType: 1
-    ignoreProtection: 0
+  specialEffect: {fileID: 11400000, guid: 8ea4a7cfd96f34041bdc841efa77098c, type: 2}
+  temporaryManaCost: -1
   cardName: "Ronin\u2019s Path  "
   cardType: 3
+  cardClass: 3
   cardMana: 1
+  isXCost: 0
   textInFront: 'Passive: +10% Dodge | ZEN BLADE gains: ZEN BLADE 3   '
   textInBack: 'Passive: +10% Dodge | ZEN BLADE gains: ZEN BLADE 3   '
   requiresTargetInFront: 0
-  requiresTargetInBack: 1
-  cardClass: 3
+  requiresTargetInBack: 0
   isZenBlade: 0

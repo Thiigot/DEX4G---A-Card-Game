@@ -2617,6 +2617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   cards: []
   cardPrefab: {fileID: 8482271158423760824, guid: 7077e2d5b84ef5c4cb174c372720b06d, type: 3}
+  manaManager: {fileID: 0}
   spacing: 170
   curveHeight: 50
   maxAngle: 10
@@ -2627,6 +2628,11 @@ MonoBehaviour:
   handYThreshold: 25
   maxHandSize: 10
   owner: {fileID: 0}
+  isSelectingCards: 0
+  cardsToSelect: 0
+  selectedCards: []
+  waitingConfirm: 0
+  confirmButton: {fileID: 0}
 --- !u!1 &967800955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3747,6 +3753,7 @@ MonoBehaviour:
   currentMana: 0
   manaPerTurn: 3
   manaText: {fileID: 1698835217}
+  currentUnit: {fileID: 0}
 --- !u!1 &1288982674
 GameObject:
   m_ObjectHideFlags: 0

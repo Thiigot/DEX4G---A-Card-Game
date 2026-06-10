@@ -9,13 +9,15 @@ public class DeckManager : MonoBehaviour
 {
     public List<Card> discard = new List<Card>();
     public List<Card> deck = new List<Card>();
+    public List<Card> exile = new List<Card>();
+
     public Transform deckPoint;
     public Transform discardPile;
     DeckUIManager deckUI;
     public int startingHandSize = 5;
-
     [SerializeField] private HandManager handManager;
     [SerializeField] private WarningUI warningUI;
+    [SerializeField] private Card zenBladeCard;
 
     public Action OnDeckChanged;
     private void Awake()
@@ -26,8 +28,11 @@ public class DeckManager : MonoBehaviour
     {
         this.handManager = hand;
         this.warningUI = FindAnyObjectByType<WarningUI>();
+        deckUI = FindAnyObjectByType<DeckUIManager>();
         LoadDeck(owner);
         ShuffleDeck();
+
+        ResetTemporaryCosts();
 
         OnDeckChanged?.Invoke();
     }
@@ -59,13 +64,13 @@ public class DeckManager : MonoBehaviour
 
     public Card DrawCard()
     {
-        if (TargetManager.isTargeting)
-        {
-            if (warningUI != null)
-                warningUI.Show("Select Target!");
-            handManager.ShakeHand();
-            return null;
-        }
+        //if (TargetManager.isTargeting)
+        //{
+        //    if (warningUI != null)
+        //        warningUI.Show("Select Target!");
+        //    handManager.ShakeHand();
+        //    return null;
+        //}
 
         if (handManager.owner.hand.Count >= handManager.maxHandSize)
         {
@@ -94,7 +99,7 @@ public class DeckManager : MonoBehaviour
     {
         discard.Add(card);
     }
-    void Reshuffle()
+    public void Reshuffle()
     {
         deck.AddRange(discard);
         discard.Clear();
@@ -130,48 +135,103 @@ public class DeckManager : MonoBehaviour
             cardObj.SetActive(false);
     }
 
-    #region ZEN BLADES
-    public List<Card> GetAllZenBladeCards()
+
+    public void BanishCard(Card card, Unit owner)
     {
-        List<Card> result = new List<Card>();
+        deck.Remove(card);
+        discard.Remove(card);
+        owner.hand.Remove(card);
 
-        foreach (var card in deck)
-            if (card.isZenBlade)
-                result.Add(card);
-
-        foreach (var card in discard)
-            if (card.isZenBlade)
-                result.Add(card);
-
-        foreach (var card in handManager.owner.hand)
-            if (card.isZenBlade)
-                result.Add(card);
-
-        return result;
+        exile.Add(card);
+        owner.handManager.RemoveCardVisual(card);
     }
 
-    public void AddCardToDeck(Card original)
+    public void AddCardToDeck(Card card)
     {
-        Card copy = Instantiate(original);
-        deck.Add(copy);
+        if (card == null)
+            return;
+
+        deck.Add(card);
+        ShuffleDeck();
+        deckUI.UpdateUI();
     }
 
-    public void ConvertZenBladeToHeal()
+    public void ZenBladeGen(int amount, Unit caster)
     {
-        foreach (var card in deck)
+        for (int i = 0; i < amount; i++)
         {
-            if (card.isZenBlade)
-            {
-                card.effectsInFront.Clear();
-
-                card.effectsInFront.Add(new CardEffect
-                {
-                    effectType = EffectType.Heal,
-                    value = 10,
-                    targetType = TargetType.Self
-                });
-            }
+            caster.deckManager.AddCardToDeck(zenBladeCard);
         }
     }
-    #endregion
+    public Card PeekTopCard()
+    {
+        if (deck.Count == 0)
+            return null;
+
+        return deck[0];
+    }
+    public Card DrawTopCard()
+    {
+        if (deck.Count == 0)
+            return null;
+
+        Card card = deck[0];
+        deck.RemoveAt(0);
+
+        return card;
+    }
+
+    public void ResetTemporaryCosts()
+    {
+
+        foreach (Card card in deck)
+        {
+            if (card == null)
+            {
+                continue;
+            }
+
+            card.ClearTemporaryCost();
+        }
+
+        foreach (Card card in discard)
+        {
+            if (card == null)
+            {
+                continue;
+            }
+
+            card.ClearTemporaryCost();
+        }
+
+        foreach (Card card in exile)
+        {
+            if (card == null)
+            {
+                continue;
+            }
+
+            card.ClearTemporaryCost();
+        }
+
+        if (handManager != null &&
+            handManager.owner != null &&
+            handManager.owner.hand != null)
+        {
+            for (int i = handManager.owner.hand.Count - 1; i >= 0; i--)
+            {
+                Card card = handManager.owner.hand[i];
+
+                if (card == null)
+                {
+                    handManager.owner.hand.RemoveAt(i);
+                    continue;
+                }
+
+                card.ClearTemporaryCost();
+            }
+        }
+
+        deckUI?.UpdateUI();
+    }
 }
