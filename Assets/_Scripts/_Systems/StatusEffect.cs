@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public abstract class StatusEffect
 {
@@ -124,7 +125,7 @@ public class StealthEffect : StatusEffect
         owner.isStealthed = false;
     }
 
-    public override void OnTurnEnd()
+    public override void OnTurnStart()
     {
         value--;
     }
@@ -245,5 +246,27 @@ public class IgnoreProtectionEffect : StatusEffect
     public override void OnTurnEnd()
     {
         value--;
+    }
+}
+
+////////////// NEXTATTACKBONUS ////////////
+public class NextAttackBonusEffect : StatusEffect
+{
+    public float multiplier = 1f;
+    bool consumed;
+    public override StatusType GetTypeID()=> StatusType.NextDamage;
+
+    public override void OnDealDamage(ref int damage)
+    {
+        if (consumed) return;
+        damage = Mathf.RoundToInt(damage * multiplier);
+
+        consumed = true;
+        value = 0; // consome o efeito
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
     }
 }

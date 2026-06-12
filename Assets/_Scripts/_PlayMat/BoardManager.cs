@@ -62,7 +62,7 @@ public class BoardManager : MonoBehaviour
             currentSlot.SetUnit(otherUnit);
             otherUnit.transform.position = currentSlot.transform.position;
         }
-        Debug.Log($"{unit.unitName} moveu de {currentIndex} para {targetIndex}.");
+
         return true;
     }
 

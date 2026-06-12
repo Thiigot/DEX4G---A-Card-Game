@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Focus Circuit
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  specialEffect: {fileID: 11400000, guid: 8ea4a7cfd96f34041bdc841efa77098c, type: 2}
+  specialEffect: {fileID: 11400000, guid: fdf676214eb0df44b84a3e0c75abf15f, type: 2}
   temporaryManaCost: -1
   cardName: 'Focus Circuit  '
   cardType: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Falling Slash
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  specialEffect: {fileID: 11400000, guid: 8ea4a7cfd96f34041bdc841efa77098c, type: 2}
+  specialEffect: {fileID: 11400000, guid: 406b6bd2e18cf354987779000686c810, type: 2}
   temporaryManaCost: -1
   cardName: 'Falling Slash  '
   cardType: 0
@@ -21,6 +21,6 @@ MonoBehaviour:
   isXCost: 0
   textInFront: 'Attack, Retreat 2 and ZEN BLADE 2  '
   textInBack: 'Attack, Draw 2 and ZEN BLADE 2  '
-  requiresTargetInFront: 0
-  requiresTargetInBack: 0
+  requiresTargetInFront: 1
+  requiresTargetInBack: 1
   isZenBlade: 0

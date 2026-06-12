@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CardData
 {
-    [CreateAssetMenu(fileName = "New Card", menuName = "Card")] 
+    [CreateAssetMenu(menuName = "Card/New Card")] 
     public class Card : ScriptableObject
     {
         [Header("Effects")]
@@ -40,11 +40,6 @@ namespace CardData
         public void SetTemporaryCost(int cost)
         {
             temporaryManaCost = cost;
-
-            Debug.Log(
-                $"[{cardName}] temporaryManaCost -> {cost}\n" +
-                System.Environment.StackTrace
-            );
         }
         public void ClearTemporaryCost()
         {

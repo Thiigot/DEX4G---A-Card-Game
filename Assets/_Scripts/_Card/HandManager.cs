@@ -326,4 +326,15 @@ public class HandManager : MonoBehaviour
 
         Destroy(cardObj);
     }
+
+    public void RefreshAllCardTexts()
+    {
+        foreach (Transform child in transform)
+        {
+            CardDisplay display = child.GetComponent<CardDisplay>();
+
+            if (display != null)
+                display.UpdateCardDisplay();
+        }
+    }
 }

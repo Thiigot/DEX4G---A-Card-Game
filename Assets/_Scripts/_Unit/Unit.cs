@@ -173,7 +173,7 @@ public class Unit : MonoBehaviour
 
         UpdateUI();
     }
-    public int ModifyOutgoingDamage(int damage, bool allowCrit = false)
+    public int ModifyOutgoingDamage(int damage, bool allowCrit = true)
     {
         int finalDamage = damage;
 
@@ -252,6 +252,28 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(2f);
         ProcessTurnEnd();
     }
+    public void ProcessTurnStart()
+    {
+        foreach (var effect in activeEffects)
+            effect.OnTurnStart();
+
+        CleanupEffects();
+
+        if(handManager != null)
+            handManager.RefreshAllCardTexts();
+    }
+    public void ProcessTurnEnd()
+    {
+        foreach (var effect in activeEffects)
+            effect.OnTurnEnd();
+
+        CleanupEffects();
+        dodgedSinceLastTurn = false;
+        deckManager.ResetTemporaryCosts();
+        handManager.RefreshHandVisual();
+        if (handManager != null)
+            handManager.RefreshAllCardTexts();
+    }
     #endregion
 
     #region CARDS
@@ -263,16 +285,12 @@ public class Unit : MonoBehaviour
         context.caster = this;
         context.isFront = IsFrontline();
 
-        yield return CardEffectExecutor.ExecuteCardCoroutine(
-        this,
-        context.target,
-        card
-    );
-        //CardEffectExecutor.ExecuteCard(this,context.target, card);
+        yield return CardEffectExecutor.ExecuteCardCoroutine(this, context.target, card);
+
+        handManager.RefreshAllCardTexts();
 
         deckManager.AddToDiscard(card);
         yield return deckManager.AnimateDiscard(cardObj);
-        //deckManager.StartCoroutine(deckManager.AnimateDiscard(cardObj));
         deckUI.UpdateUI();
     }
 
@@ -363,6 +381,17 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region STATUS SYSTEM
+
+    public T GetStatus<T>() where T : StatusEffect
+    {
+        foreach (var effect in activeEffects)
+        {
+            if (effect is T typed)
+                return typed;
+        }
+
+        return null;
+    }
 
     public bool HasIgnoreProtection()
     {
@@ -474,23 +503,6 @@ public class Unit : MonoBehaviour
 
         UpdateStatusUI();
     }
-    public void ProcessTurnStart()
-    {
-        foreach (var effect in activeEffects)
-            effect.OnTurnStart();
-
-        CleanupEffects();
-    }
-    public void ProcessTurnEnd()
-    {
-        foreach (var effect in activeEffects)
-            effect.OnTurnEnd();
-
-        CleanupEffects();
-        dodgedSinceLastTurn = false;
-        deckManager.ResetTemporaryCosts();
-        handManager.RefreshHandVisual();
-    }
     void CleanupEffects()
     {
         for (int i = activeEffects.Count - 1; i >= 0; i--)
@@ -507,7 +519,7 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region UI
-    void UpdateStatusUI()
+    public void UpdateStatusUI()
     {
         // limpa antigos
         foreach (var obj in spawnedIcons)
