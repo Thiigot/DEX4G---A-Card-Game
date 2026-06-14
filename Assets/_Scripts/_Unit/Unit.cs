@@ -48,6 +48,10 @@ public class Unit : MonoBehaviour
     [Header("Turn Stats")]
     public int cardsDrawnThisTurn;
     public bool dodgedSinceLastTurn;
+    public bool hasExtraTurn;
+
+    public bool isChanneling;
+    public System.Action channelResolveAction;
 
     [Header("Flash variables")]
     private bool isFlashing = false;
@@ -165,6 +169,14 @@ public class Unit : MonoBehaviour
         finalDamage = Mathf.Max(0, finalDamage);
         currentHP -= finalDamage;
 
+        foreach (var effect in activeEffects)
+        {
+            effect.OnOwnerDamaged(
+                attacker,
+                finalDamage
+            );
+        }
+
         if (currentHP <= 0)
             Die();
 
@@ -205,9 +217,8 @@ public class Unit : MonoBehaviour
         cardsDrawnThisTurn = 0;
         ProcessTurnStart();
 
-        if (isStunned)
+        if (isStunned || isChanneling)
         {
-            Debug.Log($"{unitName} está stunado!");
             ProcessTurnEnd();
             yield break;
         }
@@ -393,6 +404,29 @@ public class Unit : MonoBehaviour
         return null;
     }
 
+    public void RemoveStatus<T>() where T : StatusEffect
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            if (activeEffects[i] is T)
+            {
+                activeEffects[i].OnExpire();
+                activeEffects.RemoveAt(i);
+            }
+        }
+
+        UpdateStatusUI();
+    }
+    public int GetBleedStacks()
+    {
+        foreach (var effect in activeEffects)
+        {
+            if (effect is BleedEffect bleed)
+                return bleed.value;
+        }
+
+        return 0;
+    }
     public bool HasIgnoreProtection()
     {
         return activeEffects.Exists(

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Improvised Cage
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 34787e906cda4a449bc7a9da01da9239, type: 2}
+  temporaryManaCost: -1
   cardName: 'Improvised Cage  '
   cardType: 1
-  cardMana: 3
+  cardClass: 1
+  cardMana: 2
+  isXCost: 0
   textInFront: 'Stun an Enemy. If Bleeding, Gain an Extra Turn  '
   textInBack: 'Stun an Enemy. If Marked, Gain an Extra Turn  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 1
+  isZenBlade: 0

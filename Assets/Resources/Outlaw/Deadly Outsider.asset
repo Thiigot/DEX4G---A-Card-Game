@@ -12,42 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Deadly Outsider
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront:
-  - effectType: 14
-    value: 5
-    targetType: 1
-    ignoreProtection: 0
-  - effectType: 4
-    value: 1
-    targetType: 0
-    ignoreProtection: 0
-  - effectType: 17
-    value: 5
-    targetType: 0
-    ignoreProtection: 0
-  effectsInBack:
-  - effectType: 7
-    value: 3
-    targetType: 1
-    ignoreProtection: 0
-  - effectType: 0
-    value: 3
-    targetType: 1
-    ignoreProtection: 0
-  - effectType: 0
-    value: 3
-    targetType: 1
-    ignoreProtection: 0
-  - effectType: 0
-    value: 3
-    targetType: 1
-    ignoreProtection: 0
-  specialEffectInFront: []
-  specialEffectInBack: []
+  specialEffect: {fileID: 11400000, guid: ebdb554a80fc1dc4391d0083919ebcf0, type: 2}
+  temporaryManaCost: -1
   cardName: 'Deadly Outsider  '
   cardType: 0
   cardClass: 1
   cardMana: 1
+  isXCost: 0
   textInFront: 'Execute enemy with Bleed 5+. +1 Energy and gains Crit  '
   textInBack: 'Mark an enemy and attack 3x. If fatal, +1 Energy and Draw 1  '
   requiresTargetInFront: 1

@@ -25,33 +25,8 @@ public class ZenCPUEffect : CardSpecialEffect
             yield return new WaitForSeconds(0.2f);
 
             //DISCARD 2 (RANDOM)
-            #region DISCARD
+
             int discardAmount = Mathf.Min(2, caster.hand.Count);
-
-            //for (int i = 0; i < discardAmount; i++)
-            //{
-            //    int randomIndex =
-            //        Random.Range(0, caster.hand.Count);
-
-            //    Card discardedCard =
-            //        caster.hand[randomIndex];
-
-            //    caster.hand.RemoveAt(randomIndex);
-
-            //    caster.deckManager.AddToDiscard(
-            //        discardedCard
-            //    );
-
-            //    yield return caster.StartCoroutine(
-            //        caster.handManager.DiscardCardVisual(
-            //            discardedCard,
-            //            caster.deckManager
-            //        )
-            //    );
-
-            //    yield return new WaitForSeconds(0.1f);
-            //}
-            #endregion
 
             List<Card> possibleDiscards = new List<Card>(caster.hand);
             for (int i = 0; i < discardAmount; i++)

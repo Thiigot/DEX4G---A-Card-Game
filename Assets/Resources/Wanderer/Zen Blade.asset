@@ -17,7 +17,7 @@ MonoBehaviour:
   cardName: Zen Blade
   cardType: 0
   cardClass: 3
-  cardMana: 1
+  cardMana: 0
   isXCost: 0
   textInFront: 'On Draw, attack a random Enemy, Draw 1. Consume  '
   textInBack: 'On Draw, attack a random Enemy, Draw 1. Consume  '

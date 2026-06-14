@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Dust Track
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 4f67eb21d2840554bbdf2618f5f98ab7, type: 2}
+  temporaryManaCost: -1
   cardName: 'Dust Track  '
   cardType: 1
+  cardClass: 1
   cardMana: 0
+  isXCost: 0
   textInFront: 'Retreat 1. If the enemy is Bleeding, gain Stealth and Crit  '
   textInBack: 'Charge 1. If the enemy is Marked, Draw 1 and Gain Speed.  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 1
+  isZenBlade: 0

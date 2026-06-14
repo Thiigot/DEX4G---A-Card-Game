@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Stab Ribs
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 6c4ba43a2f15c114d86b335a0c93ce05, type: 2}
+  temporaryManaCost: -1
   cardName: 'Stab Ribs  '
   cardType: 1
+  cardClass: 1
   cardMana: 0
+  isXCost: 0
   textInFront: 'Heavy Bleed for 3 turns  '
   textInBack: 'Charge 2 and Apply Bleed  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 1
+  isZenBlade: 0

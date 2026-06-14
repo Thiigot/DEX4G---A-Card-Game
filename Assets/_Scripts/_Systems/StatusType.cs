@@ -1,6 +1,7 @@
 public enum StatusType
 {
     Bleed,
+    HeavyBleed,
     Stun,
     Mark,
     Weakness,
@@ -12,5 +13,7 @@ public enum StatusType
     DamageModifier,
     NextDamage,
     Crit,
-    IgnoreProtection
+    IgnoreProtection,
+    Channel,
+    Special
 }

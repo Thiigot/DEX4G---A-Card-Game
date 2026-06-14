@@ -12,22 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Cold bullet
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront:
-  - effectType: 6
-    value: 5
-    targetType: 1
-    ignoreProtection: 0
-  effectsInBack:
-  - effectType: 7
-    value: 5
-    targetType: 1
-    ignoreProtection: 0
-  specialEffectInFront: []
-  specialEffectInBack: []
+  specialEffect: {fileID: 11400000, guid: 7a472ce29b9b154438ffcab332ec157e, type: 2}
+  temporaryManaCost: -1
   cardName: 'Cold bullet  '
   cardType: 1
   cardClass: 1
   cardMana: 1
+  isXCost: 0
   textInFront: 'Double Bleed  '
   textInBack: 'Double Mark  '
   requiresTargetInFront: 1

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Desert Eclipse
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 104890a2f56a0b14abaa0a69e425b24d, type: 2}
+  temporaryManaCost: -1
   cardName: 'Desert Eclipse  '
   cardType: 1
+  cardClass: 1
   cardMana: 0
+  isXCost: 0
   textInFront: 'Retreat 3. Gain Stealth; next damage dealt is tripled. End your turn  '
   textInBack: 'Gain Stealth; next damage dealt is tripled. End your turn  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 1
+  isZenBlade: 0

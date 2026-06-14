@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: High Noon
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: ac16ba74a85124140a70aa6274e62709, type: 2}
+  temporaryManaCost: -1
   cardName: 'High Noon  '
   cardType: 1
+  cardClass: 1
   cardMana: 3
+  isXCost: 0
   textInFront: 'Reset both players'' health. The player with the least Bleed wins
     the duel  '
   textInBack: 'Reset both players'' health. The player with the most Crit wins the
     duel  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 1
+  isZenBlade: 0

@@ -8,7 +8,6 @@ public class DeadlyOutsiderEffect : CardSpecialEffect
 {
     public int critGain = 20;
     public int markAmount = 2;
-    public int damage = 4;
 
     public override IEnumerator OnPlayCoroutine(Unit caster,Unit target,Card card)
     {
@@ -78,7 +77,7 @@ public class DeadlyOutsiderEffect : CardSpecialEffect
             if (target.currentHP <= 0)
                 break;
 
-            target.TakeDamage(caster.ModifyOutgoingDamage(damage), DamageType.Direct, caster);
+            target.TakeDamage(caster.ModifyOutgoingDamage(3), DamageType.Direct, caster);
             if (target.currentHP <= 0)
             {
                 Debug.Log("LETHAL!");

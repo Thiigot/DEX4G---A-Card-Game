@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Rope & Powder
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 4ff4412cedaedab45b268f1b5c337f8b, type: 2}
+  temporaryManaCost: -1
   cardName: 'Rope & Powder  '
   cardType: 0
+  cardClass: 1
   cardMana: 1
+  isXCost: 0
   textInFront: 'Shoot an enemy in the Frontline. Retreat 2  '
   textInBack: 'Pull an enemy 2 positions  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 1
+  isZenBlade: 0

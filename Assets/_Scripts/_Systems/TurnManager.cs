@@ -63,6 +63,11 @@ public class TurnManager : MonoBehaviour
             while (currentIndex < turnOrder.Count)
             {
                 currentUnit = turnOrder[currentIndex];
+                if(currentUnit != null)
+                {
+                    currentIndex++;
+                    continue;
+                }
                 if (deckUI != null)
                 {
                     deckUI.UpdateTurnText(currentUnit);
@@ -74,7 +79,6 @@ public class TurnManager : MonoBehaviour
                 yield return new WaitForSeconds(0.4f);
 
                 yield return StartCoroutine(currentUnit.TakeTurn());
-                currentIndex++;
             }
         }
     }
@@ -131,6 +135,22 @@ public class TurnManager : MonoBehaviour
             {
                 Debug.Log("Deck não encontrado");
             }
+        }
+    }
+
+    public void GrantExtraTurn(Unit unit)
+    {
+        if (unit == null)
+            return;
+
+        turnOrder.Add(unit);
+
+        Debug.Log(
+            $"{unit.unitName} ganhou um turno extra!"
+        );
+        foreach(var u in turnOrder)
+        {
+            Debug.Log($"{u.unitName} \n");
         }
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ec87d965a7d2e48bf7c11bcda52bd5, type: 3}
   m_Name: FallSlash
   m_EditorClassIdentifier: Assembly-CSharp::FallingSlashEffect
-  zenBladeCard: {fileID: 11400000, guid: 32f653c7fa92c2646b60b3b84b09139d, type: 2}
+  zenBladeCard: {fileID: 11400000, guid: cdb305fbf8509984f8b6b6bb49b5aff0, type: 2}
   damage: 4

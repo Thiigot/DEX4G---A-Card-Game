@@ -19,6 +19,7 @@ public abstract class StatusEffect
     public virtual void ModifyRetaliateChance(ref float chance) { }
     public virtual void ModifyCritChance(ref float chance) { }
     public virtual void ModifySpeed(ref int speed) { }
+    public virtual void OnOwnerDamaged(Unit attacker,int damage){ }
     public virtual void OnExpire() { }
 
     public virtual bool IsExpired()
@@ -31,13 +32,32 @@ public abstract class StatusEffect
 public class BleedEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.Bleed;
+    public override bool IsStackable() => true;
+    public override void OnStack(int addedValue)
+    {
+        value += addedValue;
+    }
     public override void OnTurnStart()
     {
         owner.TakeDamage(value, DamageType.DoT);
         value--;
     }
 }
-
+////////////  HEAVY BLEED  ///////////
+public class HeavyBleedEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.HeavyBleed;
+    public override bool IsStackable() => true;
+    public override void OnStack(int addedValue)
+    {
+        value += addedValue;
+    }
+    public override void OnTurnStart()
+    {
+        owner.TakeDamage(Mathf.RoundToInt(value * 1.5f), DamageType.DoT);
+        value--;
+    }
+}
 ////////////  STUN  ////////////
 public class StunEffect : StatusEffect
 {
@@ -95,9 +115,26 @@ public class ProtectionEffect : StatusEffect
 public class WeaknessEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.Weakness;
+    public override bool IsStackable() => true;
+    public override void OnStack(int addedValue)
+    {
+        value += addedValue;
+    }
+
     public override void OnDealDamage(ref int damage)
     {
         damage = Mathf.RoundToInt(damage * (1f - value / 100f));
+    }
+    public override void OnTurnEnd()
+    {
+        value -= 10;
+
+        if (value < 0)
+            value = 0;
+    }
+    public override bool IsExpired()
+    {
+        return value <= 0;
     }
 }
 
@@ -106,9 +143,26 @@ public class DamageModifierEffect : StatusEffect
 {
     public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.DamageModifier;
+    public override bool IsStackable() => true;
+    public override void OnStack(int addedValue)
+    {
+        value += addedValue;
+    }
+
     public override void OnDealDamage(ref int damage)
     {
         damage = Mathf.RoundToInt(damage * (1f + value / 100f));
+    }
+    public override void OnTurnEnd()
+    {
+        value -= 10;
+
+        if (value < 0)
+            value = 0;
+    }
+    public override bool IsExpired()
+    {
+        return value <= 0;
     }
 }
 /////////  STEALTH  /////////
@@ -268,5 +322,106 @@ public class NextAttackBonusEffect : StatusEffect
     public override bool IsExpired()
     {
         return value <= 0;
+    }
+}
+
+////////////// CHANNEL ////////////
+public class ChannelEffect : StatusEffect
+{
+    public override StatusType GetTypeID()
+        => StatusType.Channel;
+
+    public override void OnTurnStart()
+    {
+        value--;
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+
+    public override void OnExpire()
+    {
+        owner.isChanneling = false;
+
+        owner.channelResolveAction?.Invoke();
+        owner.channelResolveAction = null;
+    }
+}
+
+////////////// RED TANGO ////////////
+public class RedTangoStatus : StatusEffect
+{
+    public bool bleedRetaliate;
+    public bool critRetaliate;
+
+    bool triggered;
+
+    public override StatusType GetTypeID()
+        => StatusType.Special;
+
+    public override bool ShowValue()
+        => false;
+
+    public override void OnOwnerDamaged(
+        Unit attacker,
+        int damage
+    )
+    {
+        if (triggered)
+            return;
+
+        triggered = true;
+
+        if (attacker == null)
+            return;
+
+        int retaliationDamage =
+            owner.ModifyOutgoingDamage(
+                owner.attack
+            );
+
+        if (bleedRetaliate)
+        {
+            attacker.TakeDamage(
+                retaliationDamage,
+                DamageType.Direct,
+                owner
+            );
+
+            attacker.AddStatus(
+                new BleedEffect()
+                {
+                    value = 1
+                }
+            );
+        }
+
+        if (critRetaliate)
+        {
+            attacker.AddStatus(
+                new CritEffect()
+                {
+                    value = 100
+                }
+            );
+
+            attacker.TakeDamage(
+                retaliationDamage,
+                DamageType.Direct,
+                owner
+            );
+        }
+    }
+
+    public override void OnTurnStart()
+    {
+        value--;
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0 || triggered;
     }
 }
