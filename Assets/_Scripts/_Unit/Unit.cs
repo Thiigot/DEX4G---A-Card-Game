@@ -143,10 +143,42 @@ public class Unit : MonoBehaviour
 
         UpdateUI();
     }
+    public bool ConsumeNextAttackCrit()
+    {
+        NextAttackCritEffect effect = GetStatus<NextAttackCritEffect>();
 
+        if (effect == null)
+            return false;
+
+        RemoveStatus<NextAttackCritEffect>();
+
+        return true;
+    }
+    public int ConsumeNextAttackAdvance()
+    {
+        NextAttackAdvanceEffect effect = GetStatus<NextAttackAdvanceEffect>();
+
+        if (effect == null)
+            return 0;
+
+        int amount = effect.value;
+
+        RemoveStatus<NextAttackAdvanceEffect>();
+
+        return amount;
+    }
     public void TakeDamage(int amount, DamageType type = DamageType.Direct, Unit attacker = null, bool ignoreProtection = false, bool canTriggerRetaliate = true)
     {
-        if(TryDodge())
+        if (attacker != null && type == DamageType.Direct)
+        {
+            int advance = attacker.ConsumeNextAttackAdvance();
+
+            if (advance > 0)
+            {
+                BoardManager.Instance.TryMoveUnit(attacker,advance,true);
+            }
+        }
+        if (TryDodge())
         {
             Debug.Log($"{unitName} dodged the attack!");
 
@@ -185,16 +217,24 @@ public class Unit : MonoBehaviour
 
         UpdateUI();
     }
-    public int ModifyOutgoingDamage(int damage, bool allowCrit = true)
+    public int ModifyOutgoingDamage(int damage, bool allowCrit = true, DamageType type = DamageType.Direct)
     {
         int finalDamage = damage;
 
         if(weakness > 0f)
             finalDamage = Mathf.RoundToInt(damage * (1f - weakness / 100f));
+
         foreach (var effect in activeEffects)
             effect.OnDealDamage(ref finalDamage);
 
-        if (allowCrit && TryCrit())
+        bool forceCrit = false;
+
+        if (type == DamageType.Direct)
+        {
+            forceCrit = ConsumeNextAttackCrit();
+        }
+
+        if (allowCrit && (forceCrit || TryCrit()))
         {
             finalDamage *= 2;
             Debug.Log($"{unitName} CRITICAL HIT!");
@@ -392,7 +432,19 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region STATUS SYSTEM
+    public bool IsTauntingSomeone()
+    {
+        List<Unit> enemies =
+            CardEffectExecutor.GetAllEnemies(this);
 
+        foreach (Unit enemy in enemies)
+        {
+            if (enemy.tauntedBy == this)
+                return true;
+        }
+
+        return false;
+    }
     public T GetStatus<T>() where T : StatusEffect
     {
         foreach (var effect in activeEffects)
@@ -416,6 +468,28 @@ public class Unit : MonoBehaviour
         }
 
         UpdateStatusUI();
+    }
+
+    public void ApplyBleed(Unit target, int amount)
+    {
+        int finalBleed = amount;
+
+        WolfBleedEffect wolf =
+            GetStatus<WolfBleedEffect>();
+
+        if (wolf != null)
+        {
+            finalBleed *= 2;
+
+            RemoveStatus<WolfBleedEffect>();
+        }
+
+        target.AddStatus(
+            new BleedEffect()
+            {
+                value = finalBleed
+            }
+        );
     }
     public int GetBleedStacks()
     {

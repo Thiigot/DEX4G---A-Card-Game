@@ -16,7 +16,10 @@ public static class CardEffectExecutor
     {
         if (card == null)
             yield break;
-
+        if(caster.tauntedBy != null && target != null)
+        {
+            target = caster.tauntedBy;
+        }
         CardSpecialEffect effect = card.specialEffect;
 
         if (effect == null)

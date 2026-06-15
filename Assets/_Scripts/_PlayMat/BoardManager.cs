@@ -65,6 +65,13 @@ public class BoardManager : MonoBehaviour
 
         return true;
     }
+    public BoardSlot GetFrontMostSlot(bool playerSide)
+    {
+        List<BoardSlot> slots = playerSide ? playerSlots : enemySlots;
+
+        return slots[0];
+    }
+
 
     public BoardSlot GetRandomEnemySlot(bool playerSide)
     {

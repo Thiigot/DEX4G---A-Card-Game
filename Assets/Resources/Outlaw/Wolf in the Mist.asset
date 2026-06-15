@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Wolf in the Mist
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  specialEffect: {fileID: 0}
+  specialEffect: {fileID: 11400000, guid: 1f30cd9ec2d8c5a4d9bb71b0f3894a20, type: 2}
   temporaryManaCost: -1
   cardName: 'Wolf in the Mist  '
   cardType: 1

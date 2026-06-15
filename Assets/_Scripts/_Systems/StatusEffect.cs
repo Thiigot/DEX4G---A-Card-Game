@@ -253,6 +253,28 @@ public class RetaliateEffect : StatusEffect
 
 }
 
+public class GuaranteedRetaliateEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+
+    public override StatusType GetTypeID()=> StatusType.GuaranteedRetaliate;
+
+    public override void ModifyRetaliateChance(ref float chance)
+    {
+        chance = 100f;
+    }
+
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+
 //////////  CRIT  //////////
 public class CritEffect : StatusEffect
 {
@@ -318,6 +340,31 @@ public class NextAttackBonusEffect : StatusEffect
         consumed = true;
         value = 0; // consome o efeito
     }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+
+////////////// NEXTATTACK CRIT ////////////
+public class NextAttackCritEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+
+    public override StatusType GetTypeID()=> StatusType.NextCrit;
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+////////////// NEXTATTACK CHARGE ////////////
+public class NextAttackAdvanceEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+
+    public override StatusType GetTypeID()=> StatusType.NextCharge;
 
     public override bool IsExpired()
     {
@@ -424,4 +471,19 @@ public class RedTangoStatus : StatusEffect
     {
         return value <= 0 || triggered;
     }
+}
+////////////// WOLF IN THE MIST ////////////
+public class WolfBleedEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+    public override bool IsStackable() => false;
+    public override StatusType GetTypeID()=> StatusType.Special;
+    public override bool IsExpired()=> value <= 0;
+}
+public class WolfAttackEffect : StatusEffect
+{
+    public override bool ShowValue() => false;
+    public override bool IsStackable() => false;
+    public override StatusType GetTypeID() => StatusType.Special;
+    public override bool IsExpired() => value <= 0;
 }
