@@ -53,7 +53,7 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    void ShuffleDeck()
+    public void ShuffleDeck()
     {
         for (int i = 0; i < deck.Count; i++)
         {

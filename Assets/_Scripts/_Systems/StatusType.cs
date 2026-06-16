@@ -18,5 +18,7 @@ public enum StatusType
     Crit,
     IgnoreProtection,
     Channel,
-    Special
+    Special,
+    DebuffImmunity,
+    CritImmunity
 }

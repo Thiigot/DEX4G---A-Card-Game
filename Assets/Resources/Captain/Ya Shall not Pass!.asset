@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Ya Shall not Pass!
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 1c0edaa4dfd5bc644856594f93623b05, type: 2}
+  temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
   cardName: 'Ya Shall not Pass!  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: 'Taunt an enemy for 2 turns  '
   textInBack: 'Charge 3 and Block an Enemy Attack  '
   requiresTargetInFront: 1
   requiresTargetInBack: 1
-  cardClass: 2
   isZenBlade: 0

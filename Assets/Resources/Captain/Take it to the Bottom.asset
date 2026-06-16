@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Take it to the Bottom
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: 337804614867d244d9c26a7e02751596, type: 2}
+  temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
   cardName: 'Take it to the Bottom  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: 'Takes no damage and cannot die for 5 turns. Dies instantly when the
     effect ends.  '
   textInBack: 'If you die until the next turn, kill the attacker along with  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0

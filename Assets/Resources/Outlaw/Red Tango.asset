@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Red Tango
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  specialEffect: {fileID: 0}
+  specialEffect: {fileID: 11400000, guid: 8baa13c3f5a0c3648b0fcf5020fbf661, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
   cardName: 'Red Tango  '
   cardType: 1
   cardClass: 1

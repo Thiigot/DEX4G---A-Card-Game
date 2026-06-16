@@ -49,7 +49,7 @@ public class Unit : MonoBehaviour
     public int cardsDrawnThisTurn;
     public bool dodgedSinceLastTurn;
     public bool hasExtraTurn;
-
+    public bool critAttack = false;
     public bool isChanneling;
     public System.Action channelResolveAction;
 
@@ -167,8 +167,13 @@ public class Unit : MonoBehaviour
 
         return amount;
     }
-    public void TakeDamage(int amount, DamageType type = DamageType.Direct, Unit attacker = null, bool ignoreProtection = false, bool canTriggerRetaliate = true)
+    public void TakeDamage(int amount, DamageType type = DamageType.Direct, Unit attacker = null, bool ignoreProtection = false, bool canTriggerRetaliate = true, bool isCritical = false)
     {
+        isCritical = critAttack;
+        if (isCritical && GetStatus<CritImmunityEffect>() != null)
+        {
+            isCritical = false;
+        }
         if (attacker != null && type == DamageType.Direct)
         {
             int advance = attacker.ConsumeNextAttackAdvance();
@@ -189,6 +194,10 @@ public class Unit : MonoBehaviour
         }
 
         int finalDamage = amount;
+        if (isCritical)
+        {
+            finalDamage *= 2;
+        }
         bool shouldIgnoreProtection = ignoreProtection || (attacker != null && attacker.HasIgnoreProtection());
 
         if (!shouldIgnoreProtection)
@@ -233,13 +242,18 @@ public class Unit : MonoBehaviour
         {
             forceCrit = ConsumeNextAttackCrit();
         }
+        bool isCrit = allowCrit && (forceCrit || TryCrit());
 
-        if (allowCrit && (forceCrit || TryCrit()))
+        if (isCrit)
         {
             finalDamage *= 2;
+            critAttack = true;
             Debug.Log($"{unitName} CRITICAL HIT!");
         }
-        
+        if (!isCrit)
+        {
+            critAttack = false;
+        }
         return finalDamage;
     }
     void Die()
@@ -340,9 +354,18 @@ public class Unit : MonoBehaviour
 
         handManager.RefreshAllCardTexts();
 
-        deckManager.AddToDiscard(card);
-        yield return deckManager.AnimateDiscard(cardObj);
-        deckUI.UpdateUI();
+        if (card.shuffleIntoDeckInsteadOfDiscard)
+        {
+            card.shuffleIntoDeckInsteadOfDiscard = false;
+            deckManager.deck.Add(card);
+            deckManager.ShuffleDeck();
+        }
+        else
+        {
+            deckManager.AddToDiscard(card);
+            yield return deckManager.AnimateDiscard(cardObj);
+            deckUI.UpdateUI();
+        }
     }
 
     public IEnumerator PlayCardFree(Card card)
@@ -550,7 +573,15 @@ public class Unit : MonoBehaviour
     public void AddStatus(StatusEffect neweffect)
     {
         if (neweffect == null) return;
-
+        if (neweffect.IsDebuff())
+        {
+            DebuffImmunityEffect immunity = GetStatus<DebuffImmunityEffect>();
+            if(immunity != null)
+            {
+                Debug.Log($"{unitName} ESTÁ IMUNE A DEBUFFs!");
+                return;
+            }
+        }
         if (neweffect is StunEffect)
         {
             var existing = activeEffects.Find(e => e is StunEffect);

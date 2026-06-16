@@ -8,6 +8,7 @@ public abstract class StatusEffect
 
     public abstract StatusType GetTypeID();
     public virtual bool IsStackable() => true;
+    public virtual bool IsDebuff() => false;
     public virtual void OnStack(int addedValue) { }
     public virtual void OnApply() { }
     public virtual void OnTurnStart() { }
@@ -33,6 +34,7 @@ public class BleedEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.Bleed;
     public override bool IsStackable() => true;
+    public override bool IsDebuff() => true;
     public override void OnStack(int addedValue)
     {
         value += addedValue;
@@ -48,6 +50,7 @@ public class HeavyBleedEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.HeavyBleed;
     public override bool IsStackable() => true;
+    public override bool IsDebuff() => true;
     public override void OnStack(int addedValue)
     {
         value += addedValue;
@@ -64,6 +67,7 @@ public class StunEffect : StatusEffect
     public override bool ShowValue() => false;
     public override StatusType GetTypeID() => StatusType.Stun;
     public override bool IsStackable() => false;
+    public override bool IsDebuff() => true;
     public override void OnApply()
     {
         owner.isStunned = true;
@@ -89,6 +93,7 @@ public class StunEffect : StatusEffect
 public class MarkEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.Mark;
+    public override bool IsDebuff() => true;
     public override void OnReceiveDamage(ref int damage, DamageType type)
     {
         if(type != DamageType.Direct) return;
@@ -116,6 +121,7 @@ public class WeaknessEffect : StatusEffect
 {
     public override StatusType GetTypeID() => StatusType.Weakness;
     public override bool IsStackable() => true;
+    public override bool IsDebuff() => true;
     public override void OnStack(int addedValue)
     {
         value += addedValue;
@@ -189,6 +195,7 @@ public class StealthEffect : StatusEffect
 public class TauntEffect : StatusEffect
 {
     public override bool ShowValue() => false;
+    public override bool IsDebuff() => true;
     public override StatusType GetTypeID() => StatusType.Taunt;
 
     public Unit taunter;
@@ -252,7 +259,7 @@ public class RetaliateEffect : StatusEffect
     }
 
 }
-
+//////////  RETALIATE GUARANTEED  //////////
 public class GuaranteedRetaliateEffect : StatusEffect
 {
     public override bool ShowValue() => false;
@@ -311,7 +318,16 @@ public class CritEffect : StatusEffect
         return value <= 0;
     }
 }
+////////////// CRIT IMMUNITY  //////////
+public class CritImmunityEffect : StatusEffect
+{
+    public override StatusType GetTypeID()=> StatusType.CritImmunity;
 
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
+}
 
 ////////////// IGNORE PROTECTION //////////
 public class IgnoreProtectionEffect : StatusEffect
@@ -486,4 +502,22 @@ public class WolfAttackEffect : StatusEffect
     public override bool IsStackable() => false;
     public override StatusType GetTypeID() => StatusType.Special;
     public override bool IsExpired() => value <= 0;
+}
+
+////////////// DEBUFF IMMUNITY ////////////
+public class DebuffImmunityEffect : StatusEffect
+{
+    public override StatusType GetTypeID()=> StatusType.DebuffImmunity;
+
+    public override bool ShowValue() => true;
+
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
+
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
 }

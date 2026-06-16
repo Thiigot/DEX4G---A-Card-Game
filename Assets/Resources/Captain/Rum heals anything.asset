@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Rum heals anything
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: cbe4ccb72851c6348adc7ba3af0fa623, type: 2}
+  temporaryManaCost: -1
   cardName: 'Rum heals anything  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: 'Heal Crew. 10% chance to apply Weakness  '
   textInBack: 'Heal Crew. Chance to fail  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0

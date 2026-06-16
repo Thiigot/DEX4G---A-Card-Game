@@ -12,26 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: All sails set!
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront:
-  - effectType: 4
-    value: 3
-    targetType: 0
-    ignoreProtection: 0
-  effectsInBack:
-  - effectType: 28
-    value: 3
-    targetType: 0
-    ignoreProtection: 0
-  - effectType: 5
-    value: 5
-    targetType: 0
-    ignoreProtection: 0
+  specialEffect: {fileID: 11400000, guid: a2455c57faa5c4c43bec6e174a0f9f78, type: 2}
+  temporaryManaCost: -1
   cardName: 'All sails set!  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: '+3 Energy if at Position 1  '
   textInBack: 'Charge 3, Doubles Speed  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0

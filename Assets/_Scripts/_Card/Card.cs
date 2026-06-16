@@ -12,6 +12,8 @@ namespace CardData
 
         [HideInInspector]
         public int temporaryManaCost = -1;
+        [HideInInspector]
+        public bool shuffleIntoDeckInsteadOfDiscard;
 
         [Header("Traits")]
         public string cardName;

@@ -12,11 +12,15 @@ public class SevenHarbourQueenEffect : CardSpecialEffect
 
         if (caster.IsFrontline())
         {
-
+            caster.AddStatus(new DebuffImmunityEffect { value =2  });
+            caster.currentMana++;
+            caster.handManager.manaManager.UpdateUI();
         }
         else
         {
-
+            BoardManager.Instance.TryMoveUnit(caster,3,true);
+            int prot = caster.GetStatus<ProtectionEffect>().value;
+            caster.AddStatus(new ProtectionEffect { value = prot });
         }
         yield break;
     }

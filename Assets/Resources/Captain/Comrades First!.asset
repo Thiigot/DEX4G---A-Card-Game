@@ -12,22 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Comrades First!
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront:
-  - effectType: 18
-    value: 10
-    targetType: 0
-    ignoreProtection: 0
-  effectsInBack:
-  - effectType: 18
-    value: 10
-    targetType: 4
-    ignoreProtection: 0
+  specialEffect: {fileID: 11400000, guid: 854ff967275a8c8438a2bcb51eca4ec4, type: 2}
+  temporaryManaCost: -1
   cardName: 'Comrades First!  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: 'Taunt 1 and +Protection  '
   textInBack: '+Protection for the Crew  '
   requiresTargetInFront: 1
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0

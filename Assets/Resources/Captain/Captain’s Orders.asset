@@ -12,22 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: "Captain\u2019s Orders"
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront:
-  - effectType: 18
-    value: 10
-    targetType: 4
-    ignoreProtection: 0
-  effectsInBack:
-  - effectType: 20
-    value: 10
-    targetType: 4
-    ignoreProtection: 0
+  specialEffect: {fileID: 11400000, guid: 3dde12f668f31d644b8533223251a9d8, type: 2}
+  temporaryManaCost: -1
   cardName: "Captain\u2019s Orders  "
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: '+Protection for the Crew  '
   textInBack: '+Damage for the Crew  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0

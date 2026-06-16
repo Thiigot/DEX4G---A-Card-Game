@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b79b25066ef2d4599c43112c83403e, type: 3}
   m_Name: Victory Song
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
-  effectsInFront: []
-  effectsInBack: []
+  specialEffect: {fileID: 11400000, guid: c3dc44df67a6e404c8f23dd5bdf8d467, type: 2}
+  temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
   cardName: 'Victory Song  '
   cardType: 1
+  cardClass: 2
   cardMana: 1
+  isXCost: 0
   textInFront: '+Retaliate for the Crew  '
   textInBack: '+Retaliate for 2 turns  '
   requiresTargetInFront: 0
   requiresTargetInBack: 0
-  cardClass: 2
   isZenBlade: 0
