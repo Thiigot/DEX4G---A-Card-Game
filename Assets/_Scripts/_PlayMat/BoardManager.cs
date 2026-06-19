@@ -16,6 +16,34 @@ public class BoardManager : MonoBehaviour
         Instance = this;
     }
 
+    public void CompactBoard(bool playerSide)
+    {
+        List<BoardSlot> sideSlots = playerSide ? playerSlots : enemySlots;
+
+        List<Unit> units = new();
+
+        foreach (BoardSlot slot in sideSlots)
+        {
+            if (slot.currentUnit != null)
+            {
+                units.Add(slot.currentUnit);
+            }
+        }
+
+        foreach (BoardSlot slot in sideSlots)
+        {
+            slot.Clear();
+        }
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            sideSlots[i].SetUnit(units[i]);
+
+            units[i].transform.position =
+                sideSlots[i].transform.position;
+        }
+    }
+
     public List<Unit> GetAllEnemies(bool playerSide)
     {
         List<Unit> result = new List<Unit>();
@@ -33,35 +61,66 @@ public class BoardManager : MonoBehaviour
 
     public bool TryMoveUnit(Unit unit, int steps, bool forward)
     {
-        if (unit == null || steps <= 0) return false;
+        if (unit == null || steps <= 0)
+            return false;
 
-        List<BoardSlot> sideSlots = unit.isPlayer ? playerSlots : enemySlots;
-        if (sideSlots == null || sideSlots.Count == 0) return false;
+        List<BoardSlot> sideSlots =
+            unit.isPlayer ? playerSlots : enemySlots;
+
+        if (sideSlots == null || sideSlots.Count == 0)
+            return false;
 
         int currentIndex = sideSlots.IndexOf(unit.CurrentSlot);
-        if (currentIndex < 0) return false;
+
+        if (currentIndex < 0)
+            return false;
 
         int direction = forward ? -1 : 1;
-        int targetIndex = Mathf.Clamp(currentIndex + direction * steps, 0, sideSlots.Count - 1);
 
-        if (targetIndex == currentIndex) return false;
+        int targetIndex = Mathf.Clamp(
+            currentIndex + (direction * steps),
+            0,
+            sideSlots.Count - 1
+        );
 
-        BoardSlot currentSlot = sideSlots[currentIndex];
-        BoardSlot targetSlot = sideSlots[targetIndex];
+        if (targetIndex == currentIndex)
+            return false;
 
-        Unit otherUnit = targetSlot.currentUnit;
+        // Guarda a unidade que será movida
+        Unit movingUnit = unit;
 
-        currentSlot.Clear();
-        targetSlot.Clear();
-
-        targetSlot.SetUnit(unit);
-        unit.transform.position = targetSlot.transform.position;
-
-        if (otherUnit != null)
+        // Movimento para frente
+        if (targetIndex < currentIndex)
         {
-            currentSlot.SetUnit(otherUnit);
-            otherUnit.transform.position = currentSlot.transform.position;
+            for (int i = currentIndex; i > targetIndex; i--)
+            {
+                Unit pushedUnit = sideSlots[i - 1].currentUnit;
+
+                sideSlots[i].SetUnit(pushedUnit);
+
+                if (pushedUnit != null)
+                    pushedUnit.transform.position =
+                        sideSlots[i].transform.position;
+            }
         }
+        // Movimento para trás
+        else
+        {
+            for (int i = currentIndex; i < targetIndex; i++)
+            {
+                Unit pushedUnit = sideSlots[i + 1].currentUnit;
+
+                sideSlots[i].SetUnit(pushedUnit);
+
+                if (pushedUnit != null)
+                    pushedUnit.transform.position =
+                        sideSlots[i].transform.position;
+            }
+        }
+
+        sideSlots[targetIndex].SetUnit(movingUnit);
+        movingUnit.transform.position =
+            sideSlots[targetIndex].transform.position;
 
         return true;
     }

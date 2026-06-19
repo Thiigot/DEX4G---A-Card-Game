@@ -12,12 +12,16 @@ public class SteelCaptainEffect : CardSpecialEffect
 
         if (caster.IsFrontline())
         {
+            caster.AddStatus(new CritImmunityEffect { value = 2 });
+            caster.AddStatus(new WeaknessEffect { value = 30 });
 
         }
         else
         {
             BoardManager.Instance.TryMoveUnit(caster, 1, true);
+            yield return new WaitForSeconds(0.2f);
             target.AddStatus(new TauntEffect { taunter = caster, value = 1 });
+            caster.AddStatus(new MarkEffect { value = 1 });
         }
         yield break;
     }

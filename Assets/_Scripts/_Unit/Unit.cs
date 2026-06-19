@@ -246,7 +246,6 @@ public class Unit : MonoBehaviour
 
         if (isCrit)
         {
-            finalDamage *= 2;
             critAttack = true;
             Debug.Log($"{unitName} CRITICAL HIT!");
         }
@@ -261,7 +260,10 @@ public class Unit : MonoBehaviour
         if (currentSlot != null)
             currentSlot.Clear();
 
+        BoardManager.Instance.CompactBoard(isPlayer);
+
         Destroy(gameObject);
+
     }
     #endregion
 

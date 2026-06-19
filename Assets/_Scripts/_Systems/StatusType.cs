@@ -20,5 +20,6 @@ public enum StatusType
     Channel,
     Special,
     DebuffImmunity,
-    CritImmunity
+    CritImmunity,
+    DamageImmunity
 }

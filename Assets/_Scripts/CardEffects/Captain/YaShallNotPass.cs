@@ -18,6 +18,7 @@ public class ShallNotPassEffect : CardSpecialEffect
         {
             BoardManager.Instance.TryMoveUnit(caster, 3, true);
             //BLOQUEIA ATAQUE INIMIGO
+            target.AddStatus(new NextAttackBonusEffect { multiplier=0, value = 1 });
         }
         yield break;
     }

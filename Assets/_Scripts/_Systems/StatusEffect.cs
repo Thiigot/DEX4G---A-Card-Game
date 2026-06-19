@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -322,6 +323,7 @@ public class CritEffect : StatusEffect
 public class CritImmunityEffect : StatusEffect
 {
     public override StatusType GetTypeID()=> StatusType.CritImmunity;
+    public override bool IsDebuff() => false;
 
     public override void OnTurnEnd()
     {
@@ -516,6 +518,56 @@ public class DebuffImmunityEffect : StatusEffect
         value--;
     }
 
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+
+////////////// BottomEffect ////////////
+public class BottomEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.DamageImmunity;
+    public override bool ShowValue() => true;
+    public override void OnReceiveDamage(ref int damage, DamageType type)
+    {
+        damage = 0;
+    }
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
+
+    public override void OnExpire()
+    {
+        owner.currentHP = 0;
+    }
+    public override bool IsExpired()
+    {
+        return value <= 0;
+    }
+}
+public class BottomBackEffect : StatusEffect
+{
+    public override StatusType GetTypeID() => StatusType.DamageImmunity;
+    public override bool ShowValue() => true;
+
+    public override void OnOwnerDamaged(Unit attacker, int damage)
+    {
+        if(owner.currentHP <= 0)
+        {
+            attacker.TakeDamage(9999999);
+        }
+    }
+    public override void OnTurnEnd()
+    {
+        value--;
+    }
+
+    public override void OnExpire()
+    {
+        owner.currentHP = 0;
+    }
     public override bool IsExpired()
     {
         return value <= 0;

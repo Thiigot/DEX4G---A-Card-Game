@@ -12,11 +12,11 @@ public class TaketoTheBottomEffect : CardSpecialEffect
 
         if (caster.IsFrontline())
         {
-
+            caster.AddStatus(new BottomEffect { value = 5 });
         }
         else
         {
-
+            caster.AddStatus(new BottomBackEffect { value = 2 });
         }
         yield break;
     }

@@ -63,9 +63,9 @@ public class TurnManager : MonoBehaviour
             while (currentIndex < turnOrder.Count)
             {
                 currentUnit = turnOrder[currentIndex];
-                if(currentUnit != null)
+                currentIndex++;
+                if(currentUnit == null)
                 {
-                    currentIndex++;
                     continue;
                 }
                 if (deckUI != null)
