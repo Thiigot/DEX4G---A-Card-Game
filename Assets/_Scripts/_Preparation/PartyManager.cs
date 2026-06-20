@@ -26,7 +26,7 @@ public class PartyManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        NormalizeParty();
+        LoadSavedPartyOrNormalize();
     }
 
     void Start()
@@ -109,6 +109,43 @@ public class PartyManager : MonoBehaviour
         party[index] = unit;
         RebuildPartyViews();
         return true;
+    }
+
+    /// <summary>
+    /// Calcula a versão "compactada" da party, aplicando as regras de ouro do jogo:
+    /// 1. Frontline é sempre preenchida primeiro.
+    /// 2. Nenhum slot vazio entre unidades.
+    ///
+    /// Não altera o estado de edição atual (`party`) — o jogador mantém liberdade
+    /// total para organizar como quiser enquanto edita. Esta função só é usada
+    /// no momento do "Ready", para gerar a formação final que vai para a Battle Scene.
+    ///
+    /// Slot order visual: [4]-[3]-[2]-[1] onde índice 0 = backline mais distante
+    /// e índice (MaxPartySize - 1) = frontline mais avançada.
+    /// Unidades mantêm sua ordem relativa atual; a mais "à frente" hoje continua
+    /// sendo a mais "à frente" depois de compactar.
+    /// </summary>
+    public List<UnitData> GetCompactedParty()
+    {
+        List<UnitData> units = new();
+
+        for (int i = 0; i < party.Count; i++)
+        {
+            if (party[i] != null)
+                units.Add(party[i]);
+        }
+
+        List<UnitData> compacted = new(new UnitData[party.Count]);
+
+        int writeIndex = party.Count - 1;
+
+        for (int i = units.Count - 1; i >= 0; i--)
+        {
+            compacted[writeIndex] = units[i];
+            writeIndex--;
+        }
+
+        return compacted;
     }
 
     public void Select(UnitData unit)
@@ -205,6 +242,7 @@ public class PartyManager : MonoBehaviour
 
     void NotifyPartyChanged()
     {
+        PartyPrefsManager.SaveParty(party);
         OnPartyChanged?.Invoke();
     }
 
@@ -217,6 +255,20 @@ public class PartyManager : MonoBehaviour
 
         for (int i = 0; i < partySlots.Length; i++)
             partySlots[i].index = i;
+    }
+
+    void LoadSavedPartyOrNormalize()
+    {
+        if (PartyPrefsManager.HasSavedParty())
+        {
+            party = PartyPrefsManager.LoadParty(MaxPartySize, roster);
+        }
+        else
+        {
+            party = new List<UnitData>();
+        }
+
+        NormalizeParty();
     }
 
     void NormalizeParty()
