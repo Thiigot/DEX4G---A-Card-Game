@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: ac16ba74a85124140a70aa6274e62709, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: 2059194324061405291, guid: 36873178e3692a341821b51694953566, type: 3}
   cardName: 'High Noon  '
   cardType: 1
   cardClass: 1

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: f62f308de88981e49be646cb2b3ac4e5, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Naval Barrage  '
   cardType: 0
   cardClass: 2

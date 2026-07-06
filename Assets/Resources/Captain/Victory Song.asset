@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: c3dc44df67a6e404c8f23dd5bdf8d467, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Victory Song  '
   cardType: 1
   cardClass: 2

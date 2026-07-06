@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: 91dded180d282e645a1b87c40908a0db, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Shark Bait  '
   cardType: 1
   cardClass: 2

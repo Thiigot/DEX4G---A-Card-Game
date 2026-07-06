@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: ac35190cf526abc45a95666699cf5ade, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Shot and Chop  '
   cardType: 0
   cardClass: 2
@@ -25,5 +26,5 @@ MonoBehaviour:
   textInBack: 'Attack with Flintlock(Low Damage, Multiple Target). Charge 3 and Shuffle
     this card into your deck  '
   requiresTargetInFront: 1
-  requiresTargetInBack: 1
+  requiresTargetInBack: 0
   isZenBlade: 0

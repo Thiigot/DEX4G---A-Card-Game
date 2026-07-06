@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: 00a074c0c85b1564ea650e9890ae2ac6, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -3975216232760467619, guid: ac464a2a25b76924986e6a0140ae9b3a, type: 3}
   cardName: 'Ghost Blade  '
   cardType: 1
   cardClass: 3

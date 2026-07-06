@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: 1c0edaa4dfd5bc644856594f93623b05, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Ya Shall not Pass!  '
   cardType: 1
   cardClass: 2
@@ -23,5 +24,5 @@ MonoBehaviour:
   textInFront: 'Taunt an enemy for 2 turns  '
   textInBack: 'Charge 3 and Block an Enemy Attack  '
   requiresTargetInFront: 1
-  requiresTargetInBack: 1
+  requiresTargetInBack: 0
   isZenBlade: 0

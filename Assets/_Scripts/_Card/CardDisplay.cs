@@ -8,7 +8,8 @@ public class CardDisplay : MonoBehaviour
     public Unit owner;
 
     public Card cardData;
-    public Image cardImage;
+    public Image nameImage;
+    public Image artworkImage;
     public TMP_Text nameText;
     public TMP_Text manaText;
     public TMP_Text cardText;
@@ -32,10 +33,23 @@ public class CardDisplay : MonoBehaviour
             Debug.LogError("cardData NULL em " + gameObject.name);
             return;
         }
+        //CARDIMAGE
+        if (artworkImage != null)
+        {
+            if (cardData.cardArt != null)
+            {
+                artworkImage.sprite = cardData.cardArt;
+                artworkImage.enabled = true;
+            }
+            else
+            {
+                artworkImage.enabled = false;
+            }
+        }
         //CardColor
         Color c = colorType[(int)cardData.cardClass];
         c.a = 1f;
-        cardImage.color = c;
+        nameImage.color = c;
         //CardTexts
         nameText.text = cardData.cardName;
 

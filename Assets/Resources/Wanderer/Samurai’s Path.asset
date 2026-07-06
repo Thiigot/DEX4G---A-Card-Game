@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 0}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -3975216232760467619, guid: ac464a2a25b76924986e6a0140ae9b3a, type: 3}
   cardName: "Samurai\u2019s Path  "
   cardType: 3
   cardClass: 3

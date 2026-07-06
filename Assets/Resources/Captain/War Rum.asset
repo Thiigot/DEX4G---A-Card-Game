@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: 75cc61064d6024d4f8078cddad936960, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'War Rum  '
   cardType: 1
   cardClass: 2

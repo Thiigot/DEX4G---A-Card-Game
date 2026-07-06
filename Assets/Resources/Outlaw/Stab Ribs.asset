@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: 6c4ba43a2f15c114d86b335a0c93ce05, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: 2059194324061405291, guid: 36873178e3692a341821b51694953566, type: 3}
   cardName: 'Stab Ribs  '
   cardType: 1
   cardClass: 1

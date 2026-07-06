@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: db6209640d1f58d48a981ccbc8304ffe, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: 2059194324061405291, guid: 36873178e3692a341821b51694953566, type: 3}
   cardName: 'Quick Draw  '
   cardType: 1
   cardClass: 1

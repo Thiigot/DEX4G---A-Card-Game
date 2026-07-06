@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: 8baa13c3f5a0c3648b0fcf5020fbf661, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: 2059194324061405291, guid: 36873178e3692a341821b51694953566, type: 3}
   cardName: 'Red Tango  '
   cardType: 1
   cardClass: 1

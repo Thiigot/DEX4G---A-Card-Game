@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: c59809e20ba243e4fb5e42ea8f2b9859, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Bombing Raid  '
   cardType: 0
   cardClass: 2
@@ -22,5 +24,5 @@ MonoBehaviour:
   textInFront: 'Attack ALL players. Chance to Stun enemies  '
   textInBack: 'Attack Enemy 4. Chance to Stun  '
   requiresTargetInFront: 0
-  requiresTargetInBack: 1
+  requiresTargetInBack: 0
   isZenBlade: 0

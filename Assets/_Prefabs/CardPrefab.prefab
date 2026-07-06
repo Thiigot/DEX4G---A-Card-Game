@@ -127,7 +127,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020164305201731082}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -349,8 +349,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1572,7 +1572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   owner: {fileID: 0}
   cardData: {fileID: 11400000, guid: 44f2087dc72c916489e2a2d539a51cb5, type: 2}
-  cardImage: {fileID: 7749835014967776255}
+  nameImage: {fileID: 1586384380592142232}
+  artworkImage: {fileID: 7749835014967776255}
   nameText: {fileID: 2249938519191342380}
   manaText: {fileID: 1492193318253619766}
   cardText: {fileID: 5913352284863079109}

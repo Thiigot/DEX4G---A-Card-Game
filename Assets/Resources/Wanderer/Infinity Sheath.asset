@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: 1b63b1e0e008e7b4e8e49f2b4909f478, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -3975216232760467619, guid: ac464a2a25b76924986e6a0140ae9b3a, type: 3}
   cardName: 'Infinity Sheath  '
   cardType: 0
   cardClass: 3

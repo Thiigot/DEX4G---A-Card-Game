@@ -15,6 +15,7 @@ MonoBehaviour:
   specialEffect: {fileID: 11400000, guid: 49eea5bcabc4bf7429b343ce36dbddad, type: 2}
   temporaryManaCost: -1
   shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -2211363009565841669, guid: 1b964a4c9c14ea0428530fa03490f7a0, type: 3}
   cardName: 'Walk the plank!  '
   cardType: 0
   cardClass: 2
@@ -23,5 +24,5 @@ MonoBehaviour:
   textInFront: 'Attack and Push 3. Chance to Stun  '
   textInBack: 'Attack and Charge 3. Gain Retaliate  '
   requiresTargetInFront: 1
-  requiresTargetInBack: 1
+  requiresTargetInBack: 0
   isZenBlade: 0

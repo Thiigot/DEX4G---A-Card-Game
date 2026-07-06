@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData.Card
   specialEffect: {fileID: 11400000, guid: 0c87ac99f4c192549aad346ae54dfa9e, type: 2}
   temporaryManaCost: -1
+  shuffleIntoDeckInsteadOfDiscard: 0
+  cardArt: {fileID: -3975216232760467619, guid: ac464a2a25b76924986e6a0140ae9b3a, type: 3}
   cardName: 'Timed Sheath  '
   cardType: 1
   cardClass: 3

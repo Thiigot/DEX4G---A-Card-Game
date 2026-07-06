@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace CardData
@@ -14,6 +15,9 @@ namespace CardData
         public int temporaryManaCost = -1;
         [HideInInspector]
         public bool shuffleIntoDeckInsteadOfDiscard;
+
+        [Header("Visual")]
+        public Sprite cardArt;
 
         [Header("Traits")]
         public string cardName;
