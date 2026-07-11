@@ -1,3 +1,4 @@
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using CardData;
 using TMPro;
@@ -27,6 +28,9 @@ public class PartyDeckBuilderUI : MonoBehaviour
     [SerializeField] private TMP_Text detailTypeText;
     [SerializeField] private TMP_Text detailFrontText;
     [SerializeField] private TMP_Text detailBackText;
+
+    [Header("Card Detail Panel")]
+    [SerializeField] private DeckCardDetailPanel cardDetailPanel;
 
     [Header("Actions")]
     [SerializeField] private Button saveButton;
@@ -86,6 +90,13 @@ public class PartyDeckBuilderUI : MonoBehaviour
 
         Rebuild();
         ClearCardDetails();
+
+        // Reseta scroll para o topo apenas na abertura inicial do painel.
+        if (collectionScrollRect != null)
+            collectionScrollRect.verticalNormalizedPosition = 1f;
+
+        if (deckScrollRect != null)
+            deckScrollRect.verticalNormalizedPosition = 1f;
     }
 
     public void Close()
@@ -96,6 +107,16 @@ public class PartyDeckBuilderUI : MonoBehaviour
         SetPanelVisible(false);
         ClearItems();
         ClearCardDetails();
+    }
+
+    /// <summary>
+    /// Abre o painel visual de detalhes da carta (carta em tamanho grande).
+    /// Chamado pelo clique direito no DeckCardListItem.
+    /// </summary>
+    public void OpenCardDetail(Card card)
+    {
+        if (cardDetailPanel != null)
+            cardDetailPanel.Open(card);
     }
 
     public void ShowCardDetails(Card card)
@@ -145,17 +166,11 @@ public class PartyDeckBuilderUI : MonoBehaviour
         if (destination == DeckBuilderListType.Deck)
         {
             changed = PartyDeckState.TryAddToDraft(currentUnit, card);
-            Debug.Log(changed
-                ? $"DeckBuilder: added {card.cardName} to {currentUnit.unitName} deck."
-                : $"DeckBuilder: could not add {card.cardName}. Deck may be full or card is already in deck.");
         }
 
         if (destination == DeckBuilderListType.Collection)
         {
             changed = PartyDeckState.RemoveFromDraft(currentUnit, card);
-            Debug.Log(changed
-                ? $"DeckBuilder: removed {card.cardName} from {currentUnit.unitName} deck."
-                : $"DeckBuilder: could not remove {card.cardName}. It was not in deck.");
         }
 
         if (changed)
@@ -206,35 +221,23 @@ public class PartyDeckBuilderUI : MonoBehaviour
 
     void Rebuild()
     {
+        // Salva posi√ß√£o atual dos scrolls antes de destruir e recriar os itens.
+        // S√≥ reseta para o topo na primeira abertura (Open), nunca durante edi√ß√£o.
+        float collectionScroll = collectionScrollRect != null ? collectionScrollRect.verticalNormalizedPosition : 1f;
+        float deckScroll = deckScrollRect != null ? deckScrollRect.verticalNormalizedPosition : 1f;
+
+        if (restoreScrollCoroutine != null)
+            StopCoroutine(restoreScrollCoroutine);
+
         ClearItems();
 
         if (currentUnit == null || listItemPrefab == null)
         {
-            if (currentUnit == null)
-                Debug.LogWarning("DeckBuilder: currentUnit est· NULL.");
-
-            if (listItemPrefab == null)
-                Debug.LogWarning("DeckBuilder: List Item Prefab n„o est· conectado no Inspector.");
-
             return;
         }
 
-        if (collectionContent == null)
-            Debug.LogWarning("DeckBuilder: Collection Content n„o est· conectado no Inspector.");
-
-        if (deckContent == null)
-            Debug.LogWarning("DeckBuilder: Deck Content n„o est· conectado no Inspector.");
-
         List<Card> draftDeck = PartyDeckState.GetDraft(currentUnit);
         IReadOnlyList<Card> availableCards = PartyDeckState.GetAvailableCards(currentUnit);
-
-        Debug.Log(
-            $"DeckBuilder Rebuild: unit={currentUnit.unitName}, " +
-            $"availableCards={availableCards.Count}, draftDeck={draftDeck.Count}, " +
-            $"collectionContent={(collectionContent != null ? collectionContent.name : "NULL")}, " +
-            $"deckContent={(deckContent != null ? deckContent.name : "NULL")}, " +
-            $"listItemPrefab={(listItemPrefab != null ? listItemPrefab.name : "NULL")}"
-        );
 
         if (titleText != null)
             titleText.text = $"{currentUnit.unitName} Deck Builder";
@@ -259,18 +262,37 @@ public class PartyDeckBuilderUI : MonoBehaviour
 
         Canvas.ForceUpdateCanvases();
 
+        // Restaura a posi√ß√£o no frame seguinte, ap√≥s o layout estar estabilizado.
+        // Restaurar imediatamente causaria um "piscar" vis√≠vel porque o Content
+        // acaba de ser recriado e o Unity ainda n√£o calculou as alturas corretas.
+        restoreScrollCoroutine = StartCoroutine(RestoreScrollNextFrame(collectionScroll, deckScroll));
+    }
+
+    private Coroutine restoreScrollCoroutine;
+
+    IEnumerator RestoreScrollNextFrame(float collectionPos, float deckPos)
+    {
+        // WaitForEndOfFrame garante que o VerticalLayoutGroup e o ContentSizeFitter
+        // j√° terminaram de recalcular as alturas dos itens rec√©m-criados antes de
+        // restaurar a posi√ß√£o ‚Äî evita o "piscar" causado por restaurar cedo demais.
+        yield return new WaitForEndOfFrame();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(collectionContent as RectTransform);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(deckContent as RectTransform);
+
+        Canvas.ForceUpdateCanvases();
+
         if (collectionScrollRect != null)
-            collectionScrollRect.verticalNormalizedPosition = 1f;
+            collectionScrollRect.verticalNormalizedPosition = collectionPos;
 
         if (deckScrollRect != null)
-            deckScrollRect.verticalNormalizedPosition = 1f;
+            deckScrollRect.verticalNormalizedPosition = deckPos;
     }
 
     void SpawnItem(Transform parent, Card card, DeckBuilderListType sourceList, bool selected, bool unavailable)
     {
         if (parent == null)
         {
-            Debug.LogWarning($"DeckBuilder: nao foi possivel criar item de {card.cardName}, parent esta NULL.");
             return;
         }
 
@@ -325,7 +347,6 @@ public class PartyDeckBuilderUI : MonoBehaviour
 
         if (currentUnit.deckData == null)
         {
-            Debug.LogWarning($"DeckBuilder: {currentUnit.unitName} n„o possui DeckData conectado no UnitData.");
             return;
         }
 
@@ -336,14 +357,5 @@ public class PartyDeckBuilderUI : MonoBehaviour
         int savedCount = currentUnit.deckData.startingDeck != null
             ? currentUnit.deckData.startingDeck.Count
             : 0;
-
-        Debug.Log(
-            $"DeckBuilder aberto para {currentUnit.unitName}. " +
-            $"DeckData: {currentUnit.deckData.name}. " +
-            $"AvailableCards: {availableCount}. StartingDeck: {savedCount}."
-        );
-
-        if (availableCount == 0)
-            Debug.LogWarning($"DeckBuilder: {currentUnit.deckData.name} est· com Available Cards vazio.");
     }
 }

@@ -30,7 +30,6 @@ public class CardDisplay : MonoBehaviour
     {
         if (cardData == null)
         {
-            Debug.LogError("cardData NULL em " + gameObject.name);
             return;
         }
         //CARDIMAGE

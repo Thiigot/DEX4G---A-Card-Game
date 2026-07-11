@@ -55,7 +55,6 @@ public class BattleStarter : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[BattleStarter] BattlePartyData vazio — usando playerPartyFallback do Inspector (modo de teste isolado).");
             SpawnAlliesFromFallback();
         }
     }
@@ -76,9 +75,6 @@ public class BattleStarter : MonoBehaviour
 
             if (unitData != null)
             {
-                // O UnitData vindo da Preparation Scene é o asset "_VIEW" (usado só para
-                // exibição no draft). Resolvemos para o UnitData de batalha equivalente
-                // (mesmas stats reais de combate) casando pelo unitName.
                 UnitData battleUnitData = ResolveBattleUnitData(unitData);
 
                 GameObject obj = Instantiate(unitPrefab);
@@ -96,7 +92,6 @@ public class BattleStarter : MonoBehaviour
     {
         if (UnitDataRegistry.Instance == null)
         {
-            Debug.LogWarning("[BattleStarter] UnitDataRegistry não encontrado em Resources. Usando o UnitData original sem resolver.");
             return source;
         }
 

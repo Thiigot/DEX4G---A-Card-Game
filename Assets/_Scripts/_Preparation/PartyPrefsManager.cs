@@ -72,7 +72,6 @@ public static class PartyPrefsManager
         }
         catch
         {
-            Debug.LogWarning("[PartyPrefsManager] Falha ao ler a party salva. Iniciando vazia.");
             return result;
         }
 

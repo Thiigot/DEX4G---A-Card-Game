@@ -18,7 +18,9 @@ public class DeckCardListItem : MonoBehaviour,
 {
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text costLabel;
-    [SerializeField] private Image background;
+    [SerializeField] private Image cardArt;
+    [SerializeField] private Image highlight;
+    [SerializeField] private Image nameBlank;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Color selectedColor = new Color(0.45f, 0.8f, 1f, 1f);
     [SerializeField] private Color unavailableColor = new Color(0.45f, 0.45f, 0.45f, 0.75f);
@@ -49,8 +51,8 @@ public class DeckCardListItem : MonoBehaviour,
     {
         rectTransform = transform as RectTransform;
 
-        if (background == null)
-            background = GetComponent<Image>();
+        if (cardArt == null)
+            cardArt = GetComponent<Image>();
 
         if (nameLabel == null)
             nameLabel = GetComponentInChildren<TMP_Text>();
@@ -71,19 +73,54 @@ public class DeckCardListItem : MonoBehaviour,
         if (nameLabel != null)
             nameLabel.text = card != null ? card.cardName : "Empty";
 
+        if(card.cardClass == CardClass.Mechanic || card.cardClass == CardClass.Jumper)
+        {
+            nameLabel.color = Color.black;
+        }
+        else
+        {
+            nameLabel.color = Color.white;
+        }
         if (costLabel != null)
             costLabel.text = card != null ? card.cardMana.ToString() : "";
 
-        if (background != null && card != null)
+        
+        if (cardArt != null && card != null)
         {
-            Color c = colorType[(int)card.cardClass];
-
+            cardArt.sprite = card.cardArt;
+            Color c = new Color(1f,1f,1f,1f);
             if (unavailable)
                 c = unavailableColor;
-            else if(selected)
-                c = selectedColor;
-            background.color = c;
+            cardArt.color = c;
         }
+
+        if (highlight != null && card != null)
+        {
+            Color c = colorType[(int)card.cardClass];
+            if (selected)
+            {
+                c = selectedColor;
+                //highlight.gameObject.SetActive(true);
+            }
+            else if (unavailable)
+            {
+                c = unavailableColor;
+            }
+            else
+            {
+                //highlight.gameObject.SetActive(false);
+            }
+
+            highlight.color = c;
+        }
+        if (nameBlank != null && card != null)
+        {
+            Color c = colorType[(int)card.cardClass];
+            if (unavailable)
+                c = unavailableColor;
+            nameBlank.color = c;
+        }
+
         if(typeImages != null && card != null)
         {
             for (int i = 0; i < typeImages.Length; i++)
@@ -101,10 +138,10 @@ public class DeckCardListItem : MonoBehaviour,
         if (owner == null || card == null)
             return;
 
-        if (eventData.button == PointerEventData.InputButton.Left)
-            owner.ShowCardDetails(card);
-
         if (eventData.button == PointerEventData.InputButton.Right)
+            owner.OpenCardDetail(card);
+
+        if (eventData.button == PointerEventData.InputButton.Left)
             owner.QuickMoveCard(card, listType);
     }
 
@@ -198,8 +235,8 @@ public class DeckCardListItem : MonoBehaviour,
             canvasGroup.blocksRaycasts = false;
         }
 
-        if (background != null)
-            background.color = unavailableColor;
+        if (cardArt != null)
+            cardArt.color = unavailableColor;
     }
 
     void ClearDragPlaceholder()
